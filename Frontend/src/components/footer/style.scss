@@ -1,0 +1,45 @@
+@import '/src/styles/variables.scss';
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #f9f7f7;
+    width: 100%;
+    border-top: 1px solid #e4e4e4;
+    &-content {
+        width: 100%;
+        padding: $pm-80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        &-logo {
+            color: #3fa3db;
+        }
+        &-links {
+            list-style-type: none;
+            padding-top: $pm-40;
+            & li {
+                display: inline;
+                margin: 0 $pm-40;
+                & a {
+                    text-decoration: none;
+                    color: black;
+                    & img {
+                        height: 2rem;
+                        width: 2rem;
+                    }
+                }
+            }
+        }
+        &-social {
+            padding-top: $pm-80;
+            font-weight: 600;
+        }
+        &-copyright {
+            padding-top: $pm-80;
+            font-weight: 600;
+            color: #bfbfbf;
+        }
+    }
+}
