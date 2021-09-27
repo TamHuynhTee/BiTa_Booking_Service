@@ -10,7 +10,7 @@
         //     height: 500px;
         // }
         @include laptop {
-            height: 600px;
+            height: 550px;
         }
         @include desktop {
             height: 700px;
@@ -41,6 +41,7 @@
             height: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
             padding: $pm-80;
             & .slick-slider {
                 width: 100%;

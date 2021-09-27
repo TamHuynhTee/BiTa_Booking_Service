@@ -11,6 +11,8 @@ import booked from '../../images/booked.svg';
 import plan from '../../images/plan.svg';
 import { LoginDialog } from '../../components/login';
 import { ForgotPassDialog } from '../../components/forgotPassword';
+import { defaultRoute } from '../../routes/defaultRoute';
+import { useHistory } from 'react-router';
 
 interface HomePageProps {}
 
@@ -102,6 +104,7 @@ const BannerSlider = () => {
 };
 
 const ChooseAccountDialog = () => {
+    const history = useHistory();
     return (
         <div className="modal fade" id="ChooseAccountModal" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-xl">
@@ -122,14 +125,26 @@ const ChooseAccountDialog = () => {
                             Bạn muốn trở thành
                         </h1>
                         <div className="chooseAccount">
-                            <div className="chooseAccount-card">
+                            <div
+                                className="chooseAccount-card"
+                                data-bs-dismiss="modal"
+                                onClick={() =>
+                                    history.push(defaultRoute.RegisterCustomer)
+                                }
+                            >
                                 <h2>Khách hàng</h2>
                                 <div className="chooseAccount-card-image">
                                     <img src={user} alt="" />
                                 </div>
                             </div>
-                            <div className="chooseAccount-card">
-                                <h2>Đối tác dịch vụ</h2>
+                            <div
+                                className="chooseAccount-card"
+                                data-bs-dismiss="modal"
+                                onClick={() =>
+                                    history.push(defaultRoute.RegisterBusiness)
+                                }
+                            >
+                                <h2>Đối tác</h2>
                                 <div className="chooseAccount-card-image">
                                     <img src={business} alt="" />
                                 </div>

@@ -2,7 +2,9 @@ import React from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
+import { NotFound } from '../static/404';
 import { HomePage } from '../views/home';
+import { RegisterCustomer } from '../views/registerCustomer';
 import { defaultRoute } from './defaultRoute';
 
 interface IRoute {
@@ -20,6 +22,15 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.UnauthenticatedHome,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <RegisterCustomer />
+            </>
+        ),
+        path: defaultRoute.RegisterCustomer,
         exact: true,
     },
 ];
@@ -44,7 +55,12 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Header />
-            <Switch>{renderRoutes(routes)}</Switch>
+            <Switch>
+                {renderRoutes(routes)}
+                <Route path="*">
+                    <NotFound />
+                </Route>
+            </Switch>
         </BrowserRouter>
     );
 };
