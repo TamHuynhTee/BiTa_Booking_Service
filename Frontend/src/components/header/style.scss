@@ -8,6 +8,7 @@
     padding: $pm-20 $pm-80;
     border-bottom: 1px solid #eaeaea;
     box-shadow: 10.9px 10.9px 27.8px rgba(0, 0, 0, 0.04);
+    z-index: 1;
     &-left {
         display: flex;
         align-items: center;
