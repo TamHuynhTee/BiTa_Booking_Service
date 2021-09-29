@@ -1,12 +1,14 @@
 import React from 'react';
 import './style.scss';
 import doodle from '../../images/doodle.svg';
+import { LinkButton } from '../../components/linkButton';
 
 interface RegisterCustomerProps {}
 
 export const RegisterCustomer = (props: RegisterCustomerProps) => {
     return (
         <div className="registerCustomer">
+            <LinkButton text="Trang chủ" link="/" />
             <div className="registerCustomer-form row">
                 <div className="col registerCustomer-form-doodle">
                     <img src={doodle} alt="" />
@@ -90,7 +92,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                 className="form-check-label"
                                 htmlFor="agreePolicy"
                             >
-                                Tôi đồng ý với các điều khoản
+                                Tôi đồng ý với các <span>điều khoản</span>
                             </label>
                         </div>
                         <div className="d-grid gap-2 col-6 mx-auto">

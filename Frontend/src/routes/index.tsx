@@ -4,6 +4,7 @@ import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { NotFound } from '../static/404';
 import { HomePage } from '../views/home';
+import { RegisterBusiness } from '../views/registerBusiness';
 import { RegisterCustomer } from '../views/registerCustomer';
 import { defaultRoute } from './defaultRoute';
 
@@ -17,6 +18,7 @@ const routes: Array<IRoute> = [
     {
         child: (
             <>
+                <Header />
                 <HomePage />
                 <Footer />
             </>
@@ -31,6 +33,15 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.RegisterCustomer,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <RegisterBusiness />
+            </>
+        ),
+        path: defaultRoute.RegisterBusiness,
         exact: true,
     },
 ];
@@ -54,7 +65,6 @@ const renderRoutes = (routes: Array<IRoute>) => {
 const Router = () => {
     return (
         <BrowserRouter>
-            <Header />
             <Switch>
                 {renderRoutes(routes)}
                 <Route path="*">

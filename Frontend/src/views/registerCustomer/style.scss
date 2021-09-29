@@ -1,7 +1,7 @@
 @import '/src/styles/variables.scss';
 
 .registerCustomer {
-    height: calc(100vh - #{$h-header});
+    min-height: 100vh;
     background-image: url('../../images/register-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,7 +10,10 @@
     justify-content: center;
     &-form {
         padding: $pm-40 0;
-        height: 580px;
+        @include fromCustom(1367px) {
+            height: 580px;
+        }
+        height: 500px;
         min-width: 480px;
         @include maxMobile {
             width: 400px;
@@ -31,9 +34,13 @@
             }
         }
         &-input {
+            position: relative;
             & form {
-                padding: $pm-80 0;
+                padding: $pm-40 0;
                 height: 100%;
+                @include fromCustom(1367px) {
+                    padding: $pm-120 0;
+                }
                 & h2 {
                     text-align: center;
                     font-weight: 600;

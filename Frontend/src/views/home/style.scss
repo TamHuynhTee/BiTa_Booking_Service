@@ -1,6 +1,7 @@
 @import '/src/styles/variables.scss';
 
 .homepage {
+    padding-top: $h-header;
     &-banner {
         display: flex;
         align-items: center;
