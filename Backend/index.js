@@ -1,11 +1,15 @@
+require('dotenv').config();
 const express = require('express');
+const db = require('./src/config/database');
+
 const app = express();
-const port = 8000;
 
-app.get('/', function(req, res){
-    res.send("Đây là backend");
-})
+db.connect();
 
-app.listen(port, function(){
-    console.log("Your app running on port" + port)
-})
+app.get('/', function (req, res) {
+    res.send('Đây là backend');
+});
+
+app.listen(process.env.PORT, function () {
+    console.log('Your app running on port ' + process.env.PORT);
+});
