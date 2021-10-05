@@ -1,18 +1,18 @@
-import React from 'react';
-import Slider from 'react-slick';
-import './style.scss';
-import schedule from '../../images/online-schedule.svg';
-import fast from '../../images/fast.svg';
-import simple from '../../images/simple.svg';
-import wallet from '../../images/wallet.svg';
-import user from '../../images/user.svg';
-import business from '../../images/business.svg';
-import booked from '../../images/booked.svg';
-import plan from '../../images/plan.svg';
-import { LoginDialog } from '../../components/login';
-import { ForgotPassDialog } from '../../components/forgotPassword';
-import { defaultRoute } from '../../routes/defaultRoute';
-import { useHistory } from 'react-router';
+import React from "react";
+import Slider from "react-slick";
+import "./style.scss";
+import schedule from "../../images/online-schedule.svg";
+import fast from "../../images/fast.svg";
+import simple from "../../images/simple.svg";
+import wallet from "../../images/wallet.svg";
+import user from "../../images/user.svg";
+import business from "../../images/business.svg";
+import booked from "../../images/booked.svg";
+import plan from "../../images/plan.svg";
+import { LoginDialog } from "../../components/login";
+import { ForgotPassDialog } from "../../components/forgotPassword";
+import { defaultRoute } from "../../routes/defaultRoute";
+import { useHistory } from "react-router";
 
 interface HomePageProps {}
 
@@ -69,6 +69,34 @@ export const HomePage = (props: HomePageProps) => {
                         </p>
                     </div>
                 </div>
+                <div className="row homepage-features">
+                    <form
+                        className="d-flex"
+                        onSubmit={(e) => e.preventDefault()}
+                    >
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Tìm kiếm dịch vụ"
+                            aria-label="Search"
+                        />
+                        <button
+                            className="btn btn-primary header-btn"
+                            type="submit"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-search"
+                                viewBox="0 0 16 16"
+                            >
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             </div>
             <LoginDialog />
             <ForgotPassDialog />
@@ -84,7 +112,7 @@ const BannerSlider = () => {
         speed: 1000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // autoplay: true,
+        autoplay: true,
     };
     return (
         <div className="homepage-banner-image">
@@ -121,7 +149,7 @@ const ChooseAccountDialog = () => {
                         ></button>
                     </div>
                     <div className="modal-body">
-                        <h1 style={{ textAlign: 'center', color: '#6c63ff' }}>
+                        <h1 style={{ textAlign: "center", color: "#6c63ff" }}>
                             Bạn muốn trở thành
                         </h1>
                         <div className="chooseAccount">

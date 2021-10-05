@@ -1,34 +1,44 @@
-import React from 'react';
-import './style.scss';
-import doodle from '../../images/doodle.svg';
-import { LinkButton } from '../../components/linkButton';
+import React from "react";
+import "./style.scss";
+import doodle from "../../images/doodle.svg";
+import { LinkButton } from "../../components/linkButton";
+import { defaultRoute } from "../../routes/defaultRoute";
 
 interface RegisterCustomerProps {}
 
 export const RegisterCustomer = (props: RegisterCustomerProps) => {
     return (
         <div className="registerCustomer">
-            <LinkButton text="Trang chủ" link="/" />
             <div className="registerCustomer-form row">
                 <div className="col registerCustomer-form-doodle">
                     <img src={doodle} alt="" />
                 </div>
                 <div className="col registerCustomer-form-input">
                     <form onSubmit={(e) => e.preventDefault()}>
-                        <h2>ĐĂNG KÝ</h2>
+                        <div className="registerBusiness-input-header">
+                            <LinkButton
+                                link={defaultRoute.UnauthenticatedHome}
+                                text="&lt; Trang chủ"
+                            ></LinkButton>
+                            <h1>Đăng ký</h1>
+                            <LinkButton
+                                link={defaultRoute.RegisterBusiness}
+                                text="Doanh nghiệp &gt;"
+                            ></LinkButton>
+                        </div>
                         <div className="row">
                             <div className="col">
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Họ"
+                                    placeholder="Họ*"
                                 />
                             </div>
                             <div className="col">
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Tên"
+                                    placeholder="Tên*"
                                 />
                             </div>
                         </div>
@@ -37,14 +47,14 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Username"
+                                    placeholder="Username*"
                                 />
                             </div>
                             <div className="col">
                                 <input
                                     type="email"
                                     className="form-control"
-                                    placeholder="Email"
+                                    placeholder="Email*"
                                 />
                             </div>
                         </div>
@@ -53,7 +63,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                 <input
                                     type="phone"
                                     className="form-control"
-                                    placeholder="Số điện thoại"
+                                    placeholder="Số điện thoại*"
                                 />
                             </div>
                             <div className="col">

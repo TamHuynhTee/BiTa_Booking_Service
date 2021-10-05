@@ -1,10 +1,33 @@
-@import '/src/styles/variables.scss';
+@import "/src/styles/variables.scss";
 
 .registerBusiness {
     height: 100vh;
     display: flex;
+    &-input {
+        padding: $pm-80;
+        overflow-y: auto;
+        @include maxTablet {
+            width: 100%;
+        }
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            & h1 {
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: x-large;
+                @include maxLaptop {
+                    font-size: x-large;
+                }
+            }
+        }
+    }
     &-doodle {
-        background-image: url('../../images/supplier-background.jpg');
+        @include maxTablet {
+            display: none;
+        }
+        background-image: url("../../images/supplier-background.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

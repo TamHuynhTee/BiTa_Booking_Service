@@ -1,11 +1,8 @@
-@import '/src/styles/variables.scss';
+@import "/src/styles/variables.scss";
 
 .linkButton {
-    display: inline-block;
-    color: darkturquoise;
-    margin: $pm-20 0;
+    // display: inline-block;
+    color: #0b5ed7;
+    // margin: $pm-20 0;
     text-decoration: none;
-    position: absolute;
-    left: 0;
-    top: 0;
 }

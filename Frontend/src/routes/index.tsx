@@ -1,12 +1,13 @@
-import React from 'react';
-import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
-import { NotFound } from '../static/404';
-import { HomePage } from '../views/home';
-import { RegisterBusiness } from '../views/registerBusiness';
-import { RegisterCustomer } from '../views/registerCustomer';
-import { defaultRoute } from './defaultRoute';
+import React from "react";
+import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { Footer } from "../components/footer";
+import { Header } from "../components/header";
+import { NotFound } from "../static/404";
+import { HomePage } from "../views/home";
+import { RegisterBusiness } from "../views/registerBusiness";
+import { RegisterCustomer } from "../views/registerCustomer";
+import { SearchResult } from "../views/search";
+import { defaultRoute } from "./defaultRoute";
 
 interface IRoute {
     exact: Boolean;
@@ -42,6 +43,17 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.RegisterBusiness,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <SearchResult />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Search,
         exact: true,
     },
 ];
