@@ -1,0 +1,29 @@
+@import "/src/styles/variables.scss";
+
+.profile {
+    height: calc(100vh - $h-header);
+    margin-top: $h-header;
+    padding: $pm-40;
+    overflow-y: auto;
+    &-header {
+        height: 10rem;
+        padding: $pm-20;
+        margin-bottom: $pm-40;
+        display: flex;
+        border: 1px solid black;
+        &-avatar {
+            height: 100%;
+            & img {
+                height: 100%;
+            }
+        }
+        &-nav {
+            height: 100%;
+            flex: 1;
+            padding: 0 $pm-40;
+        }
+    }
+    &-body {
+        padding: $pm-20;
+    }
+}

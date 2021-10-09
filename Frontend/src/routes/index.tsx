@@ -4,9 +4,11 @@ import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { NotFound } from "../static/404";
 import { HomePage } from "../views/home";
+import { Profile } from "../views/profile";
 import { RegisterBusiness } from "../views/registerBusiness";
 import { RegisterCustomer } from "../views/registerCustomer";
 import { SearchResult } from "../views/search";
+import { ServiceDetail } from "../views/serviceDetail";
 import { defaultRoute } from "./defaultRoute";
 
 interface IRoute {
@@ -54,6 +56,27 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.Search,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <Profile />
+            </>
+        ),
+        path: defaultRoute.Profile,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <ServiceDetail />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Service,
         exact: true,
     },
 ];

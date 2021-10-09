@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { HashLoader } from "react-spinners";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
-import { Footer } from "./components/footer";
 import Router from "./routes";
-import { HomePage } from "./views/home";
 
 function App() {
     const [loading, setLoading] = useState(false);

@@ -3,4 +3,8 @@ export const defaultRoute = {
     RegisterCustomer: "/register-customer",
     RegisterBusiness: "/register-business",
     Search: "/search",
+    Profile: "/profile",
+    Service: "/service",
+    Book: "/book",
+    Company: "/company",
 };
