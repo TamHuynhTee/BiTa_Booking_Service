@@ -1,8 +1,14 @@
-import React from 'react';
-
+import React from "react";
+import axios from "axios";
 interface Props {}
 
 export const LoginDialog = (props: Props) => {
+    const refUsername = React.useRef<any>(null);
+    const refPassword = React.useRef<any>(null);
+
+    const handleLogin = () => {
+        console.log("Hello");
+    };
     return (
         <div className="modal fade" id="LoginModal" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
@@ -25,6 +31,7 @@ export const LoginDialog = (props: Props) => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Username/Phone/Email"
+                                ref={refUsername}
                             />
                         </div>
                         <div className="mb-3">
@@ -33,6 +40,7 @@ export const LoginDialog = (props: Props) => {
                                 type="password"
                                 className="form-control"
                                 placeholder="Mật khẩu"
+                                ref={refPassword}
                             />
                         </div>
                         <div className="form-check">
@@ -59,7 +67,11 @@ export const LoginDialog = (props: Props) => {
                         >
                             Quên mật khẩu
                         </button>
-                        <button type="button" className="btn btn-primary">
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={handleLogin}
+                        >
                             Đăng nhập
                         </button>
                     </div>

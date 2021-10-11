@@ -7,6 +7,19 @@ import { defaultRoute } from "../../routes/defaultRoute";
 interface RegisterCustomerProps {}
 
 export const RegisterCustomer = (props: RegisterCustomerProps) => {
+    const refFirstName = React.useRef<any>(null);
+    const refLastName = React.useRef<any>(null);
+    const refUsername = React.useRef<any>(null);
+    const refEmail = React.useRef<any>(null);
+    const refPhone = React.useRef<any>(null);
+    const refPassword = React.useRef<any>(null);
+    const refConfirm = React.useRef<any>(null);
+    const refGender = React.useRef<any>(null);
+
+    const handleSubmit = () => {
+        console.log(refGender.current.value);
+    };
+
     return (
         <div className="registerCustomer">
             <div className="registerCustomer-form row">
@@ -32,6 +45,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Họ*"
+                                    ref={refLastName}
                                 />
                             </div>
                             <div className="col">
@@ -39,6 +53,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Tên*"
+                                    ref={refFirstName}
                                 />
                             </div>
                         </div>
@@ -48,6 +63,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Username*"
+                                    ref={refUsername}
                                 />
                             </div>
                             <div className="col">
@@ -55,6 +71,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="email"
                                     className="form-control"
                                     placeholder="Email*"
+                                    ref={refEmail}
                                 />
                             </div>
                         </div>
@@ -64,13 +81,14 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="phone"
                                     className="form-control"
                                     placeholder="Số điện thoại*"
+                                    ref={refPhone}
                                 />
                             </div>
                             <div className="col">
-                                <select className="form-select">
+                                <select className="form-select" ref={refGender}>
                                     <option defaultValue="">Giới tính</option>
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
+                                    <option value="male">Nam</option>
+                                    <option value="female">Nữ</option>
                                 </select>
                             </div>
                         </div>
@@ -80,6 +98,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="password"
                                     className="form-control"
                                     placeholder="Mật khẩu"
+                                    ref={refPassword}
                                 />
                             </div>
                         </div>
@@ -89,6 +108,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="password"
                                     className="form-control"
                                     placeholder="Xác nhận mật khẩu"
+                                    ref={refConfirm}
                                 />
                             </div>
                         </div>
@@ -106,7 +126,11 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                             </label>
                         </div>
                         <div className="d-grid gap-2 col-6 mx-auto">
-                            <button className="btn btn-primary" type="button">
+                            <button
+                                className="btn btn-primary"
+                                type="button"
+                                onClick={handleSubmit}
+                            >
                                 Đăng ký
                             </button>
                         </div>

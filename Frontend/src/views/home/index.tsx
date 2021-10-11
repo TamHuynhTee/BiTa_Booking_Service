@@ -138,9 +138,7 @@ const ChooseAccountDialog = () => {
             <div className="modal-dialog modal-dialog-centered modal-xl">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">
-                            Chọn tài khoản
-                        </h5>
+                        <h5 className="modal-title">Chọn tài khoản</h5>
                         <button
                             type="button"
                             className="btn-close"
