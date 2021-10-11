@@ -3,10 +3,14 @@ import { Switch, BrowserRouter, Route } from "react-router-dom";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { NotFound } from "../static/404";
+import { BusinessInfo } from "../views/businessInfo";
 import { HomePage } from "../views/home";
+import { BookingManagement } from "../views/bookingManagement";
+import { Profile } from "../views/profile";
 import { RegisterBusiness } from "../views/registerBusiness";
 import { RegisterCustomer } from "../views/registerCustomer";
 import { SearchResult } from "../views/search";
+import { ServiceDetail } from "../views/serviceDetail";
 import { defaultRoute } from "./defaultRoute";
 
 interface IRoute {
@@ -54,6 +58,49 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.Search,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <Profile />
+            </>
+        ),
+        path: defaultRoute.Profile,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <ServiceDetail />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Service,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <BusinessInfo />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Company,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <BookingManagement />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Book,
         exact: true,
     },
 ];

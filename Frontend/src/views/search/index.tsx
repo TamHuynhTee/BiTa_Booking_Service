@@ -40,7 +40,18 @@ export const SearchResult = (props: SearchResultProps) => {
                     </div>
                     <div className="searchResult-result-show">
                         {found ? (
-                            ""
+                            <>
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                                <SearchCard />
+                            </>
                         ) : (
                             <div className="no-data">
                                 <div className="no-data-container">
@@ -53,5 +64,45 @@ export const SearchResult = (props: SearchResultProps) => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const SearchCard = () => {
+    const thumbnail = "https://cdn.fakercloud.com/avatars/oktayelipek_128.jpg";
+    return (
+        <>
+            <div className="searchResult-card">
+                <div className="searchResult-card-image">
+                    <img src={thumbnail} className="img-thumbnail" alt="..." />
+                </div>
+                <div className="searchResult-card-info">
+                    <h2>
+                        <a href="#">Phòng khám răng nha khoa Trương Đức</a>
+                    </h2>
+                    <div className="searchResult-card-info-service">
+                        <span className="badge rounded-pill bg-primary">
+                            Nha khoa
+                        </span>
+                        <span className="badge rounded-pill bg-primary">
+                            Y tế
+                        </span>
+                    </div>
+                    <div className="searchResult-card-info-utilities">
+                        <div>
+                            <span className="badge bg-light text-dark">
+                                $ Tiền cọc
+                            </span>
+                            <p>26.500</p>
+                        </div>
+                        <div>
+                            <span className="badge bg-light text-dark">
+                                * Địa điểm
+                            </span>
+                            <p>TP.HCM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
