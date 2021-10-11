@@ -1,0 +1,9 @@
+@import "/src/styles/variables.scss";
+
+.pageWrapper {
+    margin: $pm-40 0;
+    background: #fff;
+    border-radius: $pm-10;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: $pm-40;
+}

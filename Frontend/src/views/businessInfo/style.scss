@@ -1,0 +1,12 @@
+@import "/src/styles/variables.scss";
+
+.businessInfo {
+    min-height: 100vh;
+    padding: calc($h-header + $pm-40) $pm-40 $pm-40;
+    &-wrapper {
+        padding: $pm-20 $pm-40;
+        &-branch li {
+            list-style-type: "🚩";
+        }
+    }
+}

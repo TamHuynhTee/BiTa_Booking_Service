@@ -1,0 +1,8 @@
+@import "/src/styles/variables.scss";
+
+.pageContainer {
+    min-height: calc(100vh - $h-header);
+    margin-top: $h-header;
+    padding: $pm-40;
+    background-color: $bg-color;
+}
