@@ -1,8 +1,8 @@
 import React from "react";
 import "./style.scss";
-import doodle from "../../images/doodle.svg";
-import { LinkButton } from "../../components/linkButton";
-import { defaultRoute } from "../../routes/defaultRoute";
+import doodle from "../../../../images/doodle.svg";
+import { LinkButton } from "../../../../Components/LinkButton";
+import { defaultRoute } from "../../../../routes/defaultRoute";
 
 interface RegisterCustomerProps {}
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.scss";
-import noData from "../../images/no-data.svg";
+import noData from "../../../../images/no-data.svg";
 
 interface SearchResultProps {}
 

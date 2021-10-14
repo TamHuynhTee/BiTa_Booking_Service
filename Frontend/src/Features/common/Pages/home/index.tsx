@@ -1,17 +1,17 @@
 import React from "react";
 import Slider from "react-slick";
 import "./style.scss";
-import schedule from "../../images/online-schedule.svg";
-import fast from "../../images/fast.svg";
-import simple from "../../images/simple.svg";
-import wallet from "../../images/wallet.svg";
-import user from "../../images/user.svg";
-import business from "../../images/business.svg";
-import booked from "../../images/booked.svg";
-import plan from "../../images/plan.svg";
-import { LoginDialog } from "../../components/login";
-import { ForgotPassDialog } from "../../components/forgotPassword";
-import { defaultRoute } from "../../routes/defaultRoute";
+import schedule from "../../../../images/online-schedule.svg";
+import fast from "../../../../images/fast.svg";
+import simple from "../../../../images/simple.svg";
+import wallet from "../../../../images/wallet.svg";
+import user from "../../../../images/user.svg";
+import business from "../../../../images/business.svg";
+import booked from "../../../../images/booked.svg";
+import plan from "../../../../images/plan.svg";
+import { LoginDialog } from "../../../../Components/Login";
+import { ForgotPassDialog } from "../../../../Components/ForgotPassword";
+import { defaultRoute } from "../../../../routes/defaultRoute";
 import { useHistory } from "react-router";
 
 interface HomePageProps {}

@@ -1,16 +1,16 @@
 import React from "react";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
-import { Footer } from "../components/footer";
-import { Header } from "../components/header";
+import { Footer } from "../Components/Footer";
+import { Header } from "../Components/Header";
 import { NotFound } from "../static/404";
-import { BusinessInfo } from "../views/businessInfo";
-import { HomePage } from "../views/home";
-import { BookingManagement } from "../views/bookingManagement";
-import { Profile } from "../views/profile";
-import { RegisterBusiness } from "../views/registerBusiness";
-import { RegisterCustomer } from "../views/registerCustomer";
-import { SearchResult } from "../views/search";
-import { ServiceDetail } from "../views/serviceDetail";
+import { BusinessInfo } from "../Features/common/Pages/businessInfo";
+import { HomePage } from "../Features/common/Pages/home";
+import { BookingManagement } from "../Features/Front_Office/Customer/Pages/bookingManagement";
+import { Profile } from "../Features/common/Pages/profile";
+import { RegisterBusiness } from "../Features/common/Pages/registerBusiness";
+import { RegisterCustomer } from "../Features/common/Pages/registerCustomer";
+import { SearchResult } from "../Features/common/Pages/search";
+import { ServiceDetail } from "../Features/common/Pages/serviceDetail";
 import { defaultRoute } from "./defaultRoute";
 
 interface IRoute {
