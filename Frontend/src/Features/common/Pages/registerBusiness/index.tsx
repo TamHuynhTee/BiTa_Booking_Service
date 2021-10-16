@@ -1,6 +1,6 @@
 import React from "react";
-import { LinkButton } from "../../components/linkButton";
-import { defaultRoute } from "../../routes/defaultRoute";
+import { LinkButton } from "../../../../Components/LinkButton";
+import { defaultRoute } from "../../../../routes/defaultRoute";
 import "./style.scss";
 
 interface RegisterBusinessProps {}
