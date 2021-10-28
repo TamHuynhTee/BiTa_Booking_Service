@@ -1,7 +1,7 @@
-import React from "react";
-import "./style.scss";
-import { PageContainer } from "../../../../../Components/PageContainer";
-import { PageWrapper } from "../../../../../Components/PageWrapper";
+import React from 'react';
+import './style.scss';
+import { PageContainer } from '../../../../Components/PageContainer';
+import { PageWrapper } from '../../../../Components/PageWrapper';
 
 interface BookingManagementProps {}
 

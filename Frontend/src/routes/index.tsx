@@ -1,17 +1,18 @@
-import React from "react";
-import { Switch, BrowserRouter, Route } from "react-router-dom";
-import { Footer } from "../Components/Footer";
-import { Header } from "../Components/Header";
-import { NotFound } from "../static/404";
-import { BusinessInfo } from "../Features/common/Pages/businessInfo";
-import { HomePage } from "../Features/common/Pages/home";
-import { BookingManagement } from "../Features/Front_Office/Customer/Pages/bookingManagement";
-import { Profile } from "../Features/common/Pages/profile";
-import { RegisterBusiness } from "../Features/common/Pages/registerBusiness";
-import { RegisterCustomer } from "../Features/common/Pages/registerCustomer";
-import { SearchResult } from "../Features/common/Pages/search";
-import { ServiceDetail } from "../Features/common/Pages/serviceDetail";
-import { defaultRoute } from "./defaultRoute";
+import React from 'react';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
+import { Footer } from '../Components/Footer';
+import { Header } from '../Components/Header';
+import { NotFound } from '../static/404';
+import { BusinessInfo } from '../Features/common/Pages/BusinessInfo';
+import { HomePage } from '../Features/common/Pages/Home';
+import { BookingManagement } from '../Features/Customer/Pages/BookingManagement';
+import { Profile } from '../Features/common/Pages/Profile';
+import { RegisterBusiness } from '../Features/common/Pages/RegisterBusiness';
+import { RegisterCustomer } from '../Features/common/Pages/RegisterCustomer';
+import { SearchResult } from '../Features/common/Pages/Search';
+import { ServiceDetail } from '../Features/common/Pages/ServiceDetail';
+import { defaultRoute } from './defaultRoute';
+import { Booking } from '../Features/Customer/Pages/Booking';
 
 interface IRoute {
     exact: Boolean;
@@ -97,6 +98,17 @@ const routes: Array<IRoute> = [
             <>
                 <Header />
                 <BookingManagement />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.BookManagement,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <Booking />
                 <Footer />
             </>
         ),
