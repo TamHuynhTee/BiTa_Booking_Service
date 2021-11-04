@@ -7,3 +7,4 @@ export * from './PageContainer';
 export * from './PageWrapper';
 export * from './ServiceCard';
 export * from './CustomSelect';
+export * from './ColorLabel';
