@@ -1,8 +1,8 @@
-@import "/src/styles/variables.scss";
+@import '/src/styles/variables.scss';
 
 .registerCustomer {
     min-height: 100vh;
-    background-image: url("../../../../images/register-background.jpg");
+    background-image: url('../../../../images/register-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -35,12 +35,10 @@
         }
         &-input {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             & form {
-                padding: $pm-40 0;
-                height: 100%;
-                @include fromCustom(1367px) {
-                    padding: $pm-120 0;
-                }
                 & h2 {
                     text-align: center;
                     font-weight: 600;

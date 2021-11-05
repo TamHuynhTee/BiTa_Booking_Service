@@ -1,4 +1,4 @@
-@import "/src/styles/variables.scss";
+@import '/src/styles/variables.scss';
 
 .serviceDetail {
     min-height: 100vh;
@@ -11,7 +11,7 @@
             padding: $pm-40 0;
             border-bottom: 1px solid lightgrey;
             & h1 {
-                flex: 1;
+                flex: 10;
                 color: $base-color;
                 margin: 0;
             }

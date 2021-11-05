@@ -1,4 +1,4 @@
-@import "/src/styles/variables.scss";
+@import '/src/styles/variables.scss';
 
 .registerBusiness {
     height: 100vh;
@@ -6,6 +6,8 @@
     &-input {
         padding: $pm-80;
         overflow-y: auto;
+        display: flex;
+        align-items: center;
         @include maxTablet {
             width: 100%;
         }
@@ -22,12 +24,16 @@
                 }
             }
         }
+        & form {
+            width: 100%;
+            height: 100%;
+        }
     }
     &-doodle {
         @include maxTablet {
             display: none;
         }
-        background-image: url("../../../../images/supplier-background.jpg");
+        background-image: url('../../../../images/supplier-background.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

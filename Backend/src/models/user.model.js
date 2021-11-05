@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     firstName: { type: String, required: false, trim: true },
-    lastName: { type: String, required: false, trim: true },
+    surName: { type: String, required: false, trim: true },
     email: {
       type: String,
       required: true,
@@ -93,6 +93,15 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   return !!user;
 };
 
+userSchema.statics.usernameExists = async function (username, excludeUserId) {
+  const user = await this.findOne({ username, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+userSchema.statics.isPhoneTaken = async function (phoneNumber, excludeUserId) {
+  const user = await this.findOne({ phoneNumber, _id: { $ne: excludeUserId } });
+  return !!user;
+};
 /**
  * Check if password matches the user's password
  * @param {string} password
