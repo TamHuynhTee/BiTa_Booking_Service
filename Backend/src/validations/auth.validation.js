@@ -13,6 +13,17 @@ const registerCustomer = {
   }),
 };
 
+const registerBusiness = {
+  body: Joi.object().keys({
+    registeredName: Joi.string().required(),
+    displayName: Joi.string().required(),
+    ownerName: Joi.string().required(),
+    email: Joi.string().required().email(),
+    phoneNumber: Joi.string().required(),
+    shortDescription: Joi.string(),
+  }),
+};
+
 const login = {
   body: Joi.object().keys({
     email: Joi.string().required(),
@@ -27,22 +38,21 @@ const forgotPassword = {
 };
 
 const resetPassword = {
-  query: Joi.object().keys({
-    token: Joi.string().required(),
-  }),
   body: Joi.object().keys({
+    token: Joi.string().required(),
     password: Joi.string().required().custom(password),
   }),
 };
 
 const verifyEmail = {
-  query: Joi.object().keys({
+  body: Joi.object().keys({
     token: Joi.string().required(),
   }),
 };
 
 module.exports = {
   registerCustomer,
+  registerBusiness,
   login,
   forgotPassword,
   resetPassword,

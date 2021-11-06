@@ -1,18 +1,21 @@
 import React from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import { Footer } from '../Components/Footer';
-import { Header } from '../Components/Header';
-import { NotFound } from '../static/404';
-import { BusinessInfo } from '../Features/common/Pages/BusinessInfo';
-import { HomePage } from '../Features/common/Pages/Home';
 import { BookingManagement } from '../Features/Customer/Pages/BookingManagement';
-import { Profile } from '../Features/common/Pages/Profile';
-import { RegisterBusiness } from '../Features/common/Pages/RegisterBusiness';
-import { RegisterCustomer } from '../Features/common/Pages/RegisterCustomer';
-import { SearchResult } from '../Features/common/Pages/Search';
-import { ServiceDetail } from '../Features/common/Pages/ServiceDetail';
 import { defaultRoute } from './defaultRoute';
 import { Booking } from '../Features/Customer/Pages/Booking';
+import { Footer, Header } from '../Components';
+import {
+    BusinessInfo,
+    HomePage,
+    Profile,
+    RegisterBusiness,
+    RegisterCustomer,
+    ResetPassword,
+    SearchResult,
+    ServiceDetail,
+} from '../Features/common/Pages';
+import { NotFound } from '../static/404';
+import { VerifyEmail } from '../Features/common/Pages/verifyEmail';
 
 interface IRoute {
     exact: Boolean;
@@ -39,6 +42,24 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.RegisterCustomer,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <VerifyEmail />
+            </>
+        ),
+        path: defaultRoute.VerifyEmail,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <ResetPassword />
+            </>
+        ),
+        path: defaultRoute.ResetPassword,
         exact: true,
     },
     {

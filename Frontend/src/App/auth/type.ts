@@ -17,3 +17,21 @@ export interface IRegisterCustomerApi {
     password?: string;
     gender?: string;
 }
+
+export interface IRegisterBusinessApi {
+    registeredName?: string;
+    displayName?: string;
+    ownerName?: string;
+    email?: string;
+    phoneNumber?: string;
+    shortDescription?: string;
+}
+
+export interface IVerifyEmail {
+    token: string;
+}
+
+export interface IResetPassword {
+    token: string;
+    password: string;
+}

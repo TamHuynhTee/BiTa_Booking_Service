@@ -16,8 +16,8 @@ const loginUserWithEmailAndPassword = async (email, password) => {
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
-  const check = await userService.checkVerifyEmail(user._id);
-  if (!check) throw new ApiError(httpStatus.UNAUTHORIZED, 'Email not confirmed');
+  if (!(await userService.checkVerifyEmail(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Email not confirmed');
+  if (!(await userService.checkIsActive(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'User is blocked');
   return user;
 };
 

@@ -65,4 +65,5 @@ module.exports = {
     },
     from: envVars.EMAIL_FROM,
   },
+  frontEndUrl: envVars.FE_URL,
 };

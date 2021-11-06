@@ -50,6 +50,12 @@ const checkVerifyEmail = async (id) => {
   return isEmailVerified;
 };
 
+const checkIsActive = async (id) => {
+  const user = await getUserById(id);
+  const { isActive } = user;
+  return isActive;
+};
+
 /**
  * Get user by email
  * @param {string} email
@@ -72,6 +78,12 @@ const updateUserById = async (userId, updateBody) => {
   }
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+  if (await User.usernameExists(updateBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
+  }
+  if (await User.isPhoneTaken(updateBody.phoneNumber)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
   }
   Object.assign(user, updateBody);
   await user.save();
@@ -100,4 +112,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   checkVerifyEmail,
+  checkIsActive,
 };
