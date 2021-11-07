@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { authService, userService, tokenService, emailService } = require('../services');
+const { authService, userService, tokenService, emailService, businessService } = require('../services');
 const { sendSuccess } = require('./return.controller');
 
 const registerCustomer = catchAsync(async (req, res) => {
@@ -13,9 +13,8 @@ const registerCustomer = catchAsync(async (req, res) => {
 
 const registerBusiness = catchAsync(async (req, res) => {
   console.log(req.body);
-  //   const user = await userService.createUser(req.body, 'user');
-  //   const token = await tokenService.generateAuthTokens(user);
-  //   sendSuccess(res, { token }, httpStatus.CREATED);
+  await businessService.createBusiness(req.body);
+  sendSuccess(res, {}, httpStatus.CREATED, 'Business registered.');
 });
 
 const login = catchAsync(async (req, res) => {

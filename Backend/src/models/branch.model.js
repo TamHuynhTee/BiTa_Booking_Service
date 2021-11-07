@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
 const branchSchema = mongoose.Schema(
   {
@@ -8,6 +9,8 @@ const branchSchema = mongoose.Schema(
       trim: true,
     },
     business: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Business',
       required: true,
     },
     address: {
@@ -15,13 +18,9 @@ const branchSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    map: {
-      latitude: {
-        type: Number,
-      },
-      longitude: {
-        type: Number,
-      },
+    coordinates: {
+      type: [Number],
+      required: false,
     },
     isActive: {
       type: Boolean,
@@ -36,6 +35,9 @@ const branchSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+branchSchema.plugin(toJSON);
+branchSchema.plugin(paginate);
 
 const Branch = mongoose.model('Branch', branchSchema);
 module.exports = Branch;
