@@ -1,4 +1,4 @@
-const htmlEmailConfirm = (url) => {
+const htmlResetPassword = (url) => {
   return `<!DOCTYPE html>
     <html>
     <head>
@@ -93,7 +93,7 @@ const htmlEmailConfirm = (url) => {
     
     <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
         <!-- HIDDEN PREHEADER TEXT -->
-        <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> Chúng tôi rất vui vì bạn đã chọn chúng tôi, hãy bắt đầu kích hoạt tài khoản của bạn nào. </div>
+        <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> Bạn quên mật khẩu? Dễ dàng lấy lại chỉ với vài bước. </div>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <!-- LOGO -->
             <tr>
@@ -110,7 +110,7 @@ const htmlEmailConfirm = (url) => {
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                         <tr>
                             <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                                <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Chào mừng!</h1>
+                                <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Lấy lại mật khẩu</h1>
                             </td>
                         </tr>
                     </table>
@@ -121,7 +121,7 @@ const htmlEmailConfirm = (url) => {
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                         <tr>
                             <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                <p style="margin: 0;">Chúng tôi rất vui vì bạn đã chọn đồng hàng cùng chúng tôi. Đầu tiên, bạn cần xác nhận tài khoản. Chỉ cần nhấn nút bên dưới.</p>
+                                <p style="margin: 0;">Rất tiếc vì bạn đã không thể nhớ được mật khẩu, chỉ cần nhấn nút bên dưới và nhập mật khẩu mới.</p>
                             </td>
                         </tr>
                         <tr>
@@ -131,7 +131,7 @@ const htmlEmailConfirm = (url) => {
                                         <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                             <table border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
-                                                    <td align="center" style="border-radius: 3px;" bgcolor="#2f81df"><a href="${url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #2f81df; display: inline-block;">Xác nhận tài khoản</a></td>
+                                                    <td align="center" style="border-radius: 3px;" bgcolor="#2f81df"><a href="${url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #2f81df; display: inline-block;">Lấy lại mật khẩu</a></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -181,4 +181,4 @@ const htmlEmailConfirm = (url) => {
     </html>`;
 };
 
-module.exports = htmlEmailConfirm;
+module.exports = htmlResetPassword;

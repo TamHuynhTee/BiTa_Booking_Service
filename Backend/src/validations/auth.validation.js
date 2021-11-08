@@ -15,12 +15,14 @@ const registerCustomer = {
 
 const registerBusiness = {
   body: Joi.object().keys({
-    registeredName: Joi.string().required(),
+    businessName: Joi.string().required(),
     displayName: Joi.string().required(),
     ownerName: Joi.string().required(),
     email: Joi.string().required().email(),
     phoneNumber: Joi.string().required(),
-    shortDescription: Joi.string(),
+    businessCertificate: Joi.string().allow(null, ''),
+    shortDescription: Joi.string().allow(null, ''),
+    password: Joi.string().required().custom(password),
   }),
 };
 
@@ -50,6 +52,13 @@ const verifyEmail = {
   }),
 };
 
+const approveBusiness = {
+  body: Joi.object().keys({
+    businessId: Joi.string().required(),
+    decision: Joi.boolean().required(),
+  }),
+};
+
 module.exports = {
   registerCustomer,
   registerBusiness,
@@ -57,4 +66,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   verifyEmail,
+  approveBusiness,
 };

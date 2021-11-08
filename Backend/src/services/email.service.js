@@ -1,7 +1,11 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
-const { htmlEmailConfirm, htmlResetPassword } = require('../constant/confirmEmail');
+const htmlEmailConfirm = require('../constant/confirmEmail');
+const htmlResetPassword = require('../constant/resetPassEmail');
+const htmlWelcome = require('../constant/welcomeEmail');
+const htmlReject = require('../constant/rejectEmail');
+const htmlApprove = require('../constant/approveEmail');
 
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
@@ -35,7 +39,7 @@ const sendEmail = async (to, subject, text = '', html = '') => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Lấy lại mật khẩu';
   const resetPasswordUrl = `${config.frontEndUrl}/reset-password?token=${token}`;
-  const html = htmlResetPassword(resetPasswordUrl, to);
+  const html = htmlResetPassword(resetPasswordUrl);
   await sendEmail(to, subject, '', html);
 };
 
@@ -48,7 +52,41 @@ const sendResetPasswordEmail = async (to, token) => {
 const sendVerificationEmail = async (to, token) => {
   const subject = 'Xác thực tài khoản';
   const verificationEmailUrl = `${config.frontEndUrl}/verify-email?token=${token}`;
-  const html = htmlEmailConfirm(verificationEmailUrl, to);
+  const html = htmlEmailConfirm(verificationEmailUrl);
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send welcome business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendWelcomeBusinessEmail = async (to) => {
+  const subject = 'Thông báo đăng ký doanh nghiệp';
+  const html = htmlWelcome();
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send approve business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendApproveBusinessEmail = async (to, token, username) => {
+  const subject = 'Thông báo hợp tác';
+  const accountBusiness = `${config.frontEndUrl}/verify-email?token=${token}`;
+  const html = htmlApprove(accountBusiness, username);
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send reject business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendRejectBusinessEmail = async (to) => {
+  const subject = 'Thông báo hợp tác';
+  const html = htmlReject();
   await sendEmail(to, subject, '', html);
 };
 
@@ -57,4 +95,7 @@ module.exports = {
   sendEmail,
   sendResetPasswordEmail,
   sendVerificationEmail,
+  sendWelcomeBusinessEmail,
+  sendApproveBusinessEmail,
+  sendRejectBusinessEmail,
 };

@@ -4,7 +4,7 @@ const { authService, userService, tokenService, emailService, businessService } 
 const { sendSuccess } = require('./return.controller');
 
 const registerCustomer = catchAsync(async (req, res) => {
-  const user = await userService.createUser(req.body, 'user');
+  const user = await userService.createUser(req.body);
   const token = await tokenService.generateAuthTokens(user);
   const emailToken = await tokenService.generateVerifyEmailToken(user);
   await emailService.sendVerificationEmail(user.email, emailToken);
@@ -12,8 +12,8 @@ const registerCustomer = catchAsync(async (req, res) => {
 });
 
 const registerBusiness = catchAsync(async (req, res) => {
-  console.log(req.body);
   await businessService.createBusiness(req.body);
+  await emailService.sendWelcomeBusinessEmail(req.body.email);
   sendSuccess(res, {}, httpStatus.CREATED, 'Business registered.');
 });
 
@@ -47,6 +47,16 @@ const verifyEmail = catchAsync(async (req, res) => {
   sendSuccess(res, { token: req.body.token }, httpStatus.OK, 'Email confirmed.');
 });
 
+const approveBusiness = catchAsync(async (req, res) => {
+  if (req.body.decision) {
+    await authService.approveBusiness(req.body.businessId);
+    sendSuccess(res, {}, httpStatus.NO_CONTENT, 'Approved business');
+  } else {
+    await authService.rejectBusiness(req.body.businessId);
+    sendSuccess(res, {}, httpStatus.NO_CONTENT, 'Rejected business');
+  }
+});
+
 module.exports = {
   registerCustomer,
   registerBusiness,
@@ -55,4 +65,5 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
+  approveBusiness,
 };

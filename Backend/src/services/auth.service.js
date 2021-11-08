@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const tokenService = require('./token.service');
 const userService = require('./user.service');
+const businessService = require('./business.service');
+const emailService = require('./email.service');
 const Token = require('../models/token.model');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
@@ -59,8 +61,42 @@ const verifyEmail = async (verifyEmailToken) => {
   }
 };
 
+/**
+ * Approve business
+ * @param {string} businessId
+ * @returns {Promise}
+ */
+const approveBusiness = async (businessId) => {
+  try {
+    const business = await businessService.getBusinessById(businessId);
+    if (!business) throw new Error();
+    await businessService.updateBusinessById(business.id, { isActive: true });
+    const user = await userService.getUserById(business.businessAccount);
+    const verifyEmailToken = await tokenService.generateVerifyEmailToken(user);
+    await emailService.sendApproveBusinessEmail(user.email, verifyEmailToken, user.username);
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Business approvement failed');
+  }
+};
+
+const rejectBusiness = async (businessId) => {
+  try {
+    const business = await businessService.getBusinessById(businessId);
+    if (!business) throw new Error();
+    const user = await userService.getUserById(business.businessAccount);
+    if (!user) throw new Error();
+    await emailService.sendRejectBusinessEmail(user.email);
+    await businessService.deleteBusinessById(businessId);
+    await userService.deleteUserById(business.businessAccount);
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Business rejection failed');
+  }
+};
+
 module.exports = {
   loginUserWithEmailAndPassword,
   resetPassword,
   verifyEmail,
+  approveBusiness,
+  rejectBusiness,
 };

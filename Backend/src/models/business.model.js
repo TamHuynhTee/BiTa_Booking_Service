@@ -22,16 +22,21 @@ const businessSchema = mongoose.Schema(
     isActive: {
       type: Boolean,
       required: true,
-      default: true,
+      default: false,
     },
     businessAccount: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',
-      required: true,
+      required: false,
     },
     businessCertificate: {
       type: String,
-      required: true,
+      required: false,
+      trim: true,
+    },
+    shortDescription: {
+      type: String,
+      required: false,
       trim: true,
     },
     headquarter: {
@@ -46,8 +51,13 @@ const businessSchema = mongoose.Schema(
 businessSchema.plugin(toJSON);
 businessSchema.plugin(paginate);
 
-businessSchema.statics.nameExists = async function (businessName, excludeUserId) {
-  const business = await this.findOne({ businessName, _id: { $ne: excludeUserId } });
+businessSchema.statics.nameExists = async function (businessName, excludeBusinessId) {
+  const business = await this.findOne({ businessName, _id: { $ne: excludeBusinessId } });
+  return !!business;
+};
+
+businessSchema.statics.displayNameExists = async function (displayName, excludeBusinessId) {
+  const business = await this.findOne({ displayName, _id: { $ne: excludeBusinessId } });
   return !!business;
 };
 
