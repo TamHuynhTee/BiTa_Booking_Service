@@ -16,7 +16,7 @@ const createBusiness = async (businessBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Display name already taken');
   }
   const businessAccount = {
-    username: businessBody.email.substr(0, businessBody.email.indexOf('@')),
+    username: businessBody.username,
     surName: businessBody.ownerName.substr(0, businessBody.ownerName.indexOf(' ')),
     firstName: businessBody.ownerName.substr(businessBody.ownerName.indexOf(' ') + 1),
     email: businessBody.email,
@@ -30,6 +30,10 @@ const createBusiness = async (businessBody) => {
 
 const getBusinessById = async (id) => {
   return Business.findById(id);
+};
+
+const getBusinessByAccountId = async (businessAccount) => {
+  return Business.findOne({ businessAccount: businessAccount });
 };
 
 /**
@@ -79,4 +83,5 @@ module.exports = {
   getBusinessById,
   updateBusinessById,
   deleteBusinessById,
+  getBusinessByAccountId,
 };

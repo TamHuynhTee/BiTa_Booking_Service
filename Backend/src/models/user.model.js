@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
       trim: true,
       validate: {
         validator: function (val) {
-          return val.match(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/);
+          return val.match(/^(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})$/);
         },
         message: 'Number phone {VALUE} is invalid. Please try again.',
       },

@@ -28,9 +28,15 @@ const deleteCategory = async (categoryBody) => {
   return category;
 };
 
+const queryCategories = async (filter, options) => {
+  const Categories = await Category.paginate(filter, options);
+  return Categories;
+};
+
 module.exports = {
   createCategory,
   getCategoryById,
   updateCategory,
   deleteCategory,
+  queryCategories,
 };

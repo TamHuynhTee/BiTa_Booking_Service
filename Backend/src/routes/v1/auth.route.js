@@ -19,4 +19,5 @@ router.post(
   validate(authValidation.approveBusiness),
   authController.approveBusiness
 );
+router.get('/get-current-user', auth(), authController.getCurrentUser);
 module.exports = router;

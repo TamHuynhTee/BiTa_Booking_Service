@@ -5,6 +5,7 @@ const createCategory = {
   body: Joi.object().keys({
     name: Joi.string().required(),
     code: Joi.string().required(),
+    thumbnail: Joi.string().allow('', null),
   }),
 };
 
@@ -30,8 +31,8 @@ const getCategoryById = {
 
 const getAllCategories = {
   query: Joi.object().keys({
-    _limit: Joi.number().positive(),
-    _skip: Joi.number().positive(),
+    limit: Joi.number().positive(),
+    page: Joi.number().positive(),
   }),
 };
 

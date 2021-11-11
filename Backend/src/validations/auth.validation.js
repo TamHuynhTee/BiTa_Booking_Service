@@ -22,6 +22,7 @@ const registerBusiness = {
     phoneNumber: Joi.string().required(),
     businessCertificate: Joi.string().allow(null, ''),
     shortDescription: Joi.string().allow(null, ''),
+    username: Joi.string().required(),
     password: Joi.string().required().custom(password),
   }),
 };
