@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import React, { ReactChild } from 'react';
 import { useForm } from 'react-hook-form';
 import { LinkButton } from '../../../../Components/LinkButton';
 import { defaultRoute } from '../../../../routes/defaultRoute';
@@ -158,7 +158,52 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                     </div>
                 </form>
             </div>
-            <div className="registerBusiness-doodle column-2 full-height"></div>
+            <div className="registerBusiness-doodle column-2 full-height">
+                <CollapseMenu
+                    name="collapsePolicy"
+                    btnName="Mở để xem chính sách"
+                >
+                    <ol className="list-group list-group-flush">
+                        <li className="list-group-item">A list item</li>
+                        <li className="list-group-item">A list item</li>
+                        <li className="list-group-item">A list item</li>
+                    </ol>
+                </CollapseMenu>
+                <CollapseMenu
+                    name="collapseRights"
+                    btnName="Mở để xem quyền sử dụng"
+                >
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">An item</li>
+                        <li className="list-group-item">A second item</li>
+                        <li className="list-group-item">A third item</li>
+                        <li className="list-group-item">A fourth item</li>
+                        <li className="list-group-item">And a fifth one</li>
+                    </ul>
+                </CollapseMenu>
+            </div>
+        </div>
+    );
+};
+
+const CollapseMenu = (props: {
+    name: string;
+    btnName: string;
+    children: ReactChild | Array<ReactChild>;
+}) => {
+    return (
+        <div style={{ marginBottom: '1rem' }}>
+            <button
+                className="btn btn-secondary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#${props.name}`}
+            >
+                {props.btnName}
+            </button>
+            <div className="collapse" id={props.name} style={{ opacity: '.8' }}>
+                <div className="card card-body">{props.children}</div>
+            </div>
         </div>
     );
 };

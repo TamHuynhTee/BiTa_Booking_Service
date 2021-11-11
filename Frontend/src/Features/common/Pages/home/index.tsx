@@ -1,18 +1,19 @@
-import React from "react";
-import Slider from "react-slick";
-import "./style.scss";
-import schedule from "../../../../images/online-schedule.svg";
-import fast from "../../../../images/fast.svg";
-import simple from "../../../../images/simple.svg";
-import wallet from "../../../../images/wallet.svg";
-import user from "../../../../images/user.svg";
-import business from "../../../../images/business.svg";
-import booked from "../../../../images/booked.svg";
-import plan from "../../../../images/plan.svg";
-import { LoginDialog } from "../../../../Components/Login";
-import { ForgotPassDialog } from "../../../../Components/ForgotPassword";
-import { defaultRoute } from "../../../../routes/defaultRoute";
-import { useHistory } from "react-router";
+import React from 'react';
+import Slider from 'react-slick';
+import './style.scss';
+import schedule from '../../../../images/online-schedule.svg';
+import fast from '../../../../images/fast.svg';
+import simple from '../../../../images/simple.svg';
+import wallet from '../../../../images/wallet.svg';
+import user from '../../../../images/user.svg';
+import business from '../../../../images/business.svg';
+import booked from '../../../../images/booked.svg';
+import plan from '../../../../images/plan.svg';
+import { LoginDialog } from '../../../../Components/Login';
+import { ForgotPassDialog } from '../../../../Components/ForgotPassword';
+import { defaultRoute } from '../../../../routes/defaultRoute';
+import { useHistory } from 'react-router';
+import { Typewriter } from 'react-simple-typewriter';
 
 interface HomePageProps {}
 
@@ -21,88 +22,124 @@ export const HomePage = (props: HomePageProps) => {
         <div className="homepage">
             <div className="homepage-banner">
                 <div className="homepage-banner-description">
-                    <h1>Đặt lịch hẹn nhanh chóng và đơn giản</h1>
-                    <p>
-                        BiTa tạo môi trường để khách hàng và các doanh nghiệp
-                        tìm thấy nhau, đặt hẹn và thanh toán chỉ trong 5 phút.
-                    </p>
-                    <button
-                        className="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ChooseAccountModal"
+                    <div
+                        style={{ flex: '1' }}
+                        className="d-flex justify-content-center flex-column"
                     >
-                        Bắt đầu ngay
-                    </button>
+                        <h1>
+                            <Typewriter
+                                words={[
+                                    'Chào mừng bạn đến với BiTa Booking.',
+                                    'Chúng tôi tạo ra những cuộc hẹn nhanh chóng và tiện lợi nhất.',
+                                    'Sự hài lòng của bạn chính là niềm vui đối với chúng tôi.',
+                                    'Cùng bắt đầu thôi nào!',
+                                ]}
+                                loop={0}
+                                cursor
+                                cursorStyle="|"
+                                typeSpeed={90}
+                                deleteSpeed={50}
+                                delaySpeed={1500}
+                            />
+                        </h1>
+                    </div>
+                    <div
+                        style={{ flex: '1' }}
+                        className="d-flex justify-content-center flex-column gap-3"
+                    >
+                        <h5 style={{ textAlign: 'justify' }}>
+                            BiTa tạo môi trường để khách hàng và các doanh
+                            nghiệp tìm thấy nhau, đặt hẹn và thanh toán chỉ
+                            trong 5 phút.
+                        </h5>
+                        <button
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ChooseAccountModal"
+                        >
+                            Bắt đầu ngay
+                        </button>
+                    </div>
                 </div>
                 <BannerSlider />
             </div>
             <div className="container">
+                <SectionTitle title="Tiện ích" />
                 <div className="row homepage-utilities">
-                    <div className="col homepage-utilities-item">
-                        <h1>Nhanh chóng</h1>
-                        <div className="homepage-utilities-item-image">
-                            <img src={fast} alt="" />
-                        </div>
-                        <p>
-                            Chỉ với 5 phút và bạn đã có ngay cuộc gặp với nhà
-                            cung cấp.
-                        </p>
-                    </div>
-                    <div className="col homepage-utilities-item">
-                        <h1>Đơn giản</h1>
-                        <div className="homepage-utilities-item-image">
-                            <img src={simple} alt="" />
-                        </div>
-                        <p>
-                            Thao tác đơn giản, tiện lợi, dễ dùng và thân thiện
-                            với đa số mọi người.
-                        </p>
-                    </div>
-                    <div className="col homepage-utilities-item">
-                        <h1>Tiết kiệm</h1>
-                        <div className="homepage-utilities-item-image">
-                            <img src={wallet} alt="" />
-                        </div>
-                        <p>
-                            Với việc đặt cọc online, giá cả dịch vụ được giảm
-                            đáng kể và rất nhiều khuyến mãi cho khách hàng.
-                        </p>
-                    </div>
+                    <UtilitiesHome
+                        title="Nhanh chóng"
+                        desc="Chỉ với 5 phút và bạn đã có ngay cuộc gặp với nhà
+                            cung cấp."
+                        image={fast}
+                    />
+                    <UtilitiesHome
+                        title="Đơn giản"
+                        desc="Thao tác đơn giản, tiện lợi, dễ dùng và thân thiện
+                            với đa số mọi người."
+                        image={simple}
+                    />
+                    <UtilitiesHome
+                        title="Tiết kiệm"
+                        desc="Với việc đặt cọc online, giá cả dịch vụ được giảm
+                            đáng kể và rất nhiều khuyến mãi cho khách hàng."
+                        image={wallet}
+                    />
                 </div>
-                <div className="row homepage-features">
-                    <form
-                        className="d-flex"
-                        onSubmit={(e) => e.preventDefault()}
-                    >
-                        <input
-                            className="form-control me-2"
-                            type="search"
-                            placeholder="Tìm kiếm dịch vụ"
-                            aria-label="Search"
-                        />
-                        <button
-                            className="btn btn-primary header-btn"
-                            type="submit"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                className="bi bi-search"
-                                viewBox="0 0 16 16"
-                            >
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+                <SectionTitle title="Nhanh chóng đặt được cuộc hẹn" />
+                <InstructionHome
+                    title="Lựa chọn dịch vụ phù hợp"
+                    desc="Chúng tôi cung cấp đa dạng loại hình dịch vụ cho quý
+                        khách lựa chọn, với những đối tác uy tín hàng đầu. Bạn
+                        có thể tìm kiếm dịch vụ mình cần chỉ với vài thao tác
+                        đơn giản."
+                />
+                <InstructionHome
+                    title="Chọn thời gian phù hợp để sắp xếp cuộc hẹn"
+                    desc="Mọi dịch vụ trên hệ thống đều linh hoạt, có thể thay đổi
+                        theo thời gian của khách hàng."
+                />
+                <InstructionHome
+                    title="Xem lại cuộc hẹn trên dòng thời gian"
+                    desc="Mọi cuộc hẹn sau khi được đặt sẽ được canh thời gian để
+                        nhắc nhở khách hàng, sau khi hoàn tất cuộc hẹn sẽ được
+                        lưu vào dòng thời gian của người dùng."
+                />
+                <SectionTitle title="Các loại hình dịch vụ" />
+                <div></div>
+                <SectionTitle title="Đối tác" />
+                <SectionTitle title="Một số dịch vụ" />
+                <SectionTitle title="Đánh giá từ khách hàng" />
             </div>
             <LoginDialog />
             <ForgotPassDialog />
             <ChooseAccountDialog />
         </div>
     );
+};
+
+const UtilitiesHome = (props: { title: string; desc: string; image: any }) => {
+    return (
+        <div className="col homepage-utilities-item">
+            <h1>{props.title}</h1>
+            <div className="homepage-utilities-item-image">
+                <img src={props.image} alt="" />
+            </div>
+            <h5>{props.desc}</h5>
+        </div>
+    );
+};
+
+const InstructionHome = (props: { title: string; desc: string }) => {
+    return (
+        <div className="row homepage-instruction">
+            <h4 className="homepage-instruction-title">{props.title}</h4>
+            <h5 className="homepage-instruction-description">{props.desc}</h5>
+        </div>
+    );
+};
+
+const SectionTitle = (props: { title: string }) => {
+    return <h1 className="sectionTitle">{props.title}</h1>;
 };
 
 const BannerSlider = () => {
@@ -146,8 +183,8 @@ const ChooseAccountDialog = () => {
                             aria-label="Close"
                         ></button>
                     </div>
-                    <div className="modal-body">
-                        <h1 style={{ textAlign: "center", color: "#6c63ff" }}>
+                    <div className="modal-body p-4">
+                        <h1 style={{ textAlign: 'center', color: '#6c63ff' }}>
                             Bạn muốn trở thành
                         </h1>
                         <div className="chooseAccount">

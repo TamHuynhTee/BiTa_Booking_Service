@@ -16,7 +16,7 @@
         @include desktop {
             height: 700px;
         }
-        @include tablet {
+        @include maxTablet {
             flex-direction: column-reverse;
         }
         &-description {
@@ -27,11 +27,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            & * {
+            & > * {
                 width: 50%;
             }
             & h1 {
                 font-weight: 600;
+                text-align: center;
             }
             @include tablet {
                 width: 100%;
@@ -61,7 +62,18 @@
         }
     }
     &-utilities {
+        gap: $pm-40;
+        height: 420px;
         &-item {
+            transition: all 0.5s ease;
+            border: 1px solid #fff;
+            &:hover {
+                border: 1px solid rgba(105, 105, 105, 0.2);
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                border-radius: 10px;
+                margin-top: -15px;
+            }
             padding: $pm-40;
             & h1 {
                 text-align: center;
@@ -83,6 +95,27 @@
             }
         }
     }
+    &-instruction {
+        background-color: #f1f6ff;
+        padding: $pm-40;
+        min-height: 124px;
+        &:hover {
+            background-color: #0b3052;
+            & h4,
+            h5 {
+                color: #fff;
+            }
+            transition: all 1s ease-out;
+        }
+        &-title {
+            color: #0b3052;
+            font-weight: 600;
+        }
+        &-description {
+            text-align: justify;
+            margin-top: auto;
+        }
+    }
 }
 
 .slick-next:before,
@@ -90,13 +123,19 @@
     color: #0d6efd;
 }
 
+.sectionTitle {
+    color: #0b3052;
+    font-weight: 600;
+    text-align: center;
+    margin: $pm-120 0;
+}
+
 .chooseAccount {
     display: flex;
     justify-content: space-around;
     align-items: center;
     &-card {
-        border: 1px solid #e8e8e8;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border: 3px solid #e8e8e8;
         border-radius: 10px;
         padding: $pm-40;
         width: 40%;

@@ -6,7 +6,6 @@
     &-input {
         padding: $pm-80;
         overflow-y: auto;
-        display: flex;
         align-items: center;
         @include maxTablet {
             width: 100%;
@@ -26,7 +25,6 @@
         }
         & form {
             width: 100%;
-            height: 100%;
         }
     }
     &-doodle {
@@ -39,5 +37,6 @@
         background-position: center;
         box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
         position: relative;
+        padding: $pm-160;
     }
 }
