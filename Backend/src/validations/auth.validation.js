@@ -1,16 +1,29 @@
 const Joi = require('joi');
 const { password } = require('./custom.validation');
 
-const register = {
+const registerCustomer = {
   body: Joi.object().keys({
     username: Joi.string().required(),
     firstName: Joi.string(),
-    lastName: Joi.string(),
+    surName: Joi.string(),
     email: Joi.string().required().email(),
     phoneNumber: Joi.string().required(),
     password: Joi.string().required().custom(password),
-    role: Joi.string(),
     gender: Joi.string(),
+  }),
+};
+
+const registerBusiness = {
+  body: Joi.object().keys({
+    businessName: Joi.string().required(),
+    displayName: Joi.string().required(),
+    ownerName: Joi.string().required(),
+    email: Joi.string().required().email(),
+    phoneNumber: Joi.string().required(),
+    businessCertificate: Joi.string().allow(null, ''),
+    shortDescription: Joi.string().allow(null, ''),
+    username: Joi.string().required(),
+    password: Joi.string().required().custom(password),
   }),
 };
 
@@ -21,18 +34,6 @@ const login = {
   }),
 };
 
-const logout = {
-  body: Joi.object().keys({
-    refreshToken: Joi.string().required(),
-  }),
-};
-
-const refreshTokens = {
-  body: Joi.object().keys({
-    refreshToken: Joi.string().required(),
-  }),
-};
-
 const forgotPassword = {
   body: Joi.object().keys({
     email: Joi.string().email().required(),
@@ -40,26 +41,31 @@ const forgotPassword = {
 };
 
 const resetPassword = {
-  query: Joi.object().keys({
-    token: Joi.string().required(),
-  }),
   body: Joi.object().keys({
+    token: Joi.string().required(),
     password: Joi.string().required().custom(password),
   }),
 };
 
 const verifyEmail = {
-  query: Joi.object().keys({
+  body: Joi.object().keys({
     token: Joi.string().required(),
   }),
 };
 
+const approveBusiness = {
+  body: Joi.object().keys({
+    businessId: Joi.string().required(),
+    decision: Joi.boolean().required(),
+  }),
+};
+
 module.exports = {
-  register,
+  registerCustomer,
+  registerBusiness,
   login,
-  logout,
-  refreshTokens,
   forgotPassword,
   resetPassword,
   verifyEmail,
+  approveBusiness,
 };

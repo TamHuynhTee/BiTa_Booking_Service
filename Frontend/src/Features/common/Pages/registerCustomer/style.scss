@@ -1,0 +1,54 @@
+@import '/src/styles/variables.scss';
+
+.registerCustomer {
+    min-height: 100vh;
+    background-image: url('../../../../images/register-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-form {
+        padding: $pm-40 0;
+        @include fromCustom(1367px) {
+            height: 580px;
+        }
+        height: 500px;
+        min-width: 480px;
+        @include maxMobile {
+            width: 400px;
+        }
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 5px;
+        &-doodle {
+            display: none;
+            width: 100%;
+            height: 100%;
+            @include fromCustom(1328px) {
+                display: block;
+            }
+            & img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        &-input {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & form {
+                & h2 {
+                    text-align: center;
+                    font-weight: 600;
+                }
+                & > div {
+                    &:not(:first-child) {
+                        margin-top: $pm-20;
+                    }
+                }
+            }
+        }
+    }
+}

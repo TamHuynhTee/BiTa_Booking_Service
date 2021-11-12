@@ -7,10 +7,17 @@ const ApiError = require('../utils/ApiError');
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody) => {
+const createUser = async (userBody, role = 'user') => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  if (await User.usernameExists(userBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
+  }
+  if (await User.isPhoneTaken(userBody.phoneNumber)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
+  }
+  userBody.role = role;
   return User.create(userBody);
 };
 
@@ -37,13 +44,25 @@ const getUserById = async (id) => {
   return User.findById(id);
 };
 
+const checkVerifyEmail = async (id) => {
+  const user = await getUserById(id);
+  const { isEmailVerified } = user;
+  return isEmailVerified;
+};
+
+const checkIsActive = async (id) => {
+  const user = await getUserById(id);
+  const { isActive } = user;
+  return isActive;
+};
+
 /**
  * Get user by email
  * @param {string} email
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findOne({ $or: [{ email: email }, { username: email }] });
 };
 
 /**
@@ -59,6 +78,12 @@ const updateUserById = async (userId, updateBody) => {
   }
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+  if (await User.usernameExists(updateBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
+  }
+  if (await User.isPhoneTaken(updateBody.phoneNumber)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
   }
   Object.assign(user, updateBody);
   await user.save();
@@ -86,4 +111,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  checkVerifyEmail,
+  checkIsActive,
 };

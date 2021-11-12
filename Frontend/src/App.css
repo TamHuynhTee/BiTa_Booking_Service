@@ -27,3 +27,7 @@
 .rich-text-no-resize {
     resize: none;
 }
+
+.color-label {
+    color: #69c9f5;
+}

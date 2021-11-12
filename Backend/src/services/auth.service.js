@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const tokenService = require('./token.service');
 const userService = require('./user.service');
+const businessService = require('./business.service');
+const emailService = require('./email.service');
 const Token = require('../models/token.model');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
@@ -16,39 +18,9 @@ const loginUserWithEmailAndPassword = async (email, password) => {
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
+  if (!(await userService.checkVerifyEmail(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Email not confirmed');
+  if (!(await userService.checkIsActive(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'User is blocked');
   return user;
-};
-
-/**
- * Logout
- * @param {string} refreshToken
- * @returns {Promise}
- */
-const logout = async (refreshToken) => {
-  const refreshTokenDoc = await Token.findOne({ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false });
-  if (!refreshTokenDoc) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
-  }
-  await refreshTokenDoc.remove();
-};
-
-/**
- * Refresh auth tokens
- * @param {string} refreshToken
- * @returns {Promise<Object>}
- */
-const refreshAuth = async (refreshToken) => {
-  try {
-    const refreshTokenDoc = await tokenService.verifyToken(refreshToken, tokenTypes.REFRESH);
-    const user = await userService.getUserById(refreshTokenDoc.user);
-    if (!user) {
-      throw new Error();
-    }
-    await refreshTokenDoc.remove();
-    return tokenService.generateAuthTokens(user);
-  } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
-  }
 };
 
 /**
@@ -83,17 +55,48 @@ const verifyEmail = async (verifyEmailToken) => {
     if (!user) {
       throw new Error();
     }
-    await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL });
     await userService.updateUserById(user.id, { isEmailVerified: true });
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed');
   }
 };
 
+/**
+ * Approve business
+ * @param {string} businessId
+ * @returns {Promise}
+ */
+const approveBusiness = async (businessId) => {
+  try {
+    const business = await businessService.getBusinessById(businessId);
+    if (!business) throw new Error();
+    await businessService.updateBusinessById(business.id, { isActive: true });
+    const user = await userService.getUserById(business.businessAccount);
+    const verifyEmailToken = await tokenService.generateVerifyEmailToken(user);
+    await emailService.sendApproveBusinessEmail(user.email, verifyEmailToken, user.username);
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Business approvement failed');
+  }
+};
+
+const rejectBusiness = async (businessId) => {
+  try {
+    const business = await businessService.getBusinessById(businessId);
+    if (!business) throw new Error();
+    const user = await userService.getUserById(business.businessAccount);
+    if (!user) throw new Error();
+    await emailService.sendRejectBusinessEmail(user.email);
+    await businessService.deleteBusinessById(businessId);
+    await userService.deleteUserById(business.businessAccount);
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Business rejection failed');
+  }
+};
+
 module.exports = {
   loginUserWithEmailAndPassword,
-  logout,
-  refreshAuth,
   resetPassword,
   verifyEmail,
+  approveBusiness,
+  rejectBusiness,
 };

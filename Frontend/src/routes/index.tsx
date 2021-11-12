@@ -1,17 +1,21 @@
-import React from "react";
-import { Switch, BrowserRouter, Route } from "react-router-dom";
-import { Footer } from "../components/footer";
-import { Header } from "../components/header";
-import { NotFound } from "../static/404";
-import { BusinessInfo } from "../views/businessInfo";
-import { HomePage } from "../views/home";
-import { BookingManagement } from "../views/bookingManagement";
-import { Profile } from "../views/profile";
-import { RegisterBusiness } from "../views/registerBusiness";
-import { RegisterCustomer } from "../views/registerCustomer";
-import { SearchResult } from "../views/search";
-import { ServiceDetail } from "../views/serviceDetail";
-import { defaultRoute } from "./defaultRoute";
+import React from 'react';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
+import { BookingManagement } from '../Features/Customer/Pages/BookingManagement';
+import { defaultRoute } from './defaultRoute';
+import { Booking } from '../Features/Customer/Pages/Booking';
+import { Footer, Header } from '../Components';
+import {
+    BusinessInfo,
+    HomePage,
+    Profile,
+    RegisterBusiness,
+    RegisterCustomer,
+    ResetPassword,
+    SearchResult,
+    ServiceDetail,
+} from '../Features/common/Pages';
+import { NotFound } from '../static/404';
+import { VerifyEmail } from '../Features/common/Pages/verifyEmail';
 
 interface IRoute {
     exact: Boolean;
@@ -38,6 +42,24 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.RegisterCustomer,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <VerifyEmail />
+            </>
+        ),
+        path: defaultRoute.VerifyEmail,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <ResetPassword />
+            </>
+        ),
+        path: defaultRoute.ResetPassword,
         exact: true,
     },
     {
@@ -97,6 +119,17 @@ const routes: Array<IRoute> = [
             <>
                 <Header />
                 <BookingManagement />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.BookManagement,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <Booking />
                 <Footer />
             </>
         ),

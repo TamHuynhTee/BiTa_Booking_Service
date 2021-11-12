@@ -1,5 +1,5 @@
-import React, { ReactChild } from "react";
-import "./style.scss";
+import React, { ReactChild } from 'react';
+import './style.scss';
 
 interface PageContainerProps {
     children?: Array<React.ReactChild> | React.ReactChild;
@@ -7,8 +7,8 @@ interface PageContainerProps {
 
 export const PageContainer = (props: PageContainerProps) => {
     return (
-        <div className="pageContainer">
-            <div className="container">{props.children}</div>
+        <div className="pageContainer d-flex">
+            <div className="container d-flex flex-column">{props.children}</div>
         </div>
     );
 };

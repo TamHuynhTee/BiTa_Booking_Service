@@ -7,7 +7,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
-    PORT: Joi.number().default(3000),
+    PORT: Joi.number().default(5000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
@@ -54,6 +54,10 @@ module.exports = {
     smtp: {
       host: envVars.SMTP_HOST,
       port: envVars.SMTP_PORT,
+      secure: false,
+      tls: {
+        rejectUnauthorized: false,
+      },
       auth: {
         user: envVars.SMTP_USERNAME,
         pass: envVars.SMTP_PASSWORD,
@@ -61,4 +65,5 @@ module.exports = {
     },
     from: envVars.EMAIL_FROM,
   },
+  frontEndUrl: envVars.FE_URL,
 };

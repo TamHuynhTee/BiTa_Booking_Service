@@ -1,12 +1,17 @@
-import React from "react";
-import "./style.scss";
-import logo from "../../images/logo.svg";
+import React from 'react';
+import './style.scss';
+import logo from '../../images/logo.svg';
+import { SearchBar } from '..';
 
 interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
+    const onSubmit = (data: any, e: any) => {
+        e.preventDefault();
+        console.log(data);
+    };
     return (
-        <div className="header navbar bg-light">
+        <div className="header navbar">
             <div className="container-fluid">
                 {/* left */}
                 <div className="header-left">
@@ -16,7 +21,7 @@ export const Header = (props: HeaderProps) => {
                 </div>
                 {/* right */}
                 <div className="header-right">
-                    <div style={{ position: "relative" }}>
+                    {/* <div style={{ position: 'relative' }}>
                         <a
                             className="nav-link dropdown-toggle"
                             href="#"
@@ -47,8 +52,8 @@ export const Header = (props: HeaderProps) => {
                                 </a>
                             </li>
                         </ul>
-                    </div>
-
+                    </div> */}
+                    <SearchBar placeholder="Tìm kiếm" submit={onSubmit} />
                     <button
                         type="button"
                         className="btn btn-outline-dark"

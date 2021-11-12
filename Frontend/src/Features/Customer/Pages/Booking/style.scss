@@ -1,0 +1,14 @@
+@import '/src/styles/variables.scss';
+
+.booking-input {
+    flex: 3;
+}
+
+.booking-summary {
+    flex: 2;
+
+    & .bill {
+        background: #eeeeee70;
+        height: 100%;
+    }
+}
