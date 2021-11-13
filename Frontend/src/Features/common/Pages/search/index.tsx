@@ -1,11 +1,20 @@
-import React from "react";
-import "./style.scss";
-import noData from "../../../../images/no-data.svg";
+import React from 'react';
+import './style.scss';
+import noData from '../../../../images/no-data.svg';
+import { useLocation, useParams } from 'react-router';
 
 interface SearchResultProps {}
 
 export const SearchResult = (props: SearchResultProps) => {
-    const found = true;
+    const urlSearchParams = new URLSearchParams(window.location.search).get(
+        'keyword'
+    );
+    const [searchQuery, setSearchQuery] = React.useState<any>('');
+    const found = false;
+    React.useEffect(() => {
+        setSearchQuery(urlSearchParams);
+    }, []);
+
     return (
         <div className="searchResult">
             <div className="container">
@@ -16,6 +25,8 @@ export const SearchResult = (props: SearchResultProps) => {
                     <input
                         className="form-control me-2"
                         type="search"
+                        value={searchQuery}
+                        onChange={(e: any) => setSearchQuery(e.target.value)}
                         placeholder="Tìm kiếm theo từ khóa"
                         aria-label="Search"
                     />
@@ -48,16 +59,13 @@ export const SearchResult = (props: SearchResultProps) => {
                                 <SearchCard />
                                 <SearchCard />
                                 <SearchCard />
-                                <SearchCard />
-                                <SearchCard />
-                                <SearchCard />
                             </>
                         ) : (
                             <div className="no-data">
                                 <div className="no-data-container">
                                     <img src={noData} alt="" />
                                 </div>
-                                <h3>Không tìm thấy</h3>
+                                <h3>Không có kết quả</h3>
                             </div>
                         )}
                     </div>
@@ -68,7 +76,7 @@ export const SearchResult = (props: SearchResultProps) => {
 };
 
 const SearchCard = () => {
-    const thumbnail = "https://cdn.fakercloud.com/avatars/oktayelipek_128.jpg";
+    const thumbnail = 'https://cdn.fakercloud.com/avatars/oktayelipek_128.jpg';
     return (
         <>
             <div className="searchResult-card">

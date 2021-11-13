@@ -11,8 +11,10 @@ export const Header = (props: HeaderProps) => {
     const history = useHistory();
     const onSubmit = (data: any, e: any) => {
         e.preventDefault();
-        console.log(data);
-        history.push(defaultRoute.Search);
+        history.push({
+            pathname: '/search',
+            search: `?keyword=${data.keyword}`,
+        });
     };
     return (
         <div className="header navbar">

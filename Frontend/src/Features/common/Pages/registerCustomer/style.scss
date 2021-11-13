@@ -5,6 +5,7 @@
     background-image: url('../../../../images/register-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    padding: $pm-40 $pm-160;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +14,7 @@
         @include fromCustom(1367px) {
             height: 580px;
         }
-        height: 500px;
+        min-height: 500px;
         min-width: 480px;
         @include maxMobile {
             width: 400px;
