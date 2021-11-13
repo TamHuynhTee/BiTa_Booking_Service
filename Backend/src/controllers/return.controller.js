@@ -1,8 +1,8 @@
-const sendSuccess = (res, data, status = 200, message = 'success') => {
-  return res.status(status).json({
+const sendSuccess = (res, data, code = 200, message = 'success') => {
+  return res.status(code).json({
     message: message,
     data: data,
-    status: status,
+    code: code,
   });
 };
 
