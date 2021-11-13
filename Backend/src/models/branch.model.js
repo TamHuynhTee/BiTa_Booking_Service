@@ -32,6 +32,12 @@ const branchSchema = mongoose.Schema(
       enum: ['WORKING', 'PAUSE'],
       default: 'WORKING',
     },
+    services: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service',
+      },
+    ],
   },
   { timestamps: true }
 );
