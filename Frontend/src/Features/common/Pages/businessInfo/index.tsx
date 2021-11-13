@@ -1,14 +1,14 @@
-import React from "react";
-import "./style.scss";
+import React from 'react';
+import './style.scss';
 
 interface BusinessInfoProps {}
 
 export const BusinessInfo = (props: BusinessInfoProps) => {
-    const thumbnail = "https://picsum.photos/200/200";
+    const thumbnail = 'https://picsum.photos/200/200';
     return (
         <div className="container">
             <div className="businessInfo">
-                <div className="businessInfo-wrapper shadow-lg p-3 mb-5 bg-body rounded">
+                <div className="businessInfo-wrapper p-3 mb-5 bg-body rounded">
                     <div className="d-flex">
                         <div className="flex-shrink-0">
                             <img
@@ -20,7 +20,7 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                         <div className="flex-grow-1 ms-3">
                             <h2>Công ty tư nhân hữu hạn MTV</h2>
                             <button className="btn btn-outline-primary">
-                                {" "}
+                                {' '}
                                 Thêm vào danh sách yêu thích
                             </button>
                         </div>
@@ -67,7 +67,7 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                                 <p>
                                     <span className="badge bg-secondary">
                                         Chi nhánh 1
-                                    </span>{" "}
+                                    </span>{' '}
                                     số 6 Nguyễn Du, Phước Hiệp, BRVT
                                 </p>
                             </li>
@@ -75,7 +75,7 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                                 <p>
                                     <span className="badge bg-secondary">
                                         Chi nhánh 2
-                                    </span>{" "}
+                                    </span>{' '}
                                     số 6 Nguyễn Du, Phước Hiệp, BRVT
                                 </p>
                             </li>

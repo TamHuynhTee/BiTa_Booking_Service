@@ -2,13 +2,17 @@ import React from 'react';
 import './style.scss';
 import logo from '../../images/logo.svg';
 import { SearchBar } from '..';
+import { useHistory } from 'react-router';
+import { defaultRoute } from '../../routes/defaultRoute';
 
 interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
+    const history = useHistory();
     const onSubmit = (data: any, e: any) => {
         e.preventDefault();
         console.log(data);
+        history.push(defaultRoute.Search);
     };
     return (
         <div className="header navbar">
@@ -57,8 +61,9 @@ export const Header = (props: HeaderProps) => {
                     <button
                         type="button"
                         className="btn btn-outline-dark"
-                        data-bs-toggle="modal"
-                        data-bs-target="#LoginModal"
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#LoginModal"
+                        onClick={() => history.push(defaultRoute.Login)}
                     >
                         Đăng nhập
                     </button>

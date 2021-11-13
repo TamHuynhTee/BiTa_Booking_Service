@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactChild } from 'react';
 import { useForm } from 'react-hook-form';
+import { InputCustom } from '../../../../Components';
 import { LinkButton } from '../../../../Components/LinkButton';
 import { defaultRoute } from '../../../../routes/defaultRoute';
 import { NewBusinessSchema } from '../../../../validations/auth';
@@ -90,44 +91,102 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                         </p>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="phone" className="form-label">
-                            Số điện thoại *
-                        </label>
-                        <input
-                            type="text"
-                            id="phone"
-                            {...register('phone')}
-                            className="form-control"
-                            placeholder=""
-                        />
-                        <p className="text-danger">{errors.phone?.message}</p>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">
-                            Email liên lạc *
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            {...register('email')}
-                            className="form-control"
-                            placeholder=""
-                        />
-                        <p className="text-danger">{errors.email?.message}</p>
-                    </div>
-                    <div className="mb-3">
                         <label
-                            htmlFor="exampleFormControlTextarea1"
+                            htmlFor="shortDescription"
                             className="form-label"
                         >
                             Mô tả vắn tắt về doanh nghiệp
                         </label>
                         <textarea
+                            id="shortDescription"
                             {...register('shortDescription')}
                             className="form-control rich-text-no-resize"
                             rows={3}
                             placeholder="VD: Cung cấp các dịch vụ cắt tóc, gội đầu, ..."
                         ></textarea>
+                    </div>
+                    <div
+                        className="p-3 mb-1"
+                        style={{ backgroundColor: 'rgb(241 241 241)' }}
+                    >
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">
+                                Username đăng nhập *
+                            </label>
+                            <input
+                                type="text"
+                                id="username"
+                                {...register('username')}
+                                className="form-control"
+                                placeholder=""
+                            />
+                            <p className="text-danger">
+                                {errors.username?.message}
+                            </p>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="phoneNumber" className="form-label">
+                                Số điện thoại *
+                            </label>
+                            <input
+                                type="text"
+                                id="phoneNumber"
+                                {...register('phoneNumber')}
+                                className="form-control"
+                                placeholder=""
+                            />
+                            <p className="text-danger">
+                                {errors.phoneNumber?.message}
+                            </p>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">
+                                Email liên lạc *
+                            </label>
+                            <input
+                                type="text"
+                                id="email"
+                                {...register('email')}
+                                className="form-control"
+                                placeholder=""
+                            />
+                            <p className="text-danger">
+                                {errors.email?.message}
+                            </p>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">
+                                Mật khẩu *
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                {...register('password')}
+                                className="form-control"
+                                placeholder=""
+                            />
+                            <p className="text-danger">
+                                {errors.password?.message}
+                            </p>
+                        </div>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="confirmPassword"
+                                className="form-label"
+                            >
+                                Xác nhận mật khẩu *
+                            </label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                {...register('confirmPassword')}
+                                className="form-control"
+                                placeholder=""
+                            />
+                            <p className="text-danger">
+                                {errors.confirmPassword?.message}
+                            </p>
+                        </div>
                     </div>
                     <div className="form-check mb-2">
                         <input
@@ -194,7 +253,7 @@ const CollapseMenu = (props: {
     return (
         <div style={{ marginBottom: '1rem' }}>
             <button
-                className="btn btn-secondary"
+                className="btn btn-secondary mb-1"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target={`#${props.name}`}

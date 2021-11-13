@@ -110,8 +110,6 @@ export const HomePage = (props: HomePageProps) => {
                 <SectionTitle title="Một số dịch vụ" />
                 <SectionTitle title="Đánh giá từ khách hàng" />
             </div>
-            <LoginDialog />
-            <ForgotPassDialog />
             <ChooseAccountDialog />
         </div>
     );

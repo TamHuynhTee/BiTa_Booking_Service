@@ -1,5 +1,6 @@
 export const defaultRoute = {
     UnauthenticatedHome: '/',
+    Login: '/login',
     RegisterCustomer: '/register-customer',
     RegisterBusiness: '/register-business',
     Search: '/search',

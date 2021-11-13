@@ -20,7 +20,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
     }, []);
     return (
         <PageContainer>
-            <PageWrapper className="serviceDetail-wrapper shadow-lg ps-5 pe-5 pt-3 pb-3 mb-5 bg-body rounded">
+            <PageWrapper className="serviceDetail-wrapper ps-5 pe-5 pt-3 pb-3 mb-5 bg-body rounded">
                 <div className="serviceDetail-wrapper-header">
                     <h1 className="text-truncate">
                         Dịch vụ khám tổng hợp, chụp xét nghiệm
@@ -162,10 +162,10 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                     </ul>
                 </div>
             </PageWrapper>
-            <div className="shadow-lg mb-5 bg-body rounded">
+            <div className=" mb-5 bg-body rounded">
                 <OtherService title="Các dịch vụ cùng nhà cung cấp" />
             </div>
-            <div className="shadow-lg mb-5 bg-body rounded">
+            <div className=" mb-5 bg-body rounded">
                 <OtherService title="Các dịch vụ liên quan" />
             </div>
         </PageContainer>

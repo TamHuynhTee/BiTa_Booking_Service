@@ -6,10 +6,12 @@ import { defaultRoute } from '../../../../routes/defaultRoute';
 import { SignUpSchema } from '../../../../validations/auth';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useHistory } from 'react-router';
 
 interface RegisterCustomerProps {}
 
 export const RegisterCustomer = (props: RegisterCustomerProps) => {
+    const history = useHistory();
     const {
         register,
         handleSubmit,
@@ -162,7 +164,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                 Tôi đồng ý với các <span>điều khoản</span>
                             </label>
                         </div>
-                        <div className="d-grid gap-2 col-6 mx-auto">
+                        <div className="d-grid gap-2">
                             <button className="btn btn-primary" type="submit">
                                 {!isSubmitting ? (
                                     'Đăng ký'
@@ -173,6 +175,13 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                         aria-hidden="true"
                                     ></span>
                                 )}
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-dark mb-2"
+                                onClick={() => history.push(defaultRoute.Login)}
+                            >
+                                Đăng nhập
                             </button>
                         </div>
                     </form>

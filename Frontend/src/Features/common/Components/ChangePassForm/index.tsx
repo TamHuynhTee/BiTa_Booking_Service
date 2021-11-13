@@ -31,7 +31,7 @@ export const ChangePassForm = (props: Props) => {
             <div className="form-group mb-2">
                 <ColorLabel title="Mật khẩu hiện tại" for="oldPassword" />
                 <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     {...register('oldPassword')}
                     id="oldPassword"
@@ -42,7 +42,7 @@ export const ChangePassForm = (props: Props) => {
             <div className="form-group mb-2">
                 <ColorLabel title="Mật khẩu mới" for="newPassword" />
                 <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     {...register('newPassword')}
                     id="newPassword"
@@ -56,7 +56,7 @@ export const ChangePassForm = (props: Props) => {
                     for="confirmPassword"
                 />
                 <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     {...register('confirmPassword')}
                     id="confirmPassword"

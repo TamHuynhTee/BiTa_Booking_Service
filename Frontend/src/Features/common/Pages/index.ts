@@ -7,3 +7,4 @@ export * from './Search';
 export * from './ServiceDetail';
 export * from './verifyEmail';
 export * from './resetPassword';
+export * from './Login';

@@ -2,14 +2,11 @@ import * as yup from 'yup';
 
 export const SignInSchema = yup.object().shape({
     emailOrUsername: yup.string().required('Chưa nhập username hoặc email'),
-    password: yup
-        .string()
-        .required('Chưa nhập mật khẩu')
-        .min(8, 'Mật khẩu ít nhất 8 ký tự')
-        .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            'Mật khẩu phải chứa ít nhất 1 số và 1 ký tự'
-        ),
+    password: yup.string().required('Chưa nhập mật khẩu'),
+});
+
+export const ForgotPassSchema = yup.object().shape({
+    email: yup.string().email('Không phải email').required('Chưa nhập email'),
 });
 
 export const SignUpSchema = yup.object().shape({

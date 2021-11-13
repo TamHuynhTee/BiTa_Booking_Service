@@ -7,6 +7,7 @@ import { Footer, Header } from '../Components';
 import {
     BusinessInfo,
     HomePage,
+    Login,
     Profile,
     RegisterBusiness,
     RegisterCustomer,
@@ -42,6 +43,15 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.RegisterCustomer,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Login />
+            </>
+        ),
+        path: defaultRoute.Login,
         exact: true,
     },
     {
