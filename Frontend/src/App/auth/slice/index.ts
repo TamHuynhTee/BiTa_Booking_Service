@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notifyError, notifySuccess } from '../../../utils/notify';
 import { AuthStateTypes } from '../type';
-import { loginAsync } from './thunk';
+import { getCurrentUserAsync, loginAsync } from './thunk';
 
 const initialState: Partial<AuthStateTypes> = {
     user: null,
@@ -11,7 +11,13 @@ const initialState: Partial<AuthStateTypes> = {
 export const authSlice = createSlice({
     name: 'Auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logoutUser: (state) => {
+            state.user = null;
+            localStorage.removeItem('token');
+            notifySuccess('Đăng xuất thành công');
+        },
+    },
     extraReducers: {
         [loginAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -22,21 +28,35 @@ export const authSlice = createSlice({
         ) => {
             state.status = 'idle';
             const data = action.payload;
-            if (data) {
-                if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    delete data.token;
+            if (data.code === 200) {
+                if (data.data.token) {
+                    localStorage.setItem('token', data.data.token);
                     notifySuccess('Đăng nhập thành công');
                 }
             } else {
-                notifyError('Đăng nhập thất bại');
+                notifyError(data.message);
             }
         },
         [loginAsync.rejected.toString()]: (state) => {
             state.status = 'idle';
         },
+        [getCurrentUserAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getCurrentUserAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            const { user } = action.payload;
+            state.user = user;
+        },
+        [getCurrentUserAsync.rejected.toString()]: (state, action) => {
+            state.status = 'loading';
+            state.user = action.payload;
+        },
     },
 });
 
-export const {} = authSlice.actions;
+export const { logoutUser } = authSlice.actions;
 export default authSlice.reducer;

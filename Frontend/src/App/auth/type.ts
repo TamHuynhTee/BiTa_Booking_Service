@@ -19,16 +19,22 @@ export interface IRegisterCustomerApi {
 }
 
 export interface IRegisterBusinessApi {
-    registeredName?: string;
+    businessName?: string;
     displayName?: string;
     ownerName?: string;
+    businessCertificate?: string;
+    shortDescription?: string;
+    username?: string;
     email?: string;
     phoneNumber?: string;
-    shortDescription?: string;
+    password?: string;
 }
 
 export interface IVerifyEmail {
     token: string;
+}
+export interface IForgotPassword {
+    email: string;
 }
 
 export interface IResetPassword {

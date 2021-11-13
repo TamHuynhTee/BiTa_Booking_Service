@@ -9,15 +9,22 @@ import user from '../../../../images/user.svg';
 import business from '../../../../images/business.svg';
 import booked from '../../../../images/booked.svg';
 import plan from '../../../../images/plan.svg';
-import { LoginDialog } from '../../../../Components/Login';
-import { ForgotPassDialog } from '../../../../Components/ForgotPassword';
 import { defaultRoute } from '../../../../routes/defaultRoute';
 import { useHistory } from 'react-router';
 import { Typewriter } from 'react-simple-typewriter';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
+import { selectUser } from '../../../../App/auth/slice/selector';
 
 interface HomePageProps {}
 
 export const HomePage = (props: HomePageProps) => {
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    React.useEffect(() => {
+        dispatch(getCurrentUserAsync());
+    }, []);
+    console.log(user);
     return (
         <div className="homepage">
             <div className="homepage-banner">

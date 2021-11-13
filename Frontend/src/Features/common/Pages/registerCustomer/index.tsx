@@ -7,6 +7,8 @@ import { SignUpSchema } from '../../../../validations/auth';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router';
+import { registerCustomerApi } from '../../../../App/auth/apis/auth.api';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
 
 interface RegisterCustomerProps {}
 
@@ -16,19 +18,29 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
     } = useForm({ resolver: yupResolver(SignUpSchema) });
 
     const onSubmit = (data: any, e: any) => {
-        e.preventDefault();
-        console.log(data);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                alert('Registered');
-
-                resolve(true);
-            }, 2000);
-        });
+        try {
+            e.preventDefault();
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    delete data.agreed;
+                    delete data.confirmPassword;
+                    const result = await registerCustomerApi(data);
+                    if (result.code === 201) {
+                        notifySuccess(
+                            'Đăng ký tài khoản thành công, vui lòng kiểm tra email để xác thực tài khoản'
+                        );
+                    } else {
+                        notifyError(result.message);
+                    }
+                    resolve(true);
+                }, 2000);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -80,7 +92,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                     type="text"
                                     {...register('username')}
                                     className="form-control"
-                                    placeholder="Username*"
+                                    placeholder="Tên đăng nhập*"
                                 />
                                 <p className="text-danger">
                                     {errors.username?.message}
@@ -101,13 +113,13 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                         <div className="row">
                             <div className="col">
                                 <input
-                                    type="phone"
-                                    {...register('phone')}
+                                    type="text"
+                                    {...register('phoneNumber')}
                                     className="form-control"
                                     placeholder="Số điện thoại*"
                                 />
                                 <p className="text-danger">
-                                    {errors.phone?.message}
+                                    {errors.phoneNumber?.message}
                                 </p>
                             </div>
                             <div className="col">
@@ -163,9 +175,16 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                             >
                                 Tôi đồng ý với các <span>điều khoản</span>
                             </label>
+                            <p className="text-danger">
+                                {errors.agreed?.message}
+                            </p>
                         </div>
                         <div className="d-grid gap-2">
-                            <button className="btn btn-primary" type="submit">
+                            <button
+                                className="btn btn-primary"
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
                                 {!isSubmitting ? (
                                     'Đăng ký'
                                 ) : (
@@ -180,6 +199,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                                 type="button"
                                 className="btn btn-dark mb-2"
                                 onClick={() => history.push(defaultRoute.Login)}
+                                disabled={isSubmitting}
                             >
                                 Đăng nhập
                             </button>

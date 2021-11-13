@@ -23,9 +23,13 @@ const createBusiness = async (businessBody) => {
     phoneNumber: businessBody.phoneNumber,
     password: businessBody.password,
   };
+  delete businessBody.email;
+  delete businessBody.username;
+  delete businessBody.phoneNumber;
+  delete businessBody.password;
   const user = await userService.createUser(businessAccount, 'business');
   businessBody.businessAccount = user._id;
-  await Business.create(businessBody);
+  return Business.create(businessBody);
 };
 
 const getBusinessById = async (id) => {

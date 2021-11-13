@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { forgotPasswordApi } from '../../../../App/auth/apis/auth.api';
 import { ForgotPassSchema } from '../../../../validations/auth';
 
 interface Props {}
@@ -15,8 +16,22 @@ export const ForgotPassForm = (props: Props) => {
     } = useForm({ resolver: yupResolver(ForgotPassSchema) });
 
     const onSubmit = (data: any, e: any) => {
-        e.preventDefault();
-        console.log(data);
+        try {
+            e.preventDefault();
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    const result = await forgotPasswordApi(data);
+                    if (result.code === 200) {
+                        setState(1);
+                    } else {
+                        setState(2);
+                    }
+                    resolve(true);
+                }, 2000);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

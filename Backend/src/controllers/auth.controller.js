@@ -9,13 +9,13 @@ const registerCustomer = catchAsync(async (req, res) => {
   const token = await tokenService.generateAuthTokens(user);
   const emailToken = await tokenService.generateVerifyEmailToken(user);
   await emailService.sendVerificationEmail(user.email, emailToken);
-  sendSuccess(res, { token }, httpStatus.CREATED, 'User registered.');
+  sendSuccess(res, { token }, httpStatus.CREATED, 'User registered');
 });
 
 const registerBusiness = catchAsync(async (req, res) => {
-  await businessService.createBusiness(req.body);
+  const business = await businessService.createBusiness(req.body);
   await emailService.sendWelcomeBusinessEmail(req.body.email);
-  sendSuccess(res, {}, httpStatus.CREATED, 'Business registered.');
+  sendSuccess(res, { business }, httpStatus.CREATED, 'Business registered');
 });
 
 const login = catchAsync(async (req, res) => {
@@ -23,13 +23,13 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const token = await tokenService.generateAuthTokens(user);
   const { role } = user;
-  sendSuccess(res, { token, role }, httpStatus.OK, 'Logged in.');
+  sendSuccess(res, { token, role }, httpStatus.OK, 'Logged in');
 });
 
 const forgotPassword = catchAsync(async (req, res) => {
   const resetPasswordToken = await tokenService.generateResetPasswordToken(req.body.email);
   await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken);
-  sendSuccess(res, { token: resetPasswordToken }, httpStatus.OK, 'Reset email sent.');
+  sendSuccess(res, { token: resetPasswordToken }, httpStatus.OK, 'Reset email sent');
 });
 
 const resetPassword = catchAsync(async (req, res) => {
@@ -45,7 +45,7 @@ const sendVerificationEmail = catchAsync(async (req, res) => {
 
 const verifyEmail = catchAsync(async (req, res) => {
   await authService.verifyEmail(req.body.token);
-  sendSuccess(res, { token: req.body.token }, httpStatus.OK, 'Email confirmed.');
+  sendSuccess(res, { token: req.body.token }, httpStatus.OK, 'Email confirmed');
 });
 
 const approveBusiness = catchAsync(async (req, res) => {

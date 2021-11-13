@@ -11,16 +11,19 @@ import { SignInSchema } from '../../../../validations/auth';
 import logo from '../../../../images/logo.svg';
 import { useHistory } from 'react-router';
 import { ForgotPassForm } from '../../Components/ForgotPassForm';
+import { loginApi } from '../../../../App/auth/apis/auth.api';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { useDispatch } from 'react-redux';
 
 interface LoginProps {}
 
 export const Login = (props: LoginProps) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
     } = useForm({ resolver: yupResolver(SignInSchema) });
 
     const handleShowPass = (e: any) => {
@@ -28,13 +31,26 @@ export const Login = (props: LoginProps) => {
         document.getElementById('password')?.setAttribute('type', type);
     };
 
-    const onSubmit = async (data: any, e: any) => {
-        e.preventDefault();
-        const payload: ILoginApi = {
-            email: data.emailOrUsername,
-            password: data.password,
-        };
-        // dispatch(loginAsync(payload));
+    const onSubmit = (data: any, e: any) => {
+        try {
+            e.preventDefault();
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    const payload: ILoginApi = {
+                        email: data.emailOrUsername,
+                        password: data.password,
+                    };
+                    const result: any = await dispatch(loginAsync(payload));
+                    console.log(result);
+                    if (result.payload?.code === 200) {
+                        history.push(defaultRoute.UnauthenticatedHome);
+                    }
+                    resolve(true);
+                }, 2000);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -90,7 +106,11 @@ export const Login = (props: LoginProps) => {
                         </label>
                     </div>
                     <div className="d-grid">
-                        <button className="btn btn-primary mb-2" type="submit">
+                        <button
+                            className="btn btn-primary mb-2"
+                            type="submit"
+                            disabled={isSubmitting}
+                        >
                             {!isSubmitting ? (
                                 'Đăng nhập'
                             ) : (
@@ -107,6 +127,7 @@ export const Login = (props: LoginProps) => {
                             onClick={() =>
                                 history.push(defaultRoute.RegisterCustomer)
                             }
+                            disabled={isSubmitting}
                         >
                             Đăng ký
                         </button>
@@ -119,6 +140,7 @@ export const Login = (props: LoginProps) => {
                                         defaultRoute.UnauthenticatedHome
                                     )
                                 }
+                                disabled={isSubmitting}
                             >
                                 <i className="bi bi-arrow-left"></i> Trang chủ
                             </button>
@@ -127,6 +149,7 @@ export const Login = (props: LoginProps) => {
                                 className="btn btn-link"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#forgotPassForm"
+                                disabled={isSubmitting}
                             >
                                 Quên mật khẩu?
                             </button>

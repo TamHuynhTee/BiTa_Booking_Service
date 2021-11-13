@@ -27,16 +27,16 @@ export const VerifyEmail = () => {
                         ></i>{' '}
                         Email đã xác nhận thành công, hãy đăng nhập để tiếp tục.
                     </p>
-                    <Link to="/">Đăng nhập</Link>
+                    <Link to="/login">Đăng nhập</Link>
                 </>
             ) : (
                 <>
                     <p className="d-flex align-items-center gap-3">
-			<i
+                        <i
                             className="bi bi-x-circle"
                             style={{ color: 'red', fontSize: '2rem' }}
                         ></i>{' '}
-			Email đã xác nhận không thành công, có lỗi xảy ra. Vui
+                        Email đã xác nhận không thành công, có lỗi xảy ra. Vui
                         lòng liên hệ với chúng tôi để được tư vấn qua email{' '}
                         <strong>bitabooking2021@gmail.com</strong>
                     </p>

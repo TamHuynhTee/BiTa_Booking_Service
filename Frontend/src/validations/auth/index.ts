@@ -34,6 +34,7 @@ export const SignUpSchema = yup.object().shape({
         .string()
         .required('Chưa xác nhận mật khẩu')
         .oneOf([yup.ref('password'), null], 'Mật khẩu phải giống nhau'),
+    agreed: yup.boolean().oneOf([true], 'Cần chấp nhận điều khoản'),
 });
 
 export const ProfileSchema = yup.object().shape({
@@ -89,9 +90,12 @@ export const ResetPasswordSchema = yup.object().shape({
 });
 
 export const NewBusinessSchema = yup.object().shape({
-    registeredName: yup.string().required('Chưa nhập tên doanh nghiệp'),
+    businessName: yup.string().required('Chưa nhập tên doanh nghiệp'),
     displayName: yup.string().required('Chưa chọn tên hiển thị'),
     ownerName: yup.string().required('Chưa nhập tên chủ doanh nghiệp'),
+    shortDescription: yup.string(),
+    businessCertificate: yup.string(),
+    username: yup.string().required('Chưa nhập username'),
     email: yup.string().email('Không phải email').required('Chưa nhập email'),
     phoneNumber: yup
         .string()
@@ -100,5 +104,17 @@ export const NewBusinessSchema = yup.object().shape({
             /(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})\b/,
             'Số điện thoại không hợp lệ'
         ),
-    shortDescription: yup.string(),
+    password: yup
+        .string()
+        .required('Chưa nhập mật khẩu')
+        .min(8, 'Mật khẩu ít nhất 8 ký tự')
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            'Mật khẩu phải chứa ít nhất 1 số và 1 ký tự'
+        ),
+    confirmPassword: yup
+        .string()
+        .required('Chưa xác nhận mật khẩu')
+        .oneOf([yup.ref('password'), null], 'Mật khẩu phải giống nhau'),
+    agreed: yup.boolean().oneOf([true], 'Cần chấp nhận điều khoản'),
 });

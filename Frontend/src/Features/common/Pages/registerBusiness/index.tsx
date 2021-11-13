@@ -5,28 +5,106 @@ import { InputCustom } from '../../../../Components';
 import { LinkButton } from '../../../../Components/LinkButton';
 import { defaultRoute } from '../../../../routes/defaultRoute';
 import { NewBusinessSchema } from '../../../../validations/auth';
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+} from '@firebase/storage';
+import storage from '../../../../firebase';
 import './style.scss';
+import { IRegisterBusinessApi } from '../../../../App/auth/type';
+import { registerBusinessApi } from '../../../../App/auth/apis/auth.api';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { useHistory } from 'react-router';
 
 interface RegisterBusinessProps {}
 
 export const RegisterBusiness = (props: RegisterBusinessProps) => {
+    const history = useHistory();
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
     } = useForm({ resolver: yupResolver(NewBusinessSchema) });
+    const [file, setFile] = React.useState<any>();
+    const [url, setUrl] = React.useState('');
 
+    // on file change
+    const onFileChange = (e: any) => {
+        if (!e.target.files[0]) {
+            setFile(undefined);
+            return;
+        }
+        if (e.target.files[0]?.size > 1048576) {
+            alert('Size ảnh quá lớn');
+            return;
+        }
+        const validImageType = ['image/png', 'image/jpg', 'image/jpeg'];
+        if (!validImageType.includes(e.target.files[0]?.type)) {
+            alert('Ảnh không đúng định dạng');
+            return;
+        }
+        setFile(e.target.files[0]);
+    };
+
+    // upload file to firebase
+    const onUpload = (data: any) => {
+        const storageRef = ref(storage, 'businessCertificates/' + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {},
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(
+                    async (downloadURL) => {
+                        const payload: IRegisterBusinessApi = data;
+                        payload.businessCertificate = downloadURL;
+                        const result = await registerBusinessApi(payload);
+                        if (result.code === 201) {
+                            notifySuccess(
+                                'Đăng ký thành công, hãy kiểm tra email của bạn.'
+                            );
+                            history.push(defaultRoute.UnauthenticatedHome);
+                        } else {
+                            notifyError(result.message);
+                        }
+                    }
+                );
+            }
+        );
+    };
+
+    // submit to server
     const onSubmit = (data: any, e: any) => {
         e.preventDefault();
-        console.log(data);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                alert('Registered B');
-
-                resolve(true);
-            }, 2000);
-        });
+        try {
+            delete data.agreed;
+            delete data.confirmPassword;
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    if (file) onUpload(data);
+                    else {
+                        const payload: IRegisterBusinessApi = data;
+                        const result = await registerBusinessApi(payload);
+                        if (result.code === 201) {
+                            notifySuccess(
+                                'Đăng ký thành công, hãy kiểm tra email của bạn.'
+                            );
+                            history.push(defaultRoute.UnauthenticatedHome);
+                        } else {
+                            notifyError(result.message);
+                        }
+                    }
+                    resolve(true);
+                }, 2000);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -46,18 +124,18 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                     </div>
                     <hr />
                     <div className="mb-3">
-                        <label htmlFor="registeredName" className="form-label">
+                        <label htmlFor="businessName" className="form-label">
                             Tên doanh nghiệp trên giấy đăng ký kinh doanh *
                         </label>
                         <input
                             type="text"
-                            id="registeredName"
-                            {...register('registeredName')}
+                            id="businessName"
+                            {...register('businessName')}
                             className="form-control"
                             placeholder="VD: Công ty TNHH dịch vụ 30Shine ..."
                         />
                         <p className="text-danger">
-                            {errors.registeredName?.message}
+                            {errors.businessName?.message}
                         </p>
                     </div>
                     <div className="mb-3">
@@ -104,6 +182,24 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                             rows={3}
                             placeholder="VD: Cung cấp các dịch vụ cắt tóc, gội đầu, ..."
                         ></textarea>
+                    </div>
+                    <div className="mb-3">
+                        <label
+                            htmlFor="businessCertificate"
+                            className="form-label"
+                        >
+                            Giấy chứng nhận đăng ký kinh doanh (nếu có)
+                        </label>
+                        <input
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            id="businessCertificate"
+                            className="form-control"
+                            onChange={onFileChange}
+                        />
+                        <p style={{ color: 'blue' }}>
+                            Gửi ảnh .png hoặc .jpg hoặc .jpeg, giới hạn 1MB
+                        </p>
                     </div>
                     <div
                         className="p-3 mb-1"
@@ -201,9 +297,14 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                         >
                             Tôi đồng ý với các <span>điều khoản</span>
                         </label>
+                        <p className="text-danger">{errors.agreed?.message}</p>
                     </div>
                     <div className="d-grid gap-2">
-                        <button className="btn btn-primary" type="submit">
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            disabled={isSubmitting}
+                        >
                             {!isSubmitting ? (
                                 'Gửi'
                             ) : (

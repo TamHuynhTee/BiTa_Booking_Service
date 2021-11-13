@@ -21,4 +21,12 @@ export const routeAuth: Record<string, ApiRoutes> = {
         method: ApiMethods.POST,
         url: 'auth/reset-password',
     },
+    getCurrentUser: {
+        method: ApiMethods.GET,
+        url: 'auth/get-current-user',
+    },
+    forgotPassword: {
+        method: ApiMethods.POST,
+        url: 'auth/forgot-password',
+    },
 };
