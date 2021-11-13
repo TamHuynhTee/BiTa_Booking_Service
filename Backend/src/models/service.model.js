@@ -25,24 +25,31 @@ const serviceSchema = mongoose.Schema(
     price: {
       type: Number,
       required: false,
+      default: 0,
     },
+    depositPrice: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+
     state: {
       type: String,
       required: true,
       enum: ['Working', 'Shut'],
+      default: 'Working'
     },
-    branches: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Branch',
-      },
-    ],
   },
   { timestamps: true }
 );
 
 serviceSchema.plugin(toJSON);
 serviceSchema.plugin(paginate);
+
+serviceSchema.statics.nameExists = async function (name, excludeServiceId) {
+  const service = await this.findOne({name, _id: { $ne: excludeServiceId } });
+  return !!service;
+};
 
 const Service = mongoose.model('Service', serviceSchema);
 module.exports = Service;
