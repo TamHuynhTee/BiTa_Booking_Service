@@ -39,6 +39,27 @@ const businessSchema = mongoose.Schema(
       required: false,
       trim: true,
     },
+    services: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Service',
+        required: false,
+      },
+    ],
+    branches: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Branch',
+        required: false,
+      },
+    ],
+    members: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        required: false,
+      },
+    ],
     headquarter: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'Branch',

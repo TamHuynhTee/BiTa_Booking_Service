@@ -4,22 +4,44 @@ const { objectId } = require('./custom.validation');
 const createService = {
   body: Joi.object().keys({
     name: Joi.string().required(),
-    price: Joi.number().required(),
-    category: Joi.string().custom(objectId),
-    business: Joi.string().custom(objectId),
-    hasDeposit: Joi.boolean().allow(null),
-    depositPrice: Joi.number().required(),
-  })
-}
+    business: Joi.string().required().custom(objectId),
+    category: Joi.string().required().custom(objectId),
+    price: Joi.number().optional(),
+    hasDeposit: Joi.boolean().optional(),
+    depositPrice: Joi.number().optional(),
+    duration: Joi.object({
+      quantity: Joi.number().positive(),
+      unit: Joi.string().valid('minute', 'hour'),
+    }),
+    description: Joi.string().optional(),
+    schedule: Joi.array().items(
+      Joi.object({
+        weekDay: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+        time: Joi.array().items(Joi.string()),
+      })
+    ),
+  }),
+};
 
 const updateService = {
   body: Joi.object().keys({
     serviceId: Joi.string().required().custom(objectId),
-    name: Joi.string().allow(null),
-    price: Joi.number().allow(null),
-    category: Joi.string().custom(objectId),
-    hasDeposit: Joi.boolean().allow(null),
-    depositPrice: Joi.number().allow(null),
+    name: Joi.string().optional(),
+    category: Joi.string().optional().custom(objectId),
+    price: Joi.number().optional(),
+    hasDeposit: Joi.boolean().optional(),
+    depositPrice: Joi.number().optional(),
+    duration: Joi.object({
+      quantity: Joi.number().positive(),
+      unit: Joi.string().valid('minute', 'hour'),
+    }),
+    description: Joi.string().optional(),
+    schedule: Joi.array().items(
+      Joi.object({
+        weekDay: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+        time: Joi.array().items(Joi.string()),
+      })
+    ),
   }),
 };
 
@@ -34,7 +56,4 @@ const getServiceById = {
     serviceId: Joi.string().required().custom(objectId),
   }),
 };
-module.exports = {createService, updateService,deleteService, getServiceById};
-
-
-
+module.exports = { createService, updateService, deleteService, getServiceById };

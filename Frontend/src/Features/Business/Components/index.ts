@@ -1,1 +1,2 @@
-export * from ".";
+export * from './AppointmentManagement';
+export * from './Sidebar';

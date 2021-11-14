@@ -5,16 +5,15 @@ const ApiError = require('../utils/ApiError');
 const { serviceService, userService } = require('../services');
 
 //createService
-const createService = catchAsync(async (req, res)=>{
-  console.log(req.body)
-const service = await serviceService.createService(req.body)
-  sendSuccess(res,{service},httpStatus.OK,"Created service")
-})
+const createService = catchAsync(async (req, res) => {
+  const service = await serviceService.createService(req.body);
+  sendSuccess(res, { service }, httpStatus.OK, 'Created service');
+});
 
 const updateService = catchAsync(async (req, res) => {
   const service = await serviceService.updateService(req.body);
-  sendSuccess(res,{service},httpStatus.OK,"Service updated")
-})
+  sendSuccess(res, { service }, httpStatus.OK, 'Service updated');
+});
 
 const deleteService = catchAsync(async (req, res) => {
   await serviceService.deleteService(req.body);

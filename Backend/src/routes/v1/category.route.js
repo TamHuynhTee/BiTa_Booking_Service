@@ -24,15 +24,10 @@ router.delete(
   validate(categoryValidation.deleteCategory),
   categoryController.deleteCategory
 );
-router.get(
-  '/get-category-by-id',
-  auth('manageCategories'),
-  validate(categoryValidation.getCategoryById),
-  categoryController.getCategoryById
-);
+router.get('/get-category-by-id', auth(), validate(categoryValidation.getCategoryById), categoryController.getCategoryById);
 router.get(
   '/get-all-categories',
-  auth('manageCategories'),
+  auth(),
   validate(categoryValidation.getAllCategories),
   categoryController.getAllCategories
 );

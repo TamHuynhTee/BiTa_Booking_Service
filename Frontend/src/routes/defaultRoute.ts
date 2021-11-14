@@ -11,4 +11,5 @@ export const defaultRoute = {
     Company: '/company',
     VerifyEmail: '/verify-email',
     ResetPassword: '/reset-password',
+    BusinessDashboard: '/business-dashboard',
 };

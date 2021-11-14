@@ -17,6 +17,7 @@ import {
 } from '../Features/common/Pages';
 import { NotFound } from '../static/404';
 import { VerifyEmail } from '../Features/common/Pages/verifyEmail';
+import { BusinessDashboard } from '../Features/Business/Pages';
 
 interface IRoute {
     exact: Boolean;
@@ -169,6 +170,10 @@ const Router = () => {
         <BrowserRouter>
             <Switch>
                 {renderRoutes(routes)}
+                {/* business routes */}
+                <Route path="/business-dashboard">
+                    <BusinessDashboard />
+                </Route>
                 <Route path="*">
                     <NotFound />
                 </Route>

@@ -28,7 +28,6 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
         formState: { errors, isSubmitting },
     } = useForm({ resolver: yupResolver(NewBusinessSchema) });
     const [file, setFile] = React.useState<any>();
-    const [url, setUrl] = React.useState('');
 
     // on file change
     const onFileChange = (e: any) => {

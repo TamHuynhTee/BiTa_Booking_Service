@@ -18,26 +18,48 @@ const serviceSchema = mongoose.Schema(
       ref: 'Category',
       required: true,
     },
-    hasDeposit: {
-      type: Boolean,
-      default: false,
-    },
     price: {
       type: Number,
       required: false,
       default: 0,
+    },
+    hasDeposit: {
+      type: Boolean,
+      default: false,
     },
     depositPrice: {
       type: Number,
       required: false,
       default: 0,
     },
-
-    state: {
+    schedule: [
+      {
+        weekDay: {
+          type: String,
+          enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        },
+        time: [String],
+      },
+    ],
+    duration: {
+      quantity: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+      unit: {
+        type: String,
+        enum: ['minute', 'hour'],
+        default: 'minute',
+      },
+    },
+    description: {
       type: String,
-      required: true,
-      enum: ['Working', 'Shut'],
-      default: 'Working'
+      required: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }
@@ -47,7 +69,7 @@ serviceSchema.plugin(toJSON);
 serviceSchema.plugin(paginate);
 
 serviceSchema.statics.nameExists = async function (name, excludeServiceId) {
-  const service = await this.findOne({name, _id: { $ne: excludeServiceId } });
+  const service = await this.findOne({ name, _id: { $ne: excludeServiceId } });
   return !!service;
 };
 

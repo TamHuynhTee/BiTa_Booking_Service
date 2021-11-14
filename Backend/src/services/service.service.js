@@ -1,12 +1,16 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { Service } = require('../models');
+const { businessService } = require('.');
 
 const createService = async (serviceBody) => {
-    if (await Service.nameExists(serviceBody.name))
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
-    return Service.create(serviceBody)
-}
+  if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
+  const service = await Service.create(serviceBody);
+  const business = await businessService.getBusinessById(serviceBody.business);
+  business.services.push(service.id);
+  await business.save();
+  return service;
+};
 
 const getServiceById = async (serviceId) => {
   return Service.findById(serviceId);
@@ -14,7 +18,6 @@ const getServiceById = async (serviceId) => {
 
 const updateService = async (serviceBody) => {
   const service = await getServiceById(serviceBody.serviceId);
-  console.log(service)
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
   if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
   Object.assign(service, serviceBody);
@@ -28,12 +31,9 @@ const deleteService = async (serviceBody) => {
   return service;
 };
 
-
 module.exports = {
-   createService,
-   updateService,
-   deleteService,
-   getServiceById,
-  };
-
-
+  createService,
+  updateService,
+  deleteService,
+  getServiceById,
+};
