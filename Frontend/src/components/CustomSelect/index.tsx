@@ -35,7 +35,7 @@ export const CustomSelect = (props: {
                     />
                 )}
             />
-            <p className="text-danger">{errors?.message}</p>
+            <p className="text-danger">{errors?.[name]?.message}</p>
         </>
     );
 };

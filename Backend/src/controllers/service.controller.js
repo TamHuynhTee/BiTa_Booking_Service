@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
 const { sendSuccess } = require('./return.controller');
 const ApiError = require('../utils/ApiError');
@@ -26,9 +27,17 @@ const getServiceById = catchAsync(async (req, res) => {
   sendSuccess(res, { service }, httpStatus.OK, 'Service found');
 });
 
+const queryServices = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const services = await serviceService.queryServices(filter, options);
+  sendSuccess(res, services, httpStatus.OK, 'Services found');
+});
+
 module.exports = {
   createService,
   updateService,
   deleteService,
   getServiceById,
+  queryServices,
 };

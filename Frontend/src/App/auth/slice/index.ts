@@ -48,8 +48,7 @@ export const authSlice = createSlice({
             action: PayloadAction<any>
         ) => {
             state.status = 'idle';
-            const { user } = action.payload;
-            state.user = user;
+            state.user = action.payload;
         },
         [getCurrentUserAsync.rejected.toString()]: (state, action) => {
             state.status = 'loading';

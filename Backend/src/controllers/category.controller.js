@@ -25,9 +25,8 @@ const getCategoryById = catchAsync(async (req, res) => {
 });
 
 const getAllCategories = catchAsync(async (req, res) => {
-  console.log(req.query);
-  const result = await categoryService.queryCategories({}, req.query);
-  sendSuccess(res, { result }, httpStatus.OK, 'Categories found');
+  const result = await categoryService.getAllCategories();
+  sendSuccess(res, result, httpStatus.OK, 'Categories found');
 });
 
 module.exports = {

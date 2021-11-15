@@ -6,9 +6,11 @@ import {
 } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
 import authReducer from '../App/auth/slice';
+import categoryReducer from '../App/category/slice';
 
 const reducer = {
     auth: authReducer,
+    category: categoryReducer,
 };
 export type IRootState = StateFromReducersMapObject<typeof reducer>;
 type Store = ReturnType<typeof initConfigStore>;

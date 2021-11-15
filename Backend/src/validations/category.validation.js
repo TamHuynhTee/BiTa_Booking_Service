@@ -12,8 +12,9 @@ const createCategory = {
 const updateCategory = {
   body: Joi.object().keys({
     categoryId: Joi.string().required().custom(objectId),
-    name: Joi.string().required(),
+    name: Joi.string().allow('', null),
     code: Joi.string().allow('', null),
+    thumbnail: Joi.string().allow('', null),
   }),
 };
 
@@ -29,10 +30,10 @@ const getCategoryById = {
   }),
 };
 
-const getAllCategories = {
+const queryCategories = {
   query: Joi.object().keys({
-    limit: Joi.number().positive(),
-    page: Joi.number().positive(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
   }),
 };
 
@@ -41,5 +42,5 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getCategoryById,
-  getAllCategories,
+  queryCategories,
 };

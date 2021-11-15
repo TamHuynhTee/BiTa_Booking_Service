@@ -78,3 +78,8 @@ export const APPOINTMENT_TIME = [
     { value: '2330', label: '23:30' },
     { value: '2345', label: '23:45' },
 ];
+
+export const DURATION_UNIT = [
+    { value: 'minute', label: 'phút' },
+    { value: 'hour', label: 'giờ' },
+];

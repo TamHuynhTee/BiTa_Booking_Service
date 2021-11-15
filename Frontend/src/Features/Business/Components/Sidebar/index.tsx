@@ -2,14 +2,22 @@ import React from 'react';
 import './style.scss';
 import logo from '../../../../images/BiTaBusiness.svg';
 import { Link } from 'react-router-dom';
-import { useRouteMatch } from 'react-router';
+import { useHistory, useRouteMatch } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../../../App/auth/slice';
 
 interface SidebarProps {}
 
 const img = 'https://picsum.photos/seed/picsum/200/300';
 
 export const Sidebar = (props: SidebarProps) => {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const { url } = useRouteMatch();
+    const logOut = () => {
+        dispatch(logoutUser());
+        history.push('/');
+    };
     return (
         <div className="sidebar">
             <div className="sidebar-logo d-flex justify-content-center">
@@ -112,10 +120,7 @@ export const Sidebar = (props: SidebarProps) => {
                         </ul>
                     </div>
                     <li>
-                        <Link
-                            to={`${url}/create-service`}
-                            className="text-truncate"
-                        >
+                        <Link to={`${url}/customers`} className="text-truncate">
                             <SidebarIcon type="bi-people" />
                             Khách hàng
                         </Link>
@@ -141,7 +146,7 @@ export const Sidebar = (props: SidebarProps) => {
                 </ul>
             </div>
             <div className="d-flex justify-content-center">
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" onClick={logOut}>
                     <i className="bi bi-box-arrow-left me-2" />
                     Đăng xuất
                 </button>

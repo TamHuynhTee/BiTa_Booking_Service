@@ -29,8 +29,12 @@ const deleteCategory = async (categoryBody) => {
 };
 
 const queryCategories = async (filter, options) => {
-  const Categories = await Category.paginate(filter, options);
-  return Categories;
+  const categories = await Category.paginate(filter, options);
+  return categories;
+};
+
+const getAllCategories = async () => {
+  return Category.find();
 };
 
 module.exports = {
@@ -39,4 +43,5 @@ module.exports = {
   updateCategory,
   deleteCategory,
   queryCategories,
+  getAllCategories,
 };

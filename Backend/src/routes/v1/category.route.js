@@ -25,11 +25,6 @@ router.delete(
   categoryController.deleteCategory
 );
 router.get('/get-category-by-id', auth(), validate(categoryValidation.getCategoryById), categoryController.getCategoryById);
-router.get(
-  '/get-all-categories',
-  auth(),
-  validate(categoryValidation.getAllCategories),
-  categoryController.getAllCategories
-);
+router.get('/get-all-categories', categoryController.getAllCategories);
 
 module.exports = router;

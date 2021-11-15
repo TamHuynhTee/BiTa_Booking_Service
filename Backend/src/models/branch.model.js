@@ -27,11 +27,6 @@ const branchSchema = mongoose.Schema(
       required: true,
       default: true,
     },
-    state: {
-      type: String,
-      enum: ['WORKING', 'PAUSE'],
-      default: 'WORKING',
-    },
     services: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -44,6 +39,11 @@ const branchSchema = mongoose.Schema(
 
 branchSchema.plugin(toJSON);
 branchSchema.plugin(paginate);
+
+branchSchema.statics.nameExists = async function (name, excludeBranchId) {
+  const branch = await this.findOne({ name, _id: { $ne: excludeBranchId } });
+  return !!branch;
+};
 
 const Branch = mongoose.model('Branch', branchSchema);
 module.exports = Branch;

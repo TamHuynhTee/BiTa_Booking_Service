@@ -43,7 +43,11 @@ export const Login = (props: LoginProps) => {
                     const result: any = await dispatch(loginAsync(payload));
                     console.log(result);
                     if (result.payload?.code === 200) {
-                        history.push(defaultRoute.UnauthenticatedHome);
+                        history.push(
+                            result.payload?.data.role === 'user'
+                                ? defaultRoute.UnauthenticatedHome
+                                : '/business-dashboard'
+                        );
                     }
                     resolve(true);
                 }, 2000);

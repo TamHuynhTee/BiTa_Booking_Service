@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useLocation, useRouteMatch } from 'react-router';
 import {
     BranchDetail,
@@ -14,6 +15,8 @@ import {
     ServiceList,
     Statistics,
 } from '..';
+import { selectUser } from '../../../../App/auth/slice/selector';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { ServiceDetail } from '../../../common/Pages';
 import { Sidebar } from '../../Components';
 import './style.scss';
@@ -21,7 +24,14 @@ import './style.scss';
 interface BusinessDashboardProps {}
 
 export const BusinessDashboard = (props: BusinessDashboardProps) => {
+    const dispatch = useDispatch();
     const { path } = useRouteMatch();
+    const user = useSelector(selectUser);
+    console.log(user);
+    React.useEffect(() => {
+        dispatch(getCurrentUserAsync());
+    }, []);
+
     return (
         <div className="businessDashboard">
             <Sidebar />
@@ -42,7 +52,9 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
                         exact
                         path={`${path}/create-service`}
                         component={CreateService}
-                    />
+                    >
+                        <CreateService business={user?.business?.id} />
+                    </Route>
                     <Route
                         exact
                         path={`${path}/branches`}

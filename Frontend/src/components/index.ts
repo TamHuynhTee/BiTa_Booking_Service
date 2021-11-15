@@ -8,3 +8,4 @@ export * from './CustomSelect';
 export * from './ColorLabel';
 export * from './SearchBar';
 export * from './InputCustom';
+export * from './ButtonSpinner';

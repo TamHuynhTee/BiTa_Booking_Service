@@ -31,9 +31,15 @@ const deleteService = async (serviceBody) => {
   return service;
 };
 
+const queryServices = async (filter, options) => {
+  const services = await Service.paginate(filter, options);
+  return services;
+};
+
 module.exports = {
   createService,
   updateService,
   deleteService,
   getServiceById,
+  queryServices,
 };

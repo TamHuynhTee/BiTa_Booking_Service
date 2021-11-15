@@ -24,4 +24,6 @@ router.get(
   serviceController.getServiceById
 );
 
+router.get('/query-service', validate(serviceValidation.queryServices), serviceController.queryServices);
+
 module.exports = router;
