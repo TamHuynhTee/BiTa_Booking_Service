@@ -5,8 +5,13 @@ const createBranch = {
   body: Joi.object().keys({
     name: Joi.string().required(),
     business: Joi.string().custom(objectId).required(),
-    address: Joi.string().required(),
-    coordinates: Joi.array().required(),
+    address: Joi.object({
+      street: Joi.string().required(),
+      ward: Joi.string().required(),
+      district: Joi.string().required(),
+      province: Joi.string().required(),
+    }),
+    coordinates: Joi.array().allow(null),
   }),
 };
 
@@ -15,7 +20,12 @@ const updateBranch = {
     branchId: Joi.string().custom(objectId).required(),
     name: Joi.string().allow(null),
     business: Joi.string().custom(objectId).allow(null),
-    address: Joi.string().allow(null),
+    address: Joi.object({
+      street: Joi.string().required(),
+      ward: Joi.string().required(),
+      district: Joi.string().required(),
+      province: Joi.string().required(),
+    }),
     coordinates: Joi.array().allow(null),
   }),
 };

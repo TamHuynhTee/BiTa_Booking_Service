@@ -88,7 +88,7 @@ export const CreateService = (props: Props) => {
             return new Promise((resolve) => {
                 setTimeout(async () => {
                     const result = await createServiceApi(data);
-                    if (result.code === 200) {
+                    if (result.code === 201) {
                         notifySuccess('Đã tạo dịch vụ mới');
                         history.push('/business-dashboard/services');
                     } else {

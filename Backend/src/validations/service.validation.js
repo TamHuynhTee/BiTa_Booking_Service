@@ -60,6 +60,8 @@ const getServiceById = {
 const queryServices = {
   query: Joi.object().keys({
     name: Joi.string(),
+    isActive: Joi.boolean(),
+    business: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),

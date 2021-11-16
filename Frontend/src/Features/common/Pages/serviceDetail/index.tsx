@@ -96,7 +96,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                         }
                                         key={`${location[0]}-${location[1]}`}
                                         zoom={16}
-                                        scrollWheelZoom={false}
+                                        scrollWheelZoom={true}
                                     >
                                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                                         <Marker

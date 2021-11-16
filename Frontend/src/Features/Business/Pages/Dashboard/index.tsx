@@ -38,21 +38,15 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
             <div className="businessDashboard-content">
                 <Switch>
                     <Route exact path={path} component={DashboardHome} />
-                    <Route
-                        exact
-                        path={`${path}/services`}
-                        component={ServiceList}
-                    />
+                    <Route exact path={`${path}/services`}>
+                        <ServiceList business={user?.business?.id} />
+                    </Route>
                     <Route
                         exact
                         path={`${path}/service/:id`}
                         component={ServiceDetail}
                     />
-                    <Route
-                        exact
-                        path={`${path}/create-service`}
-                        component={CreateService}
-                    >
+                    <Route exact path={`${path}/create-service`}>
                         <CreateService business={user?.business?.id} />
                     </Route>
                     <Route
@@ -65,11 +59,9 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
                         path={`${path}/branch/:id`}
                         component={BranchDetail}
                     />
-                    <Route
-                        exact
-                        path={`${path}/create-branch`}
-                        component={CreateBranch}
-                    />
+                    <Route exact path={`${path}/create-branch`}>
+                        <CreateBranch business={user?.business?.id} />
+                    </Route>
                     <Route
                         exact
                         path={`${path}/customers`}

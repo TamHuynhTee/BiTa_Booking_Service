@@ -14,9 +14,22 @@ const branchSchema = mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
-      trim: true,
+      street: {
+        type: String,
+        required: true,
+      },
+      ward: {
+        type: String,
+        required: true,
+      },
+      district: {
+        type: String,
+        required: true,
+      },
+      province: {
+        type: String,
+        required: true,
+      },
     },
     coordinates: {
       type: [Number],

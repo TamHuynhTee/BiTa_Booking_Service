@@ -8,7 +8,7 @@ const { serviceService, userService } = require('../services');
 //createService
 const createService = catchAsync(async (req, res) => {
   const service = await serviceService.createService(req.body);
-  sendSuccess(res, { service }, httpStatus.OK, 'Created service');
+  sendSuccess(res, { service }, httpStatus.CREATED, 'Created service');
 });
 
 const updateService = catchAsync(async (req, res) => {
@@ -28,7 +28,7 @@ const getServiceById = catchAsync(async (req, res) => {
 });
 
 const queryServices = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name']);
+  const filter = pick(req.query, ['name', 'isActive', 'business']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const services = await serviceService.queryServices(filter, options);
   sendSuccess(res, services, httpStatus.OK, 'Services found');
