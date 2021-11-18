@@ -12,12 +12,12 @@ import {
     CustomerList,
     DashboardHome,
     OrderHistory,
+    ServiceDetail,
     ServiceList,
     Statistics,
 } from '..';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
-import { ServiceDetail } from '../../../common/Pages';
 import { Sidebar } from '../../Components';
 import './style.scss';
 
@@ -27,7 +27,6 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
     const dispatch = useDispatch();
     const { path } = useRouteMatch();
     const user = useSelector(selectUser);
-    console.log(user);
     React.useEffect(() => {
         dispatch(getCurrentUserAsync());
     }, []);

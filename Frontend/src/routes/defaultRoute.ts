@@ -5,11 +5,12 @@ export const defaultRoute = {
     RegisterBusiness: '/register-business',
     Search: '/search',
     Profile: '/profile',
-    Service: '/service',
+    Service: '/service-detail/:id',
     Book: '/book',
     BookManagement: '/book-management',
     Company: '/company',
     VerifyEmail: '/verify-email',
     ResetPassword: '/reset-password',
     BusinessDashboard: '/business-dashboard',
+    AuthenticatedHome: '/home',
 };

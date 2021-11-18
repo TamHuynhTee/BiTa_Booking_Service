@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
-import { selectUser } from '../../../../App/auth/slice/selector';
 import { selectCategories } from '../../../../App/category/slice/selector';
 import { getAllCategoriesAsync } from '../../../../App/category/slice/thunk';
 import { CustomSelect } from '../../../../Components';
@@ -19,7 +18,13 @@ import {
 } from '../../../../utils/selectOptions';
 import { CreateServiceSchema } from '../../../../validations/service';
 import { createServiceApi } from '../../Apis/business.api';
-
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+} from '@firebase/storage';
+import storage from '../../../../firebase';
 interface Props {
     business?: string;
 }
@@ -29,9 +34,27 @@ export const CreateService = (props: Props) => {
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const { business } = props;
+    const [file, setFile] = React.useState<any>();
     React.useEffect(() => {
         dispatch(getAllCategoriesAsync());
     }, []);
+
+    const onFileChange = (e: any) => {
+        if (!e.target.files[0]) {
+            setFile(undefined);
+            return;
+        }
+        if (e.target.files[0]?.size > 1048576) {
+            alert('Size ảnh quá lớn');
+            return;
+        }
+        const validImageType = ['image/png', 'image/jpg', 'image/jpeg'];
+        if (!validImageType.includes(e.target.files[0]?.type)) {
+            alert('Ảnh không đúng định dạng');
+            return;
+        }
+        setFile(e.target.files[0]);
+    };
 
     const {
         register,
@@ -68,6 +91,33 @@ export const CreateService = (props: Props) => {
         </div>
     ));
 
+    const onUpload = (data: any) => {
+        const storageRef = ref(storage, 'services/' + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {},
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(
+                    async (downloadURL) => {
+                        const payload = data;
+                        payload.image = downloadURL;
+                        const result = await createServiceApi(payload);
+                        if (result.code === 201) {
+                            notifySuccess('Đã tạo dịch vụ mới');
+                            history.push('/business-dashboard/services');
+                        } else {
+                            notifyError(result.message);
+                        }
+                    }
+                );
+            }
+        );
+    };
+
     const onSubmit = (data: any, e: any) => {
         try {
             e.preventDefault();
@@ -84,15 +134,17 @@ export const CreateService = (props: Props) => {
             delete data.unit;
             data.schedule = list;
             data.business = business;
-            console.log(data);
             return new Promise((resolve) => {
                 setTimeout(async () => {
-                    const result = await createServiceApi(data);
-                    if (result.code === 201) {
-                        notifySuccess('Đã tạo dịch vụ mới');
-                        history.push('/business-dashboard/services');
-                    } else {
-                        notifyError(result.message);
+                    if (file) onUpload(data);
+                    else {
+                        const result = await createServiceApi(data);
+                        if (result.code === 201) {
+                            notifySuccess('Đã tạo dịch vụ mới');
+                            history.push('/business-dashboard/services');
+                        } else {
+                            notifyError(result.message);
+                        }
                     }
                     resolve(true);
                 }, 2000);
@@ -207,6 +259,25 @@ export const CreateService = (props: Props) => {
                     Lịch phục vụ
                 </label>
                 <div className="mb-3">{schedule}</div>
+                <label
+                    className="form-label fw-bold"
+                    style={{ color: 'royalblue' }}
+                >
+                    Ảnh dịch vụ
+                </label>
+                <div className="mb-3">
+                    <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        id="businessCertificate"
+                        className="form-control"
+                        onChange={onFileChange}
+                    />
+                    <p style={{ color: 'blue' }}>
+                        Dùng ảnh .png hoặc .jpg hoặc .jpeg, giới hạn 1MB. Nên
+                        chọn ảnh kích thước 300 x 300
+                    </p>
+                </div>
                 <button
                     className="btn btn-primary mb-2"
                     type="submit"

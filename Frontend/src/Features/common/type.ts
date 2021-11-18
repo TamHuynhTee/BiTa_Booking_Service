@@ -1,3 +1,8 @@
+export interface CommonStateTypes {
+    serviceDetail?: any;
+    status?: string;
+}
+
 export interface IUserInfo {
     surName?: string;
     firstName?: string;

@@ -3,17 +3,17 @@ const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
 const { sendSuccess } = require('./return.controller');
 const ApiError = require('../utils/ApiError');
-const { serviceService, userService } = require('../services');
+const { serviceService, businessService, categoryService } = require('../services');
 
 //createService
 const createService = catchAsync(async (req, res) => {
   const service = await serviceService.createService(req.body);
-  sendSuccess(res, { service }, httpStatus.CREATED, 'Created service');
+  sendSuccess(res, service, httpStatus.CREATED, 'Created service');
 });
 
 const updateService = catchAsync(async (req, res) => {
   const service = await serviceService.updateService(req.body);
-  sendSuccess(res, { service }, httpStatus.OK, 'Service updated');
+  sendSuccess(res, service, httpStatus.OK, 'Service updated');
 });
 
 const deleteService = catchAsync(async (req, res) => {
@@ -21,10 +21,18 @@ const deleteService = catchAsync(async (req, res) => {
   sendSuccess(res, {}, httpStatus.OK, 'Service deleted');
 });
 
-const getServiceById = catchAsync(async (req, res) => {
-  const service = await serviceService.getServiceById(req.body.serviceId);
+const getServiceByIdFull = catchAsync(async (req, res) => {
+  const service = await serviceService.getServiceById(req.query.serviceId);
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
-  sendSuccess(res, { service }, httpStatus.OK, 'Service found');
+  const business = await businessService.getBusinessById(service.business);
+  const category = await categoryService.getCategoryById(service.category);
+  sendSuccess(res, { service, business, category }, httpStatus.OK, 'Service found');
+});
+
+const getServiceById = catchAsync(async (req, res) => {
+  const service = await serviceService.getServiceById(req.query.serviceId);
+  if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
+  sendSuccess(res, service, httpStatus.OK, 'Service found');
 });
 
 const queryServices = catchAsync(async (req, res) => {
@@ -40,4 +48,5 @@ module.exports = {
   deleteService,
   getServiceById,
   queryServices,
+  getServiceByIdFull,
 };

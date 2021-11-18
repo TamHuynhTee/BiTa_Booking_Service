@@ -14,10 +14,11 @@ import {
     ResetPassword,
     SearchResult,
     ServiceDetail,
+    VerifyEmail,
 } from '../Features/common/Pages';
 import { NotFound } from '../static/404';
-import { VerifyEmail } from '../Features/common/Pages/verifyEmail';
 import { BusinessDashboard } from '../Features/Business/Pages';
+import { CustomerHomepage } from '../Features/Customer/Pages/HomePage';
 
 interface IRoute {
     exact: Boolean;
@@ -91,6 +92,17 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.Search,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <CustomerHomepage />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.AuthenticatedHome,
         exact: true,
     },
     {

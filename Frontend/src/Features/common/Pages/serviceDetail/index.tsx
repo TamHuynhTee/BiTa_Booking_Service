@@ -5,19 +5,13 @@ import { ServiceCard } from '../../../../Components/ServiceCard';
 import { PageContainer } from '../../../../Components/PageContainer';
 import { PageWrapper } from '../../../../Components/PageWrapper';
 import './style.scss';
+import { useParams } from 'react-router';
 
 interface ServiceDetailProps {}
 
 export const ServiceDetail = (props: ServiceDetailProps) => {
-    const [location, setLocation] = useState<any>([null, null]);
+    const params = useParams();
 
-    React.useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const { latitude, longitude } = position.coords;
-            setLocation([latitude, longitude]);
-        });
-        return () => {};
-    }, []);
     return (
         <PageContainer>
             <PageWrapper className="serviceDetail-wrapper ps-5 pe-5 pt-3 pb-3 mb-5 bg-body rounded">
@@ -26,7 +20,9 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                         Dịch vụ khám tổng hợp, chụp xét nghiệm
                     </h1>
                     <div className="btn-group flex-grow-1">
-                        <button className="btn btn-danger">Lấy hẹn ngay</button>
+                        <button className="btn btn-danger">
+                            Đăng ký dùng dịch vụ
+                        </button>
                     </div>
                 </div>
                 <div className="serviceDetail-wrapper-body">
@@ -86,43 +82,6 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                 📍 31 Nguyễn Du, phường Tân Phú, thành phố Thủ
                                 Đức, thành phố Hồ Chí Minh
                             </p>
-                            <div className="card mt-2 mb-2 p-2">
-                                <div style={{ height: '360px' }}>
-                                    <MapContainer
-                                        center={
-                                            !location[0] || !location[1]
-                                                ? [51.505, -0.09]
-                                                : [location[0], location[1]]
-                                        }
-                                        key={`${location[0]}-${location[1]}`}
-                                        zoom={16}
-                                        scrollWheelZoom={true}
-                                    >
-                                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                        <Marker
-                                            position={
-                                                !location[0] || !location[1]
-                                                    ? [51.505, -0.09]
-                                                    : [location[0], location[1]]
-                                            }
-                                        >
-                                            <Popup>
-                                                A pretty CSS3 popup. <br />{' '}
-                                                Easily customizable.
-                                            </Popup>
-                                        </Marker>
-                                    </MapContainer>
-                                </div>
-                                <span className="text-end">
-                                    Chi tiết hơn trên{' '}
-                                    <a
-                                        href={`https://www.google.com/maps/@${location[0]},${location[1]}`}
-                                        target="_blank"
-                                    >
-                                        Google map
-                                    </a>
-                                </span>
-                            </div>
                         </li>
                         <li>
                             <label>

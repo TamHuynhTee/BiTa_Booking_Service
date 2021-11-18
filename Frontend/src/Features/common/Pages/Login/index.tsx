@@ -45,7 +45,7 @@ export const Login = (props: LoginProps) => {
                     if (result.payload?.code === 200) {
                         history.push(
                             result.payload?.data.role === 'user'
-                                ? defaultRoute.UnauthenticatedHome
+                                ? defaultRoute.AuthenticatedHome
                                 : '/business-dashboard'
                         );
                     }

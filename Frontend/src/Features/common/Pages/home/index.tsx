@@ -19,12 +19,6 @@ import { selectUser } from '../../../../App/auth/slice/selector';
 interface HomePageProps {}
 
 export const HomePage = (props: HomePageProps) => {
-    const dispatch = useDispatch();
-    const user = useSelector(selectUser);
-    React.useEffect(() => {
-        dispatch(getCurrentUserAsync());
-    }, []);
-    console.log(user);
     return (
         <div className="homepage">
             <div className="homepage-banner">

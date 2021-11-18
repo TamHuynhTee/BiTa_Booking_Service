@@ -9,13 +9,14 @@ const registerCustomer = catchAsync(async (req, res) => {
   const token = await tokenService.generateAuthTokens(user);
   const emailToken = await tokenService.generateVerifyEmailToken(user);
   await emailService.sendVerificationEmail(user.email, emailToken);
-  sendSuccess(res, { token }, httpStatus.CREATED, 'User registered');
+  sendSuccess(res, token, httpStatus.CREATED, 'User registered');
 });
 
 const registerBusiness = catchAsync(async (req, res) => {
+  const { email } = req.body;
   const business = await businessService.createBusiness(req.body);
-  await emailService.sendWelcomeBusinessEmail(req.body.email);
-  sendSuccess(res, { business }, httpStatus.CREATED, 'Business registered');
+  await emailService.sendWelcomeBusinessEmail(email);
+  sendSuccess(res, business, httpStatus.CREATED, 'Business registered');
 });
 
 const login = catchAsync(async (req, res) => {

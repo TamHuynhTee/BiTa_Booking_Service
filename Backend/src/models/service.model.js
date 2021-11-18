@@ -57,6 +57,10 @@ const serviceSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    image: {
+      type: String,
+      required: false,
+    },
     isActive: {
       type: Boolean,
       default: true,

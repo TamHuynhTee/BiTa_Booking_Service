@@ -20,6 +20,10 @@ export const BookingForm = (props: BookingFormProps) => {
         reset,
         control,
     } = useForm({ resolver: yupResolver(CreateBookingSchema) });
+    // Stopped here
+    const onDayChange = (e: any) => {
+        const value = e.target.value;
+    };
 
     const thisDay = () => {
         const date = new Date();
@@ -80,6 +84,7 @@ export const BookingForm = (props: BookingFormProps) => {
                     id="appointmentDate"
                     className="form-control"
                     min={thisDay()}
+                    onChange={onDayChange}
                 />
                 <p className="text-danger">{errors.appointmentDate?.message}</p>
             </div>

@@ -1,20 +1,37 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 
-interface Props {
+interface SearchBarProps {
     placeholder?: string;
     submit?: any;
 }
 
-export const SearchBar = (props: Props) => {
-    const { register, handleSubmit } = useForm();
+export const SearchBar = (props: SearchBarProps) => {
+    const { submit, placeholder } = props;
+    const [keyword, setKeyword] = React.useState('');
+    const typingTimeoutRef = React.useRef<any>(null);
+
+    // debounce
+    const handleSearchChange = (e: any) => {
+        const value = e.target.value;
+        setKeyword(value);
+        if (!submit) return;
+        if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = setTimeout(() => {
+            const formValues = {
+                keyword: value,
+            };
+            submit(formValues);
+        }, 300);
+    };
+
     return (
-        <form className="d-flex" onSubmit={handleSubmit(props.submit)}>
+        <form>
             <input
                 className="form-control"
-                {...register('keyword')}
-                type="search"
-                placeholder={props.placeholder}
+                type="text"
+                placeholder={placeholder}
+                value={keyword}
+                onChange={handleSearchChange}
             />
         </form>
     );

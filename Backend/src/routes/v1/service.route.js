@@ -17,12 +17,8 @@ router.delete(
   serviceController.deleteService
 );
 
-router.get(
-  '/get-service-by-id',
-  auth('service'),
-  validate(serviceValidation.getServiceById),
-  serviceController.getServiceById
-);
+router.get('/get-service-by-id', validate(serviceValidation.getServiceById), serviceController.getServiceById);
+router.get('/get-service-by-id-full', validate(serviceValidation.getServiceById), serviceController.getServiceByIdFull);
 
 router.get('/query-service', validate(serviceValidation.queryServices), serviceController.queryServices);
 

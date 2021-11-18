@@ -3,8 +3,9 @@ import './style.scss';
 import logo from '../../../../images/BiTaBusiness.svg';
 import { Link } from 'react-router-dom';
 import { useHistory, useRouteMatch } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../../../App/auth/slice';
+import { selectUser } from '../../../../App/auth/slice/selector';
 
 interface SidebarProps {}
 
@@ -12,12 +13,14 @@ const img = 'https://picsum.photos/seed/picsum/200/300';
 
 export const Sidebar = (props: SidebarProps) => {
     const dispatch = useDispatch();
+    const user = useSelector(selectUser);
     const history = useHistory();
     const { url } = useRouteMatch();
     const logOut = () => {
         dispatch(logoutUser());
         history.push('/');
     };
+    console.log(user);
     return (
         <div className="sidebar">
             <div className="sidebar-logo d-flex justify-content-center">
@@ -30,7 +33,7 @@ export const Sidebar = (props: SidebarProps) => {
                 href="#profileCollapse"
             >
                 <img src={img} alt="avatar" className="avatar" />{' '}
-                <h4 className="text-truncate">MTV</h4>
+                <h4 className="text-truncate">{user?.business?.displayName}</h4>
             </a>
             <div className="collapse mt-2" id="profileCollapse">
                 <ul className="sidebar-links-list">

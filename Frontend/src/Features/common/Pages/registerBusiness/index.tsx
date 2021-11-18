@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactChild } from 'react';
 import { useForm } from 'react-hook-form';
-import { InputCustom } from '../../../../Components';
 import { LinkButton } from '../../../../Components/LinkButton';
 import { defaultRoute } from '../../../../routes/defaultRoute';
 import { NewBusinessSchema } from '../../../../validations/auth';
@@ -239,7 +238,7 @@ export const RegisterBusiness = (props: RegisterBusinessProps) => {
                                 Email liên lạc *
                             </label>
                             <input
-                                type="text"
+                                type="email"
                                 id="email"
                                 {...register('email')}
                                 className="form-control"

@@ -14,6 +14,7 @@ const createService = {
       unit: Joi.string().valid('minute', 'hour'),
     }),
     description: Joi.string().optional(),
+    image: Joi.string().optional(),
     schedule: Joi.array().items(
       Joi.object({
         weekDay: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
@@ -36,6 +37,7 @@ const updateService = {
       unit: Joi.string().valid('minute', 'hour'),
     }),
     description: Joi.string().optional(),
+    image: Joi.string().optional(),
     schedule: Joi.array().items(
       Joi.object({
         weekDay: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
@@ -46,20 +48,20 @@ const updateService = {
 };
 
 const deleteService = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     serviceId: Joi.string().required().custom(objectId),
   }),
 };
 
 const getServiceById = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     serviceId: Joi.string().required().custom(objectId),
   }),
 };
 
 const queryServices = {
   query: Joi.object().keys({
-    name: Joi.string(),
+    name: Joi.string().allow(null, ''),
     isActive: Joi.boolean(),
     business: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),
