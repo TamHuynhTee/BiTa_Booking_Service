@@ -9,3 +9,4 @@ export * from './ColorLabel';
 export * from './SearchBar';
 export * from './InputCustom';
 export * from './ButtonSpinner';
+export * from './LineChartResponsive';

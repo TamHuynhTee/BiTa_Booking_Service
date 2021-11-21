@@ -26,9 +26,33 @@ export const getServiceByIdApi = async (
     return await Repository(routeBusiness['getServiceById'], id);
 };
 
+export const getAllServiceApi = async (
+    businessId: any
+): Promise<ReturnListResponse<any>> => {
+    return await Repository(routeBusiness['getAllService'], businessId);
+};
+
 // Branch
 export const createBranchApi = async (
     payload: any
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['createBranch'], payload);
+};
+
+export const queryBranchApi = async (
+    query: any
+): Promise<ReturnListResponse<any>> => {
+    return await Repository(routeBusiness['queryBranch'], query);
+};
+
+export const getBranchByIdApi = async (
+    id: any
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['getBranchById'], id);
+};
+
+export const updateBranchApi = async (
+    payload: any
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['updateBranch'], payload);
 };

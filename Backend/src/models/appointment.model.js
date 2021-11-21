@@ -30,7 +30,6 @@ const appointmentSchema = mongoose.Schema(
     appointmentDate: {
       type: Date,
       required: true,
-      default: Date.now(),
     },
     appointmentTime: {
       type: String,
@@ -42,15 +41,15 @@ const appointmentSchema = mongoose.Schema(
       enum: ['AsScheduled', 'MaybeSoon', 'MaybeLate'],
       default: 'AsScheduled',
     },
-    cost: {
+    price: {
       type: Number,
       required: false,
       default: 0,
     },
-    currency: {
-      type: String,
-      enum: ['VND', 'USD'],
-      default: 'VND',
+    depositPrice: {
+      type: Number,
+      required: false,
+      default: 0,
     },
     state: {
       type: String,

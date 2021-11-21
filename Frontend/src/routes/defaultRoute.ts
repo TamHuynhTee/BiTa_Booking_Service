@@ -5,7 +5,7 @@ export const defaultRoute = {
     RegisterBusiness: '/register-business',
     Search: '/search',
     Profile: '/profile',
-    Service: '/service-detail/:id',
+    Service: '/service/:id',
     Book: '/book',
     BookManagement: '/book-management',
     Company: '/company',

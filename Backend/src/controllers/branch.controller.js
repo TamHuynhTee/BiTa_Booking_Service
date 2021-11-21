@@ -7,7 +7,7 @@ const { branchService } = require('../services');
 
 const createBranch = catchAsync(async (req, res) => {
   const branch = await branchService.createBranch(req.body);
-  sendSuccess(res, branch, httpStatus.CREATED, 'Created');
+  sendSuccess(res, branch, httpStatus.CREATED, 'Đã tạo chi nhánh mới');
 });
 
 const updateBranch = catchAsync(async (req, res) => {
@@ -21,13 +21,13 @@ const deleteBranch = catchAsync(async (req, res) => {
 });
 
 const getBranchById = catchAsync(async (req, res) => {
-  const branch = await branchService.getBranchById(req.body.branchId);
+  const branch = await branchService.getBranchById(req.query.branchId);
   if (!branch) throw new ApiError(httpStatus.NOT_FOUND, "Branch doesn't exists");
   sendSuccess(res, branch, httpStatus.OK, 'Branch found');
 });
 
 const queryBranches = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name']);
+  const filter = pick(req.query, ['name', 'isActive', 'business']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const branches = await branchService.queryBranches(filter, options);
   sendSuccess(res, branches, httpStatus.OK, 'Branches found');

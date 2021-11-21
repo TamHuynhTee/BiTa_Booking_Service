@@ -27,6 +27,7 @@ const updateBranch = {
       province: Joi.string().required(),
     }),
     coordinates: Joi.array().allow(null),
+    services: Joi.array().items(Joi.string().custom(objectId)).optional(),
   }),
 };
 
@@ -37,14 +38,16 @@ const deleteBranch = {
 };
 
 const getBranchById = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     branchId: Joi.string().required().custom(objectId),
   }),
 };
 
 const queryBranches = {
   query: Joi.object().keys({
-    name: Joi.string(),
+    name: Joi.string().allow(null, ''),
+    isActive: Joi.boolean(),
+    business: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),

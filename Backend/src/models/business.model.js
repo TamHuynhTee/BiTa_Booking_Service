@@ -82,5 +82,13 @@ businessSchema.statics.displayNameExists = async function (displayName, excludeB
   return !!business;
 };
 
+businessSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'businessAccount',
+    select: 'avatar username firstName surName',
+  });
+  next();
+});
+
 const Business = mongoose.model('Business', businessSchema);
 module.exports = Business;

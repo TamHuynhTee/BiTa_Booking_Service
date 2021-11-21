@@ -128,8 +128,8 @@ export const CreateBranch = (props: Props) => {
                         </p>
                     </div>
                 </div>
-                <div className="mb-3">
-                    {/* <div style={{ height: '360px' }}>
+                {/* <div className="mb-3">
+                    <div style={{ height: '360px' }}>
                         <MapContainer
                             center={[10.7894725, 106.710327]}
                             key="51.505--0.09"
@@ -145,8 +145,8 @@ export const CreateBranch = (props: Props) => {
                                 <Popup>Test popup</Popup>
                             </Marker>
                         </MapContainer>
-                    </div> */}
-                </div>
+                    </div>
+                </div> */}
                 <button
                     className="btn btn-primary mb-2"
                     type="submit"

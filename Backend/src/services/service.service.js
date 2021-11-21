@@ -13,6 +13,10 @@ const getServiceById = async (serviceId) => {
   return Service.findById(serviceId);
 };
 
+const getAllServices = async (businessId) => {
+  return Service.find({ business: businessId }).select({ name: 1, category: 0, business: 0 });
+};
+
 const updateService = async (serviceBody) => {
   const service = await getServiceById(serviceBody.serviceId);
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
@@ -40,4 +44,5 @@ module.exports = {
   deleteService,
   getServiceById,
   queryServices,
+  getAllServices,
 };

@@ -10,9 +10,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreateBookingSchema } from '../../../../validations/booking';
 
-interface BookingFormProps {}
+interface BookingFormProps {
+    service?: any;
+    user?: any;
+}
 
 export const BookingForm = (props: BookingFormProps) => {
+    const [bookingDate, setBookingDate] = React.useState();
     const {
         register,
         handleSubmit,
@@ -23,6 +27,8 @@ export const BookingForm = (props: BookingFormProps) => {
     // Stopped here
     const onDayChange = (e: any) => {
         const value = e.target.value;
+        const dt = new Date(value);
+        console.log(dt.getDay());
     };
 
     const thisDay = () => {
@@ -38,7 +44,8 @@ export const BookingForm = (props: BookingFormProps) => {
 
     const onSubmit = (data: any, e: any) => {
         e.preventDefault();
-        console.log(data);
+        const dt = new Date(data.appointmentDate);
+        console.log(data, dt.getDay());
     };
 
     return (
@@ -84,6 +91,7 @@ export const BookingForm = (props: BookingFormProps) => {
                     id="appointmentDate"
                     className="form-control"
                     min={thisDay()}
+                    defaultValue={thisDay()}
                     onChange={onDayChange}
                 />
                 <p className="text-danger">{errors.appointmentDate?.message}</p>

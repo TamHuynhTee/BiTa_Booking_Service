@@ -12,7 +12,9 @@ export const Footer = (props: FooterProps) => {
         <div className="footer">
             <div className="container">
                 <div className="footer-content">
-                    <h1 className="footer-content-logo"> BITA Booking</h1>
+                    <h1 className="footer-content-logo fw-bold">
+                        BITA Booking
+                    </h1>
                     <ul className="footer-content-links">
                         <li>
                             <a href="#">About</a>

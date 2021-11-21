@@ -49,7 +49,7 @@ export const ServiceDetail = (props: Props) => {
         resolver: yupResolver(CreateServiceSchema),
         defaultValues: {
             name: service?.name,
-            category: service?.category,
+            category: service?.category.id,
             price: service?.price,
             depositPrice: service?.depositPrice,
             description: service?.description,
@@ -128,7 +128,7 @@ export const ServiceDetail = (props: Props) => {
         </div>
     ));
 
-    console.log(service);
+    console.log(service, categories);
 
     const onSubmit = (data: any, e: any) => {
         try {

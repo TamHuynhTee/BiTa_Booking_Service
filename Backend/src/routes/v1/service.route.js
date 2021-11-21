@@ -1,5 +1,6 @@
 const express = require('express');
 const validate = require('../../middlewares/validate');
+const queryService = require('../../middlewares/queryService');
 const auth = require('../../middlewares/auth');
 const { serviceController } = require('../../controllers');
 const { serviceValidation } = require('../../validations');
@@ -18,8 +19,12 @@ router.delete(
 );
 
 router.get('/get-service-by-id', validate(serviceValidation.getServiceById), serviceController.getServiceById);
-router.get('/get-service-by-id-full', validate(serviceValidation.getServiceById), serviceController.getServiceByIdFull);
-
-router.get('/query-service', validate(serviceValidation.queryServices), serviceController.queryServices);
+router.get('/get-all-services', validate(serviceValidation.getAllServices), serviceController.getAllServices);
+router.get(
+  '/query-service',
+  validate(serviceValidation.queryServices),
+  queryService.queryServices,
+  serviceController.queryServices
+);
 
 module.exports = router;

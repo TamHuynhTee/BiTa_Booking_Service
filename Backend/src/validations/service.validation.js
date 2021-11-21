@@ -59,6 +59,12 @@ const getServiceById = {
   }),
 };
 
+const getAllServices = {
+  query: Joi.object().keys({
+    businessId: Joi.string().required().custom(objectId),
+  }),
+};
+
 const queryServices = {
   query: Joi.object().keys({
     name: Joi.string().allow(null, ''),
@@ -70,4 +76,4 @@ const queryServices = {
   }),
 };
 
-module.exports = { createService, updateService, deleteService, getServiceById, queryServices };
+module.exports = { createService, updateService, deleteService, getServiceById, queryServices, getAllServices };

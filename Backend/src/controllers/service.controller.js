@@ -21,18 +21,16 @@ const deleteService = catchAsync(async (req, res) => {
   sendSuccess(res, {}, httpStatus.OK, 'Service deleted');
 });
 
-const getServiceByIdFull = catchAsync(async (req, res) => {
-  const service = await serviceService.getServiceById(req.query.serviceId);
-  if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
-  const business = await businessService.getBusinessById(service.business);
-  const category = await categoryService.getCategoryById(service.category);
-  sendSuccess(res, { service, business, category }, httpStatus.OK, 'Service found');
-});
-
 const getServiceById = catchAsync(async (req, res) => {
   const service = await serviceService.getServiceById(req.query.serviceId);
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
   sendSuccess(res, service, httpStatus.OK, 'Service found');
+});
+
+const getAllServices = catchAsync(async (req, res) => {
+  const services = await serviceService.getAllServices(req.query.businessId);
+  if (!services) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
+  sendSuccess(res, services, httpStatus.OK, 'Service found');
 });
 
 const queryServices = catchAsync(async (req, res) => {
@@ -48,5 +46,5 @@ module.exports = {
   deleteService,
   getServiceById,
   queryServices,
-  getServiceByIdFull,
+  getAllServices,
 };

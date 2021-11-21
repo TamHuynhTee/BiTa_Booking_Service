@@ -15,10 +15,21 @@ import { Typewriter } from 'react-simple-typewriter';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { selectUser } from '../../../../App/auth/slice/selector';
+import { queryServiceAsync } from '../../../Business/slice/thunk';
+import { selectServices } from '../../../Business/slice/selector';
+import { ServiceCardHome } from '../../Components';
+import { SearchBar } from '../../../../Components';
+import { Link } from 'react-router-dom';
 
 interface HomePageProps {}
 
 export const HomePage = (props: HomePageProps) => {
+    const dispatch = useDispatch();
+    const services = useSelector(selectServices);
+    React.useEffect(() => {
+        dispatch(queryServiceAsync({ limit: 4 }));
+    }, []);
+    console.log(services);
     return (
         <div className="homepage">
             <div className="homepage-banner">
@@ -108,7 +119,21 @@ export const HomePage = (props: HomePageProps) => {
                 <SectionTitle title="Các loại hình dịch vụ" />
                 <div></div>
                 <SectionTitle title="Đối tác" />
-                <SectionTitle title="Một số dịch vụ" />
+                <SectionTitle title="Một số dịch vụ phổ biến" />
+                <div className="d-flex justify-content-between">
+                    <div className="d-inline-block">
+                        <SearchBar placeholder="Tìm kiếm dịch vụ" />
+                    </div>
+                    <Link to="">Xem tất cả {' >'}</Link>
+                </div>
+                <hr />
+                <div className="row">
+                    {services?.results.map((e: any, i: number) => (
+                        <div className="col-lg-3" key={i}>
+                            <ServiceCardHome data={e} />
+                        </div>
+                    ))}
+                </div>
                 <SectionTitle title="Đánh giá từ khách hàng" />
             </div>
             <ChooseAccountDialog />

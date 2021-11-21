@@ -58,5 +58,13 @@ branchSchema.statics.nameExists = async function (name, excludeBranchId) {
   return !!branch;
 };
 
+branchSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'services',
+    select: 'name',
+  });
+  next();
+});
+
 const Branch = mongoose.model('Branch', branchSchema);
 module.exports = Branch;

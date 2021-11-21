@@ -72,6 +72,10 @@ const userSchema = mongoose.Schema(
       enum: ['male', 'female'],
       default: 'male',
     },
+    avatar: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

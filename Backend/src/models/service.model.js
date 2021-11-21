@@ -77,5 +77,17 @@ serviceSchema.statics.nameExists = async function (name, excludeServiceId) {
   return !!service;
 };
 
+serviceSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'business',
+    select: 'displayName businessAccount',
+  });
+  this.populate({
+    path: 'category',
+    select: 'name',
+  });
+  next();
+});
+
 const Service = mongoose.model('Service', serviceSchema);
 module.exports = Service;

@@ -17,9 +17,9 @@ const getBranchById = async (branchId) => {
 const updateBranch = async (branchBody) => {
   const branch = await getBranchById(branchBody.branchId);
   if (!branch) throw new ApiError(httpStatus.NOT_FOUND, "Branch doesn't exists");
-  if (await Branch.nameExists(branchBody.name)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Branch name already taken');
-  }
+  //   if (await Branch.nameExists(branchBody.name)) {
+  //     throw new ApiError(httpStatus.BAD_REQUEST, 'Branch name already taken');
+  //   }
   Object.assign(branch, branchBody);
   await branch.save();
 };
