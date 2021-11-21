@@ -12,6 +12,8 @@ router.post('/registerBusiness', validate(authValidation.registerBusiness), auth
 router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
 router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
+router.put('/update-profile', auth(), validate(authValidation.updateProfile), authController.updateProfile);
+router.put('/update-avatar', auth(), validate(authValidation.updateAvatar), authController.updateUserAvatar);
 router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
 router.post(
   '/approve-business',

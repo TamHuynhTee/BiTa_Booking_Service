@@ -79,13 +79,23 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  if (await User.usernameExists(updateBody.username)) {
+  if (await User.usernameExists(updateBody.username, userId)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
   }
-  if (await User.isPhoneTaken(updateBody.phoneNumber)) {
+  if (await User.isPhoneTaken(updateBody.phoneNumber, userId)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
   }
   Object.assign(user, updateBody);
+  await user.save();
+  return user;
+};
+
+const updateUserAvatarById = async (userId, avatar) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  user.avatar = avatar;
   await user.save();
   return user;
 };
@@ -110,6 +120,7 @@ module.exports = {
   getUserById,
   getUserByEmail,
   updateUserById,
+  updateUserAvatarById,
   deleteUserById,
   checkVerifyEmail,
   checkIsActive,

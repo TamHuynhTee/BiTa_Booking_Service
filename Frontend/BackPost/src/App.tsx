@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HashLoader } from 'react-spinners';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import Router from './routes';
+import { Router } from './routes';
 
 function App() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = React.useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setLoading(true);
-        setTimeout(() => setLoading(false), 1500);
+        const load = setTimeout(() => setLoading(false), 1500);
+        return () => clearTimeout(load);
     }, []);
-
     return (
         <div className="App">
             {loading ? (

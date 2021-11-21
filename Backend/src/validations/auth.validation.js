@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { password } = require('./custom.validation');
+const { password, objectId } = require('./custom.validation');
 
 const registerCustomer = {
   body: Joi.object().keys({
@@ -24,6 +24,26 @@ const registerBusiness = {
     shortDescription: Joi.string().allow(null, ''),
     username: Joi.string().required(),
     password: Joi.string().required().custom(password),
+  }),
+};
+
+const updateProfile = {
+  body: Joi.object().keys({
+    userId: Joi.string().custom(objectId).required(),
+    email: Joi.string().required().email(),
+    phoneNumber: Joi.string().required(),
+    username: Joi.string().allow(null, ''),
+    firstName: Joi.string(),
+    surName: Joi.string(),
+    gender: Joi.string(),
+    dayOfBirth: Joi.date(),
+  }),
+};
+
+const updateAvatar = {
+  body: Joi.object().keys({
+    userId: Joi.string().custom(objectId).required(),
+    avatar: Joi.string(),
   }),
 };
 
@@ -68,4 +88,6 @@ module.exports = {
   resetPassword,
   verifyEmail,
   approveBusiness,
+  updateProfile,
+  updateAvatar,
 };

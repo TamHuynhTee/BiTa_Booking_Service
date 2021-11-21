@@ -68,6 +68,19 @@ const getCurrentUser = catchAsync(async (req, res) => {
   } else sendSuccess(res, { user: req.user }, httpStatus.OK, 'Found account');
 });
 
+const updateProfile = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+  delete req.body.userId;
+  const user = await userService.updateUserById(userId, req.body);
+  sendSuccess(res, user, httpStatus.OK, 'Cập nhật thành công');
+});
+
+const updateUserAvatar = catchAsync(async (req, res) => {
+  const { userId, avatar } = req.body;
+  const user = await userService.updateUserAvatarById(userId, avatar);
+  sendSuccess(res, user, httpStatus.OK, 'Cập nhật thành công');
+});
+
 module.exports = {
   registerCustomer,
   registerBusiness,
@@ -78,4 +91,6 @@ module.exports = {
   verifyEmail,
   approveBusiness,
   getCurrentUser,
+  updateProfile,
+  updateUserAvatar,
 };

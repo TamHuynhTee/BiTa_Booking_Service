@@ -1,0 +1,33 @@
+.loading-container {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+}
+
+.column-2 {
+    width: 50%;
+}
+
+.column-3 {
+    width: 33.33%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.rich-text-no-resize {
+    resize: none;
+}
+
+.color-label {
+    color: #004a74;
+}
