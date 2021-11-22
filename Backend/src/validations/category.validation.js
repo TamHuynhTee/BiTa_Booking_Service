@@ -25,7 +25,7 @@ const deleteCategory = {
 };
 
 const getCategoryById = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     categoryId: Joi.string().required().custom(objectId),
   }),
 };

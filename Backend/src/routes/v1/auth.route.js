@@ -14,6 +14,7 @@ router.post('/reset-password', validate(authValidation.resetPassword), authContr
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
 router.put('/update-profile', auth(), validate(authValidation.updateProfile), authController.updateProfile);
 router.put('/update-avatar', auth(), validate(authValidation.updateAvatar), authController.updateUserAvatar);
+router.put('/change-password', auth(), validate(authValidation.changePassword), authController.changePassword);
 router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
 router.post(
   '/approve-business',

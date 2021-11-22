@@ -10,8 +10,8 @@ const createBusiness = {
     businessAccount: Joi.string().required().custom(objectId),
     businessCertificate: Joi.string().allow(null, ''),
     shortDescription: Joi.string().allow(null),
-}),
-}
+  }),
+};
 
 const updateBusinessInfo = {
   body: Joi.object().keys({
@@ -21,7 +21,7 @@ const updateBusinessInfo = {
     businessCertificate: Joi.string().allow(null, ''),
     shortDescription: Joi.string().allow(null, ''),
   }),
-}
+};
 
 const deleteBusinessById = {
   body: Joi.object().keys({
@@ -30,8 +30,19 @@ const deleteBusinessById = {
 };
 
 const getBusinessById = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     businessId: Joi.string().required().custom(objectId),
+  }),
+};
+
+const queryBusinesses = {
+  query: Joi.object().keys({
+    keyword: Joi.string().allow(null, ''),
+    filter: Joi.string().valid('businessName', 'displayName', 'ownerName'),
+    isActive: Joi.boolean(),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
   }),
 };
 
@@ -39,5 +50,6 @@ module.exports = {
   createBusiness,
   updateBusinessInfo,
   deleteBusinessById,
-  getBusinessById
+  getBusinessById,
+  queryBusinesses,
 };

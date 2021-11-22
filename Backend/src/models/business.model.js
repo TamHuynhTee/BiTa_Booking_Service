@@ -85,7 +85,7 @@ businessSchema.statics.displayNameExists = async function (displayName, excludeB
 businessSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'businessAccount',
-    select: 'avatar username firstName surName',
+    select: 'avatar username firstName surName avatar email phoneNumber',
   });
   next();
 });

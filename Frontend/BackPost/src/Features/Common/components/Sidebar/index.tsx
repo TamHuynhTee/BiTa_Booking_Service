@@ -32,11 +32,11 @@ export const Sidebar = (props: SidebarProps) => {
                 href="#profileCollapse"
             >
                 <img
-                    src={user?.user?.avatar || img}
+                    src={user?.avatar || img}
                     alt="avatar"
                     className="avatar"
                 />{' '}
-                <h4 className="text-truncate">{user?.user?.username}</h4>
+                <h4 className="text-truncate">{user?.username}</h4>
             </a>
             <div className="collapse mt-2" id="profileCollapse">
                 <ul className="sidebar-links-list">
@@ -58,7 +58,7 @@ export const Sidebar = (props: SidebarProps) => {
                             Trang chủ
                         </Link>
                     </li>
-                    {user?.user?.role === 'manager' ? (
+                    {user?.role === 'manager' ? (
                         <>
                             <li>
                                 <Link

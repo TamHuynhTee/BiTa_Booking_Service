@@ -2,15 +2,16 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { categoryService } = require('../services');
 const { sendSuccess } = require('./return.controller');
+const ApiError = require('../utils/ApiError');
 
 const createCategory = catchAsync(async (req, res) => {
   await categoryService.createCategory(req.body);
-  sendSuccess(res, {}, httpStatus.CREATED, 'Created');
+  sendSuccess(res, {}, httpStatus.CREATED, 'Đã tạo loại dịch vụ mới');
 });
 
 const updateCategory = catchAsync(async (req, res) => {
   await categoryService.updateCategory(req.body);
-  sendSuccess(res, {}, httpStatus.OK, 'Category changed');
+  sendSuccess(res, {}, httpStatus.OK, 'Đã cập nhật loại dịch vụ');
 });
 
 const deleteCategory = catchAsync(async (req, res) => {
@@ -19,9 +20,9 @@ const deleteCategory = catchAsync(async (req, res) => {
 });
 
 const getCategoryById = catchAsync(async (req, res) => {
-  const category = await categoryService.getCategoryById(req.body.categoryId);
+  const category = await categoryService.getCategoryById(req.query.categoryId);
   if (!category) throw new ApiError(httpStatus.NOT_FOUND, "Category doesn't exists");
-  sendSuccess(res, { category }, httpStatus.OK, 'Category found');
+  sendSuccess(res, category, httpStatus.OK, 'Category found');
 });
 
 const getAllCategories = catchAsync(async (req, res) => {

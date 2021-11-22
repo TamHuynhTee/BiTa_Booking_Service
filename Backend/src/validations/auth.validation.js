@@ -29,7 +29,6 @@ const registerBusiness = {
 
 const updateProfile = {
   body: Joi.object().keys({
-    userId: Joi.string().custom(objectId).required(),
     email: Joi.string().required().email(),
     phoneNumber: Joi.string().required(),
     username: Joi.string().allow(null, ''),
@@ -42,7 +41,6 @@ const updateProfile = {
 
 const updateAvatar = {
   body: Joi.object().keys({
-    userId: Joi.string().custom(objectId).required(),
     avatar: Joi.string(),
   }),
 };
@@ -64,6 +62,13 @@ const resetPassword = {
   body: Joi.object().keys({
     token: Joi.string().required(),
     password: Joi.string().required().custom(password),
+  }),
+};
+
+const changePassword = {
+  body: Joi.object().keys({
+    oldPassword: Joi.string().required().custom(password),
+    newPassword: Joi.string().required().custom(password),
   }),
 };
 
@@ -90,4 +95,5 @@ module.exports = {
   approveBusiness,
   updateProfile,
   updateAvatar,
+  changePassword,
 };

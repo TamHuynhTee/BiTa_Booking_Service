@@ -3,6 +3,7 @@ const validate = require('../../middlewares/validate');
 const auth = require('../../middlewares/auth');
 const { businessController } = require('../../controllers');
 const { businessValidation } = require('../../validations');
+const queryBusiness = require('../../middlewares/queryBusiness');
 
 const router = express.Router();
 
@@ -26,11 +27,12 @@ router.delete(
   validate(businessValidation.deleteBusinessById),
   businessController.deleteBusinessById
 );
+router.get('/get-business-by-id', auth(), validate(businessValidation.getBusinessById), businessController.getBusinessById);
 router.get(
-  '/get-category-by-id',
-  auth('manageCategories'),
-  validate(businessValidation.getBusinessById),
-  businessController.getBusinessById
+  '/query-business',
+  validate(businessValidation.queryBusinesses),
+  queryBusiness.queryBusinesses,
+  businessController.queryBusinesses
 );
 
 module.exports = router;

@@ -25,6 +25,24 @@ const loginUserWithEmailAndPassword = async (email, password) => {
 
 /**
  * Reset password
+ * @param {string} oldPassword
+ * @param {string} newPassword
+ * @returns {Promise}
+ */
+const changePassword = async (userId, updateBody) => {
+  const { oldPassword, newPassword } = updateBody;
+  const user = await userService.getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Người dùng không tồn tại');
+  }
+  if (!(await user.isPasswordMatch(oldPassword))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Sai mật khẩu');
+  }
+  await userService.updateUserById(user.id, { password: newPassword });
+};
+
+/**
+ * Reset password
  * @param {string} resetPasswordToken
  * @param {string} newPassword
  * @returns {Promise}
@@ -100,4 +118,5 @@ module.exports = {
   verifyEmail,
   approveBusiness,
   rejectBusiness,
+  changePassword,
 };

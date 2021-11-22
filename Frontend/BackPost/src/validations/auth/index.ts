@@ -21,3 +21,19 @@ export const ProfileInfoSchema = yup.object().shape({
     dayOfBirth: yup.date(),
     avatar: yup.string(),
 });
+
+export const ChangePasswordSchema = yup.object().shape({
+    oldPassword: yup.string().required('Chưa nhập mật khẩu'),
+    newPassword: yup
+        .string()
+        .required('Chưa nhập mật khẩu mới')
+        .min(8, 'Mật khẩu ít nhất 8 ký tự')
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            'Mật khẩu phải chứa ít nhất 1 số và 1 ký tự'
+        ),
+    confirmPassword: yup
+        .string()
+        .required('Chưa xác nhận mật khẩu')
+        .oneOf([yup.ref('newPassword'), null], 'Mật khẩu phải giống nhau'),
+});

@@ -82,10 +82,16 @@ const deleteBusinessById = async (businessId) => {
   return business;
 };
 
+const queryBusinesses = async (filter, options) => {
+  const businesses = await Business.paginate(filter, options);
+  return businesses;
+};
+
 module.exports = {
   createBusiness,
   getBusinessById,
   updateBusinessById,
   deleteBusinessById,
   getBusinessByAccountId,
+  queryBusinesses,
 };

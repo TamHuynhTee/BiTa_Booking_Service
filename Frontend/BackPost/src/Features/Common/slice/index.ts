@@ -27,11 +27,11 @@ export const authSlice = createSlice({
             action: PayloadAction<any>
         ) => {
             state.status = 'idle';
-            state.user = action.payload;
+            const { user } = action.payload;
+            state.user = user;
         },
         [getCurrentUserAsync.rejected.toString()]: (state, action) => {
             state.status = 'loading';
-            state.user = action.payload;
         },
     },
 });

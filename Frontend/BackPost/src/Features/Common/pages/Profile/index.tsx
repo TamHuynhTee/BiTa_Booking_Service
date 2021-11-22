@@ -43,7 +43,7 @@ export const Profile = (props: Props) => {
                 </li>
             </ul>
             <div className="mb-3">
-                {page === 1 ? <InfoForm /> : <ChangePassForm />}
+                {page === 1 ? <InfoForm info={data} /> : <ChangePassForm />}
             </div>
         </div>
     );

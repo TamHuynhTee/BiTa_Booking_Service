@@ -69,16 +69,19 @@ const getCurrentUser = catchAsync(async (req, res) => {
 });
 
 const updateProfile = catchAsync(async (req, res) => {
-  const { userId } = req.body;
-  delete req.body.userId;
-  const user = await userService.updateUserById(userId, req.body);
+  const user = await userService.updateUserById(req.user._id, req.body);
   sendSuccess(res, user, httpStatus.OK, 'Cập nhật thành công');
 });
 
 const updateUserAvatar = catchAsync(async (req, res) => {
-  const { userId, avatar } = req.body;
-  const user = await userService.updateUserAvatarById(userId, avatar);
+  const { avatar } = req.body;
+  const user = await userService.updateUserAvatarById(req.user._id, avatar);
   sendSuccess(res, user, httpStatus.OK, 'Cập nhật thành công');
+});
+
+const changePassword = catchAsync(async (req, res) => {
+  await authService.changePassword(req.user._id, req.body);
+  sendSuccess(res, {}, httpStatus.OK, 'Cập nhật thành công');
 });
 
 module.exports = {
@@ -93,4 +96,5 @@ module.exports = {
   getCurrentUser,
   updateProfile,
   updateUserAvatar,
+  changePassword,
 };

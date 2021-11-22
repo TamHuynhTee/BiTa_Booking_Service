@@ -19,7 +19,7 @@ export const BranchList = (props: Props) => {
     const { business } = props;
     const [page, setPage] = React.useState(1);
     const [pagination, setPagination] = React.useState(1);
-    const services = useSelector(selectBranches);
+    const branches = useSelector(selectBranches);
     const fetchData = () => {
         dispatch(
             queryBranchAsync({
@@ -36,7 +36,7 @@ export const BranchList = (props: Props) => {
             ?.classList.add('active');
     }, [dispatch, page]);
 
-    console.log(services);
+    console.log(branches);
     const onSubmit = (data: any) => {
         if (!data.keyword) {
             fetchData();
@@ -108,7 +108,7 @@ export const BranchList = (props: Props) => {
                 />
             </div>
             <div className="d-flex flex-column gap-2">
-                {services?.totalResults === 0 ? (
+                {branches?.totalResults === 0 ? (
                     <div
                         className="d-flex justify-content-center align-items-center"
                         style={{ height: '10rem' }}
@@ -121,7 +121,7 @@ export const BranchList = (props: Props) => {
                             {/* Pagination */}
                             <nav>
                                 <ul className="pagination">
-                                    {[...Array(services?.totalPages)].map(
+                                    {[...Array(branches?.totalPages)].map(
                                         (e: any, i: number) => (
                                             <li
                                                 className="page-item"
@@ -143,7 +143,7 @@ export const BranchList = (props: Props) => {
                             </nav>
                         </div>
                         {/* Results */}
-                        {services?.results.map((e: any, i: number) => (
+                        {branches?.results.map((e: any, i: number) => (
                             <BranchCard key={i} data={e} />
                         ))}
                     </>

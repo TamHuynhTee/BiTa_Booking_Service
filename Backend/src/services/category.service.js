@@ -15,8 +15,10 @@ const getCategoryById = async (categoryId) => {
 const updateCategory = async (categoryBody) => {
   const category = await getCategoryById(categoryBody.categoryId);
   if (!category) throw new ApiError(httpStatus.NOT_FOUND, "Category doesn't exists");
-  if (await Category.nameExists(categoryBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
-  if (await Category.codeExists(categoryBody.code)) throw new ApiError(httpStatus.BAD_REQUEST, 'Code already exists');
+  if (await Category.nameExists(categoryBody.name, categoryBody.categoryId))
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
+  if (await Category.codeExists(categoryBody.code, categoryBody.categoryId))
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Code already exists');
   Object.assign(category, categoryBody);
   await category.save();
 };

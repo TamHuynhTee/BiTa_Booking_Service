@@ -63,9 +63,8 @@ const userSchema = mongoose.Schema(
       default: true,
     },
     dayOfBirth: {
-      type: Date,
+      type: String,
       required: false,
-      default: Date.now(),
     },
     gender: {
       type: String,

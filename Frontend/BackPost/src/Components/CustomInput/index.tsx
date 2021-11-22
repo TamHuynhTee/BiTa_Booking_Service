@@ -3,7 +3,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { ColorLabel } from '..';
 
 export const CustomInput = (props: {
-    type?: 'text' | 'password' | 'email' | 'date';
+    type?: 'text' | 'password' | 'email';
     register?: any;
     name?: string;
     placeholder?: string;
@@ -22,13 +22,11 @@ export const CustomInput = (props: {
                 placeholder={placeholder}
                 id={name}
             />
-            {/* <p className="text-danger"> */}
             <ErrorMessage
                 errors={errors}
                 name={name || ''}
                 as={<p className="text-danger"></p>}
             />
-            {/* </p> */}
         </div>
     );
 };

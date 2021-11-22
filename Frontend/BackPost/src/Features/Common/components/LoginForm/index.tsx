@@ -6,6 +6,7 @@ import { ILoginApi } from '../../type';
 import { useHistory } from 'react-router';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { loginApi } from '../../apis/auth.api';
+import { ButtonSpinner } from '../../../../Components';
 
 interface Props {}
 
@@ -103,15 +104,7 @@ export const LoginForm = (props: Props) => {
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {!isSubmitting ? (
-                        'Đăng nhập'
-                    ) : (
-                        <span
-                            className="spinner-border spinner-border-sm"
-                            role="status"
-                            aria-hidden="true"
-                        ></span>
-                    )}
+                    {!isSubmitting ? 'Đăng nhập' : <ButtonSpinner />}
                 </button>
             </div>
         </form>
