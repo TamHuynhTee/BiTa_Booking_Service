@@ -14,6 +14,10 @@ const getBranchById = async (branchId) => {
   return Branch.findById(branchId);
 };
 
+const getBranchesByService = async (serviceId) => {
+  return Branch.find({ services: serviceId, isActive: true });
+};
+
 const updateBranch = async (branchBody) => {
   const branch = await getBranchById(branchBody.branchId);
   if (!branch) throw new ApiError(httpStatus.NOT_FOUND, "Branch doesn't exists");
@@ -36,4 +40,4 @@ const queryBranches = async (filter, options) => {
   return branches;
 };
 
-module.exports = { createBranch, getBranchById, updateBranch, deleteBranch, queryBranches };
+module.exports = { createBranch, getBranchById, updateBranch, deleteBranch, queryBranches, getBranchesByService };

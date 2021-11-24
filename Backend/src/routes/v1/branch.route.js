@@ -11,6 +11,7 @@ router.post('/create-branch', auth('branch'), validate(branchValidation.createBr
 router.put('/update-branch', auth('branch'), validate(branchValidation.updateBranch), branchController.updateBranch);
 router.delete('/delete-branch', auth('branch'), validate(branchValidation.deleteBranch), branchController.deleteBranch);
 router.get('/get-branch-by-id', validate(branchValidation.getBranchById), branchController.getBranchById);
+router.get('/get-branches-by-service', validate(branchValidation.getBranchByService), branchController.getBranchesByService);
 router.get(
   '/query-branch',
   validate(branchValidation.queryBranches),

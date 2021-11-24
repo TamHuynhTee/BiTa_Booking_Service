@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CommonStateTypes } from '../type';
-import { getServiceDetailAsync, queryBusinessAsync } from './thunk';
+import {
+    getBranchesByServiceAsync,
+    getServiceDetailAsync,
+    queryBusinessAsync,
+} from './thunk';
 
 const initialState: Partial<CommonStateTypes> = {
     serviceDetail: null,
     businesses: undefined,
     businessDetail: null,
+    serviceBranches: [],
     status: 'idle',
 };
 
@@ -38,6 +43,19 @@ export const commonSlice = createSlice({
             state.businesses = action.payload;
         },
         [queryBusinessAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        [getBranchesByServiceAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getBranchesByServiceAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.serviceBranches = action.payload;
+        },
+        [getBranchesByServiceAsync.rejected.toString()]: (state, action) => {
             state.status = 'idle';
         },
     },

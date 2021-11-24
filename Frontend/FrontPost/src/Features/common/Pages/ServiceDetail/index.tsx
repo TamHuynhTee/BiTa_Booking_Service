@@ -5,30 +5,67 @@ import { ServiceCard } from '../../../../Components/ServiceCard';
 import { PageContainer } from '../../../../Components/PageContainer';
 import { PageWrapper } from '../../../../Components/PageWrapper';
 import './style.scss';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getBranchesByServiceAsync,
+    getServiceDetailAsync,
+} from '../../slice/thunk';
+import { selectServiceBranch, selectServiceDetail } from '../../slice/selector';
+import { moneyFormatter } from '../../../../utils/moneyFormatter';
+import { weekDayFormatter } from '../../../../utils/weekDayFormatter';
+import { timeFormatter } from '../../../../utils/timeFormatter';
 
 interface ServiceDetailProps {}
 
 export const ServiceDetail = (props: ServiceDetailProps) => {
+    const history = useHistory();
     const { id } = useParams<any>();
+    const dispatch = useDispatch();
+    const service = useSelector(selectServiceDetail);
+    const branches = useSelector(selectServiceBranch);
 
-    React.useEffect(() => {}, []);
+    React.useEffect(() => {
+        dispatch(getServiceDetailAsync({ serviceId: id }));
+        dispatch(getBranchesByServiceAsync({ serviceId: id }));
+    }, []);
+
+    const handleBook = () => {
+        history.push(`/book/${id}`);
+    };
 
     return (
         <PageContainer>
             <PageWrapper className="serviceDetail-wrapper ps-5 pe-5 pt-3 pb-3 mb-5 bg-body rounded">
                 <div className="serviceDetail-wrapper-header">
-                    <h1 className="text-truncate">
-                        Dịch vụ khám tổng hợp, chụp xét nghiệm
-                    </h1>
+                    <h1 className="text-truncate fw-bold">Chi tiết dịch vụ</h1>
                     <div className="btn-group flex-grow-1">
-                        <button className="btn btn-danger">
-                            Đăng ký dùng dịch vụ
+                        <button
+                            className="btn btn-success"
+                            onClick={handleBook}
+                        >
+                            Đặt hẹn ngay
                         </button>
                     </div>
                 </div>
                 <div className="serviceDetail-wrapper-body">
                     <ul>
+                        <li className="mb-3">
+                            <label>
+                                <span className="badge bg-primary me-3 fs-5">
+                                    <i className="bi bi-bookmark"></i>
+                                </span>
+                                <span className="badge bg-primary fs-5">
+                                    Dịch vụ
+                                </span>
+                            </label>
+                            <h2 className="fw-bold mt-2">{service?.name}</h2>
+                            <img
+                                src={service?.image}
+                                alt="..."
+                                className="img-fluid img-thumbnail"
+                            />
+                        </li>
                         <li>
                             <label>
                                 <span className="badge bg-primary me-3 fs-5">
@@ -38,7 +75,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                     Nhà cung cấp dịch vụ
                                 </span>
                             </label>
-                            <Supplier />
+                            <Supplier data={service?.business} />
                         </li>
                         <li>
                             <label>
@@ -46,12 +83,10 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                     <i className="bi bi-bookmark"></i>
                                 </span>
                                 <span className="badge bg-primary fs-5">
-                                    Dịch vụ
+                                    Mô tả dịch vụ
                                 </span>
                             </label>
-                            <p>Khám nội soi</p>
-                            <p>Khám tổng thể</p>
-                            <p>Chữa chấn thương chỉnh hình</p>
+                            <p>{service?.description}</p>
                         </li>
                         <li>
                             <label>
@@ -63,27 +98,10 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                 </span>
                             </label>
                             <div className="d-flex mt-3 mb-3 gap-3">
-                                <span className="badge rounded-pill bg-light text-dark">
-                                    Y tế
-                                </span>
-                                <span className="badge rounded-pill bg-light text-dark">
-                                    Sức khỏe
+                                <span className="badge rounded-pill bg-secondary">
+                                    {service?.category?.name}
                                 </span>
                             </div>
-                        </li>
-                        <li>
-                            <label>
-                                <span className="badge bg-dark me-3 fs-5">
-                                    <i className="bi bi-geo-alt"></i>
-                                </span>
-                                <span className="badge bg-dark fs-5">
-                                    Địa chỉ đặt hẹn
-                                </span>
-                            </label>
-                            <p>
-                                📍 31 Nguyễn Du, phường Tân Phú, thành phố Thủ
-                                Đức, thành phố Hồ Chí Minh
-                            </p>
                         </li>
                         <li>
                             <label>
@@ -94,7 +112,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                     Giá cả
                                 </span>
                             </label>
-                            <p>Miễn phí</p>
+                            <p>{moneyFormatter(service?.price)}</p>
                         </li>
                         <li>
                             <label>
@@ -105,20 +123,54 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                     Đặt cọc
                                 </span>
                             </label>
-                            <p>50.000</p>
+                            <p>
+                                {service?.hasDeposit
+                                    ? moneyFormatter(service?.depositPrice)
+                                    : 'Không có'}
+                            </p>
                         </li>
                         <li>
                             <label>
                                 <span className="badge bg-info me-3 fs-5">
-                                    <i className="bi bi-info-square"></i>
+                                    <i className="bi bi-calendar-week"></i>
                                 </span>
                                 <span className="badge bg-info fs-5">
-                                    Tiện ích
+                                    Lịch làm việc
                                 </span>
                             </label>
-                            <p>Hủy hẹn không mất phí</p>
-                            <p>Đổi giờ hẹn</p>
-                            <p>Liên hệ nhanh chóng</p>
+                            {service?.schedule?.map((e: any, i: number) => (
+                                <p key={i}>
+                                    <label>
+                                        {weekDayFormatter(e.weekDay)}:
+                                    </label>
+                                    {e.time?.map((time: any, index: number) => (
+                                        <p
+                                            className="badge rounded-pill bg-primary ms-2"
+                                            key={index}
+                                        >
+                                            {timeFormatter(time)}
+                                        </p>
+                                    ))}
+                                </p>
+                            ))}
+                        </li>
+                        <li>
+                            <label>
+                                <span className="badge bg-dark me-3 fs-5">
+                                    <i className="bi bi-geo-alt"></i>
+                                </span>
+                                <span className="badge bg-dark fs-5">
+                                    Các chi nhánh hiện có
+                                </span>
+                            </label>
+                            {branches?.map((e: any, i: number) => (
+                                <div key={i} className="mt-3">
+                                    <span className="badge rounded-pill bg-danger">
+                                        {e.name}
+                                    </span>
+                                    {` ${e.address.street}, ${e.address.ward}, ${e.address.district}, ${e.address.province}`}
+                                </div>
+                            ))}
                         </li>
                     </ul>
                 </div>
@@ -133,11 +185,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
     );
 };
 
-interface OtherService {
-    title?: string;
-}
-
-const OtherService = (props: OtherService) => {
+const OtherService = (props: { title?: string }) => {
     const settings = {
         dots: false,
         infinite: true,
@@ -160,28 +208,30 @@ const OtherService = (props: OtherService) => {
     );
 };
 
-const Supplier = () => {
+const Supplier = (props: { data?: any }) => {
+    const { data } = props;
     const thumbnail = 'https://picsum.photos/200/200';
     return (
         <div className="card mt-2 mb-2">
             <div className="d-flex bd-highlight mh-100">
                 <div className="p-2">
                     <img
-                        src={thumbnail}
-                        alt=""
+                        src={data?.businessAccount?.avatar || thumbnail}
+                        alt="..."
                         height="200"
                         width="200"
                         className="rounded float-start img-fluid mh-100"
                     />
                 </div>
                 <div className="p-2 flex-md-grow-1">
-                    <h2>Phòng khám đa khoa Tân Đức</h2>
+                    <h2 className="fw-bold">{data?.displayName}</h2>
                     <p>
-                        <i className="bi bi-telephone"></i> 0347933844
+                        <i className="bi bi-telephone"></i>{' '}
+                        {data?.businessAccount?.phoneNumber}
                     </p>
                     <p>
-                        <i className="bi bi-building"></i> Tân Bình, Thành Phố
-                        Hồ Chí Minh
+                        <i className="bi bi-envelope"></i>{' '}
+                        {data?.businessAccount?.email}
                     </p>
                     <button type="button" className="btn btn-link fs-5">
                         Chi tiết

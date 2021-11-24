@@ -43,6 +43,12 @@ const getBranchById = {
   }),
 };
 
+const getBranchByService = {
+  query: Joi.object().keys({
+    serviceId: Joi.string().required().custom(objectId),
+  }),
+};
+
 const queryBranches = {
   query: Joi.object().keys({
     name: Joi.string().allow(null, ''),
@@ -54,4 +60,4 @@ const queryBranches = {
   }),
 };
 
-module.exports = { createBranch, updateBranch, deleteBranch, getBranchById, queryBranches };
+module.exports = { createBranch, updateBranch, deleteBranch, getBranchById, queryBranches, getBranchByService };

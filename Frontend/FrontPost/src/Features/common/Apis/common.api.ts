@@ -14,3 +14,9 @@ export const queryBusinessApi = async (
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeCommon['queryBusiness'], query);
 };
+
+export const getBranchesByServiceApi = async (
+    serviceId: any
+): Promise<ReturnListResponse<any>> => {
+    return await Repository(routeCommon['getBranchesByService'], serviceId);
+};

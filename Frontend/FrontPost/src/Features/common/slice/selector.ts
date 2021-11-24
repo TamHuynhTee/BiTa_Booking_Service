@@ -7,3 +7,5 @@ export const selectBusinessDetail = (state: RootState) =>
     state?.common.businessDetail;
 export const selectQueryBusiness = (state: RootState) =>
     state?.common.businesses;
+export const selectServiceBranch = (state: RootState) =>
+    state?.common.serviceBranches;

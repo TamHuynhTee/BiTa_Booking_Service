@@ -26,6 +26,12 @@ const getBranchById = catchAsync(async (req, res) => {
   sendSuccess(res, branch, httpStatus.OK, 'Branch found');
 });
 
+const getBranchesByService = catchAsync(async (req, res) => {
+  const branches = await branchService.getBranchesByService(req.query.serviceId);
+  if (!branches) throw new ApiError(httpStatus.NOT_FOUND, "Branch doesn't exists");
+  sendSuccess(res, branches, httpStatus.OK, 'Branch found');
+});
+
 const queryBranches = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'isActive', 'business']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -33,4 +39,4 @@ const queryBranches = catchAsync(async (req, res) => {
   sendSuccess(res, branches, httpStatus.OK, 'Branches found');
 });
 
-module.exports = { createBranch, queryBranches, updateBranch, deleteBranch, getBranchById };
+module.exports = { createBranch, queryBranches, updateBranch, deleteBranch, getBranchById, getBranchesByService };

@@ -2,6 +2,7 @@ export interface CommonStateTypes {
     serviceDetail?: any;
     businesses?: IQueryResult;
     businessDetail?: any;
+    serviceBranches?: Array<any>;
     status?: string;
 }
 
