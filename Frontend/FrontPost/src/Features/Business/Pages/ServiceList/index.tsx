@@ -140,7 +140,7 @@ export const ServiceList = (props: Props) => {
                             </nav>
                         </div>
                         {/* Results */}
-                        {services?.results.map((e: any, i: number) => (
+                        {services?.results?.map((e: any, i: number) => (
                             <ServiceCard key={i} data={e} />
                         ))}
                     </>

@@ -26,8 +26,10 @@ export const ServiceCardHome = (props: Props) => {
                 height="200"
             />
             <div className="card-body">
-                <h5 className="card-title fw-bold">{data.name}</h5>
-                <p className="card-text">{data.description}</p>
+                <h5 className="card-title fw-bold text-truncate">
+                    {data.name}
+                </h5>
+                <p className="card-text text-truncate">{data.description}</p>
                 <button className="btn btn-link" onClick={handleDetailService}>
                     Chi tiết
                 </button>

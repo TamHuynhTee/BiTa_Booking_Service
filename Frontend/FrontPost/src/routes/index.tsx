@@ -6,6 +6,7 @@ import { Booking } from '../Features/Customer/Pages/Booking';
 import { Footer, Header } from '../Components';
 import {
     BusinessInfo,
+    BusinessList,
     HomePage,
     Login,
     Profile,
@@ -14,6 +15,7 @@ import {
     ResetPassword,
     SearchResult,
     ServiceDetail,
+    ServiceList,
     VerifyEmail,
 } from '../Features/common/Pages';
 import { NotFound } from '../static/404';
@@ -134,7 +136,7 @@ const routes: Array<IRoute> = [
                 <Footer />
             </>
         ),
-        path: defaultRoute.Company,
+        path: defaultRoute.Business,
         exact: true,
     },
     {
@@ -157,6 +159,28 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.Book,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <ServiceList />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.ServiceList,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <BusinessList />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.BusinessList,
         exact: true,
     },
 ];

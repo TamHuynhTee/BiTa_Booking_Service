@@ -52,10 +52,10 @@ const verifyEmail = catchAsync(async (req, res) => {
 const approveBusiness = catchAsync(async (req, res) => {
   if (req.body.decision) {
     await authService.approveBusiness(req.body.businessId);
-    sendSuccess(res, {}, httpStatus.NO_CONTENT, 'Approved business');
+    sendSuccess(res, {}, httpStatus.OK, 'Đã duyệt doanh nghiệp');
   } else {
     await authService.rejectBusiness(req.body.businessId);
-    sendSuccess(res, {}, httpStatus.NO_CONTENT, 'Rejected business');
+    sendSuccess(res, {}, httpStatus.OK, 'Đã từ chối doanh nghiệp');
   }
 });
 

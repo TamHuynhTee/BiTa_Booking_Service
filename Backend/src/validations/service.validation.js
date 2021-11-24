@@ -69,7 +69,10 @@ const queryServices = {
   query: Joi.object().keys({
     name: Joi.string().allow(null, ''),
     isActive: Joi.boolean(),
+    minPrice: Joi.number().allow(null),
+    maxPrice: Joi.number().allow(null),
     business: Joi.string().optional().custom(objectId),
+    category: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),

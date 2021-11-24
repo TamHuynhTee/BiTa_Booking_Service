@@ -26,4 +26,8 @@ export const routeManager: Record<string, ApiRoutes> = {
         method: ApiMethods.GET,
         url: 'business/get-business-by-id',
     },
+    approveBusiness: {
+        method: ApiMethods.POST,
+        url: 'auth/approve-business',
+    },
 };

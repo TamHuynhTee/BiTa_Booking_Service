@@ -6,4 +6,8 @@ export const routeCommon: Record<string, ApiRoutes> = {
         method: ApiMethods.GET,
         url: 'service/get-service-by-id',
     },
+    queryBusiness: {
+        method: ApiMethods.GET,
+        url: 'business/query-business',
+    },
 };

@@ -89,7 +89,7 @@ const approveBusiness = async (businessId) => {
   try {
     const business = await businessService.getBusinessById(businessId);
     if (!business) throw new Error();
-    await businessService.updateBusinessById(business.id, { isActive: true });
+    await businessService.updateBusinessById(business.id, { isActive: true, isConfirmed: true });
     const user = await userService.getUserById(business.businessAccount);
     const verifyEmailToken = await tokenService.generateVerifyEmailToken(user);
     await emailService.sendApproveBusinessEmail(user.email, verifyEmailToken, user.username);

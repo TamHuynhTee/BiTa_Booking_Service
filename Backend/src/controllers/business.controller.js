@@ -27,7 +27,7 @@ const getBusinessById = catchAsync(async (req, res) => {
 });
 
 const queryBusinesses = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['businessName', 'displayName', 'ownerName', 'isActive']);
+  const filter = pick(req.query, ['businessName', 'displayName', 'ownerName', 'isActive', 'isConfirmed']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const businesses = await businessService.queryBusinesses(filter, options);
   sendSuccess(res, businesses, httpStatus.OK, 'Businesses found');

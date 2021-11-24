@@ -10,7 +10,7 @@ import {
 } from './thunk';
 
 const initialState: Partial<BusinessStateTypes> = {
-    services: null,
+    services: undefined,
     branches: null,
     businessServiceDetail: null,
     businessBranchDetail: null,
@@ -41,7 +41,7 @@ export const businessSlice = createSlice({
             state.services = action.payload;
         },
         [queryServiceAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         // query branches
         [queryBranchAsync.pending.toString()]: (state) => {
@@ -55,7 +55,7 @@ export const businessSlice = createSlice({
             state.branches = action.payload;
         },
         [queryBranchAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getAllServiceAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -71,7 +71,7 @@ export const businessSlice = createSlice({
             state.servicesForSelect = data;
         },
         [getAllServiceAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
             state.servicesForSelect = action.payload;
         },
         [getServiceByIdAsync.pending.toString()]: (state) => {
@@ -85,7 +85,7 @@ export const businessSlice = createSlice({
             state.businessServiceDetail = action.payload;
         },
         [getServiceByIdAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
             state.businessBranchDetail = action.payload;
         },
         [getBranchByIdAsync.pending.toString()]: (state) => {
@@ -99,7 +99,7 @@ export const businessSlice = createSlice({
             state.businessBranchDetail = action.payload;
         },
         [getBranchByIdAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
             state.businessBranchDetail = action.payload;
         },
     },

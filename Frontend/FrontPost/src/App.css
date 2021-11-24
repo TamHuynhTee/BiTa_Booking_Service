@@ -31,3 +31,15 @@
 .color-label {
     color: #69c9f5;
 }
+
+.sidebar-li {
+    font-size: 1.15rem;
+    cursor: pointer;
+    color: royalblue;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+
+.sidebar-li:hover {
+    text-decoration: underline;
+}

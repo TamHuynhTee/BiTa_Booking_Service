@@ -83,3 +83,9 @@ export const DURATION_UNIT = [
     { value: 'minute', label: 'phút' },
     { value: 'hour', label: 'giờ' },
 ];
+
+export const BUSINESS_FILTER = [
+    { value: 'businessName', label: 'Tên doanh nghiệp' },
+    { value: 'displayName', label: 'Tên hiển thị' },
+    { value: 'ownerName', label: 'Tên chủ doanh nghiệp' },
+];

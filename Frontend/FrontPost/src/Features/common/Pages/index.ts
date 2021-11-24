@@ -5,6 +5,8 @@ export * from './RegisterBusiness';
 export * from './RegisterCustomer';
 export * from './Search';
 export * from './ServiceDetail';
+export * from './ServiceList';
+export * from './BusinessList';
 export * from './verifyEmail';
 export * from './resetPassword';
 export * from './Login';

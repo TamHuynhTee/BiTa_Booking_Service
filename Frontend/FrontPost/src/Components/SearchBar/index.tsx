@@ -3,10 +3,12 @@ import React from 'react';
 interface SearchBarProps {
     placeholder?: string;
     submit?: any;
+    className?: string;
+    formSubmit?: any;
 }
 
 export const SearchBar = (props: SearchBarProps) => {
-    const { submit, placeholder } = props;
+    const { submit, placeholder, className, formSubmit } = props;
     const [keyword, setKeyword] = React.useState('');
     const typingTimeoutRef = React.useRef<any>(null);
 
@@ -21,13 +23,13 @@ export const SearchBar = (props: SearchBarProps) => {
                 keyword: value,
             };
             submit(formValues);
-        }, 300);
+        }, 500);
     };
 
     return (
-        <form>
+        <form className={`${className}`} onSubmit={formSubmit}>
             <input
-                className="form-control"
+                className={`form-control`}
                 type="text"
                 placeholder={placeholder}
                 value={keyword}

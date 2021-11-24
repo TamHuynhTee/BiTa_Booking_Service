@@ -24,7 +24,6 @@ export const BusinessList = (props: Props) => {
     };
 
     const handleChangePage = (page: number) => {
-        setQuery({ ...query, page: page });
         dispatch(queryBusinessAsync({ ...query, page: page }));
     };
 

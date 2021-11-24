@@ -33,7 +33,6 @@ export const Dashboard = (props: Props) => {
     React.useEffect(() => {
         dispatch(getCurrentUserAsync());
     }, []);
-    console.log(user);
     return (
         <div className="businessDashboard">
             <Sidebar />

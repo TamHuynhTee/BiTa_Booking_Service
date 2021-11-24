@@ -10,7 +10,9 @@ import { useParams } from 'react-router';
 interface ServiceDetailProps {}
 
 export const ServiceDetail = (props: ServiceDetailProps) => {
-    const params = useParams();
+    const { id } = useParams<any>();
+
+    React.useEffect(() => {}, []);
 
     return (
         <PageContainer>

@@ -1,5 +1,7 @@
+import { IQueryResult } from '../common/type';
+
 export interface BusinessStateTypes {
-    services?: any;
+    services?: IQueryResult;
     branches?: any;
     businessServiceDetail?: any;
     businessBranchDetail?: any;

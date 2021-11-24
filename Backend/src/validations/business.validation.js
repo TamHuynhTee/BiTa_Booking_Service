@@ -39,7 +39,8 @@ const queryBusinesses = {
   query: Joi.object().keys({
     keyword: Joi.string().allow(null, ''),
     filter: Joi.string().valid('businessName', 'displayName', 'ownerName'),
-    isActive: Joi.boolean(),
+    isActive: Joi.boolean().allow(null),
+    isConfirmed: Joi.boolean().allow(null),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),

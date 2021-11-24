@@ -23,6 +23,7 @@ export interface IQueryBusinessApi {
     keyword?: string;
     filter?: string;
     isActive?: boolean;
+    isConfirmed?: boolean;
     sortBy?: string;
     limit?: number;
     page?: number;

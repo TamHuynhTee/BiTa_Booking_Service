@@ -24,6 +24,11 @@ const businessSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isConfirmed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     businessAccount: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',

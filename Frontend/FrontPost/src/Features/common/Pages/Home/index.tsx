@@ -25,11 +25,17 @@ interface HomePageProps {}
 
 export const HomePage = (props: HomePageProps) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const services = useSelector(selectServices);
+
     React.useEffect(() => {
         dispatch(queryServiceAsync({ limit: 4 }));
     }, []);
-    console.log(services);
+
+    const handleSearch = () => {
+        history.push('/search');
+    };
+
     return (
         <div className="homepage">
             <div className="homepage-banner">
@@ -122,13 +128,16 @@ export const HomePage = (props: HomePageProps) => {
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">
                     <div className="d-inline-block">
-                        <SearchBar placeholder="Tìm kiếm dịch vụ" />
+                        <SearchBar
+                            placeholder="Tìm kiếm dịch vụ"
+                            formSubmit={handleSearch}
+                        />
                     </div>
-                    <Link to="">Xem tất cả {' >'}</Link>
+                    <Link to="/services">Xem tất cả {' >'}</Link>
                 </div>
                 <hr />
                 <div className="row">
-                    {services?.results.map((e: any, i: number) => (
+                    {services?.results?.map((e: any, i: number) => (
                         <div className="col-lg-3" key={i}>
                             <ServiceCardHome data={e} />
                         </div>

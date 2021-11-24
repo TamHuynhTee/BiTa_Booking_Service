@@ -43,3 +43,9 @@ export const getBusinessByIdApi = async (
 ): Promise<ReturnListResponse<any>> => {
     return await Repository(routeManager['getBusinessById'], businessId);
 };
+
+export const approveBusinessApi = async (
+    payload: any
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeManager['approveBusiness'], payload);
+};

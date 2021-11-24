@@ -97,6 +97,16 @@ const updateUserById = async (userId, updateBody) => {
   return user;
 };
 
+const updateUserAccess = async (userId) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy người dùng');
+  }
+  Object.assign(user, { isActive: !user.isActive });
+  await user.save();
+  return user;
+};
+
 const updateUserAvatarById = async (userId, avatar) => {
   const user = await getUserById(userId);
   if (!user) {
@@ -131,4 +141,5 @@ module.exports = {
   deleteUserById,
   checkVerifyEmail,
   checkIsActive,
+  updateUserAccess,
 };
