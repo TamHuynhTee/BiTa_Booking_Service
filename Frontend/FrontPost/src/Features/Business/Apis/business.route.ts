@@ -39,4 +39,8 @@ export const routeBusiness: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'branch/update-branch',
     },
+    getAllBranch: {
+        method: ApiMethods.GET,
+        url: 'branch/get-all-branches',
+    },
 };

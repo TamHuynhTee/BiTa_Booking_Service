@@ -121,9 +121,9 @@ export const CreateService = (props: Props) => {
     const onSubmit = (data: any, e: any) => {
         try {
             e.preventDefault();
-            data.price = Number(data.price.replace(/,/g, ''));
-            data.depositPrice = Number(data.depositPrice.replace(/,/g, ''));
-            data.quantity = Number(data.quantity.replace(/,/g, ''));
+            data.price = ~~data.price.replaceAll('.', '');
+            data.depositPrice = ~~data.depositPrice.replaceAll('.', '');
+            data.quantity = ~~data.quantity.replaceAll('.', '');
             if (data.price <= data.depositPrice) {
                 notifyError('Phí cọc phải bé hơn phí dịch vụ');
                 return;

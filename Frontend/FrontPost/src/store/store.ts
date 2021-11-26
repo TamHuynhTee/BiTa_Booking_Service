@@ -9,12 +9,14 @@ import authReducer from '../App/auth/slice';
 import categoryReducer from '../App/category/slice';
 import businessReducer from '../Features/Business/slice';
 import commonReducer from '../Features/common/slice';
+import customerReducer from '../Features/Customer/slice';
 
 const reducer = {
     auth: authReducer,
     category: categoryReducer,
     business: businessReducer,
     common: commonReducer,
+    customer: customerReducer,
 };
 export type IRootState = StateFromReducersMapObject<typeof reducer>;
 type Store = ReturnType<typeof initConfigStore>;

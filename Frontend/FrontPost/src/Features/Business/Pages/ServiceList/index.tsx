@@ -1,151 +1,107 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchBar } from '../../../../Components';
+import {
+    LoadingComponent,
+    NoDataView,
+    Pagination,
+    SearchBar,
+} from '../../../../Components';
+import { ACTIVE_OPTIONS } from '../../../../utils/selectOptions';
+import { IQueryServiceApi } from '../../../common/type';
 import { ServiceCard } from '../../Components';
-import { selectServices } from '../../slice/selector';
+import { selectLoading, selectServices } from '../../slice/selector';
 import { queryServiceAsync } from '../../slice/thunk';
 
-interface Props {
-    business?: string;
-}
-
-const listPage = [
-    { page: 1, name: 'Đang hoạt động' },
-    { page: 2, name: 'Ngưng hoạt động' },
-];
-
-export const ServiceList = (props: Props) => {
+export const ServiceList = (props: { business?: string }) => {
     const dispatch = useDispatch();
     const { business } = props;
-    const [page, setPage] = React.useState(1);
-    const [pagination, setPagination] = React.useState(1);
     const services = useSelector(selectServices);
-    const fetchData = () => {
-        dispatch(
-            queryServiceAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-            })
-        );
-    };
+    const loading = useSelector(selectLoading);
+    const [query, setQuery] = React.useState<IQueryServiceApi>({
+        isActive: ACTIVE_OPTIONS[0].value,
+        business: business,
+    });
+
     React.useEffect(() => {
-        fetchData();
-        document.getElementById(`nav-link-${page}`)?.classList.add('active');
-        document
-            .getElementById(`page-item-${pagination}`)
-            ?.classList.add('active');
-    }, [dispatch, page]);
+        dispatch(queryServiceAsync(query));
+    }, []);
 
-    console.log(services);
-    const onSubmit = (data: any) => {
-        if (!data.keyword) {
-            fetchData();
-            return;
-        }
-        dispatch(
-            queryServiceAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-                name: data.keyword ? data.keyword : null,
-            })
-        );
+    const handleSubmit = () => {
+        dispatch(queryServiceAsync(query));
     };
 
-    const handleChangeActive = (newPage: number) => {
-        if (page === newPage) return;
-        setPage(newPage);
-        document.getElementById(`nav-link-${page}`)?.classList.remove('active');
-        document.getElementById(`nav-link-${newPage}`)?.classList.add('active');
-        dispatch(
-            queryServiceAsync({
-                isActive: newPage === 1 ? true : false,
-                business: business,
-            })
-        );
+    const handleSearch = (data: any) => {
+        const { keyword } = data;
+        setQuery({ ...query, name: keyword });
     };
 
-    const handleChangePage = (thisPage: number) => {
-        if (thisPage === pagination) return;
-        setPagination(thisPage);
-        document
-            .getElementById(`page-item-${pagination}`)
-            ?.classList.remove('active');
-        document
-            .getElementById(`page-item-${thisPage}`)
-            ?.classList.add('active');
+    const handleChangeActive = (e: any) => {
+        const value = e.target.value;
         dispatch(
             queryServiceAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-                page: thisPage,
+                ...query,
+                isActive: value === 'true' ? true : false,
             })
         );
+        setQuery({
+            ...query,
+            isActive: value === 'true' ? true : false,
+        });
+    };
+
+    const handleChangePage = (page: number) => {
+        dispatch(queryServiceAsync({ ...query, page: page }));
     };
 
     return (
         <div className="container">
-            <h3 className="fw-bold">Dịch vụ của tôi</h3>
+            <h4 className="fw-bold">Dịch vụ của tôi</h4>
             <hr />
-            {/* Navbar */}
-            <ul className="nav nav-tabs">
-                {listPage.map((e: any, i: number) => (
-                    <li className="nav-item" key={i}>
-                        <button
-                            className="nav-link"
-                            id={`nav-link-${i + 1}`}
-                            onClick={() => handleChangeActive(i + 1)}
-                        >
-                            {e.name}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-            {/* Search bar */}
-            <div className="my-3">
-                <SearchBar placeholder="Tìm kiếm theo tên" submit={onSubmit} />
+            <div className="input-group my-3 row">
+                <SearchBar
+                    className="col-md-7"
+                    placeholder="Tìm kiếm tên chi nhánh"
+                    submit={handleSearch}
+                />
+                <select
+                    className="form-select col-md-3"
+                    onChange={handleChangeActive}
+                >
+                    {ACTIVE_OPTIONS.map((e: any, i: number) => (
+                        <option value={e.value} key={i}>
+                            {e.label}
+                        </option>
+                    ))}
+                </select>
+                <button
+                    className="btn btn-primary col-2"
+                    onClick={handleSubmit}
+                >
+                    Tìm
+                </button>
             </div>
-            <div className="d-flex flex-column gap-2">
-                {services?.totalResults === 0 ? (
-                    <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: '10rem' }}
-                    >
-                        <h5>Không có dữ liệu</h5>
+            {loading === 'idle' ? (
+                <>
+                    <div className="my-3">
+                        {services?.results?.length === 0 ? (
+                            <NoDataView />
+                        ) : (
+                            services?.results?.map((e: any, i: number) => (
+                                <ServiceCard data={e} key={i} />
+                            ))
+                        )}
                     </div>
-                ) : (
-                    <>
-                        <div className="mb-3">
-                            {/* Pagination */}
-                            <nav>
-                                <ul className="pagination">
-                                    {[...Array(services?.totalPages)].map(
-                                        (e: any, i: number) => (
-                                            <li
-                                                className="page-item"
-                                                id={`page-item-${i + 1}`}
-                                                key={i}
-                                            >
-                                                <button
-                                                    className="page-link"
-                                                    onClick={() =>
-                                                        handleChangePage(i + 1)
-                                                    }
-                                                >
-                                                    {i + 1}
-                                                </button>
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </nav>
-                        </div>
-                        {/* Results */}
-                        {services?.results?.map((e: any, i: number) => (
-                            <ServiceCard key={i} data={e} />
-                        ))}
-                    </>
-                )}
-            </div>
+                    <div className="my-3">
+                        <Pagination
+                            totalPages={services?.totalPages}
+                            query={handleChangePage}
+                            page={services?.page}
+                        />
+                    </div>
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
         </div>
     );
 };

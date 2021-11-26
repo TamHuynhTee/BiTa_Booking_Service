@@ -20,3 +20,9 @@ export const getBranchesByServiceApi = async (
 ): Promise<ReturnListResponse<any>> => {
     return await Repository(routeCommon['getBranchesByService'], serviceId);
 };
+
+export const getBusinessDetailApi = async (
+    businessId: any
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeCommon['getBusinessDetail'], businessId);
+};

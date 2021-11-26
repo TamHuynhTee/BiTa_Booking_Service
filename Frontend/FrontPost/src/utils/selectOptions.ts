@@ -1,7 +1,7 @@
 export const TIME_TO_COME = [
-    { value: 1, label: 'Như dự kiến' },
-    { value: 2, label: 'Có thể trễ hẹn' },
-    { value: 3, label: 'Có thể tới sớm' },
+    { value: 'AsScheduled', label: 'Như dự kiến' },
+    { value: 'MaybeLate', label: 'Có thể trễ hẹn' },
+    { value: 'MaybeSoon', label: 'Có thể tới sớm' },
 ];
 
 export const APPOINTMENT_TIME = [
@@ -88,4 +88,14 @@ export const BUSINESS_FILTER = [
     { value: 'businessName', label: 'Tên doanh nghiệp' },
     { value: 'displayName', label: 'Tên hiển thị' },
     { value: 'ownerName', label: 'Tên chủ doanh nghiệp' },
+];
+
+export const ACTIVE_OPTIONS = [
+    { value: true, label: 'Đang hoạt động' },
+    { value: false, label: 'Ngưng hoạt động' },
+];
+
+export const BRANCH_FILTER = [
+    { value: 'name', label: 'Tên chi nhánh' },
+    { value: 'address', label: 'Địa chỉ' },
 ];

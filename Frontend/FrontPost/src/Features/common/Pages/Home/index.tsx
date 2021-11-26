@@ -29,7 +29,7 @@ export const HomePage = (props: HomePageProps) => {
     const services = useSelector(selectServices);
 
     React.useEffect(() => {
-        dispatch(queryServiceAsync({ limit: 4 }));
+        dispatch(queryServiceAsync({ limit: 4, isActive: true }));
     }, []);
 
     const handleSearch = () => {
@@ -122,8 +122,6 @@ export const HomePage = (props: HomePageProps) => {
                         nhắc nhở khách hàng, sau khi hoàn tất cuộc hẹn sẽ được
                         lưu vào dòng thời gian của người dùng."
                 />
-                <SectionTitle title="Các loại hình dịch vụ" />
-                <div></div>
                 <SectionTitle title="Đối tác" />
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">

@@ -48,11 +48,9 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
                     <Route exact path={`${path}/create-service`}>
                         <CreateService business={user?.business?.id} />
                     </Route>
-                    <Route
-                        exact
-                        path={`${path}/branches`}
-                        component={BranchList}
-                    />
+                    <Route exact path={`${path}/branches`}>
+                        <BranchList business={user?.business?.id} />
+                    </Route>
                     <Route
                         exact
                         path={`${path}/branch/:id`}

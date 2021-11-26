@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IQueryServiceApi } from '../../common/type';
 import {
+    getAllBranchApi,
     getAllServiceApi,
     getBranchByIdApi,
     getServiceByIdApi,
@@ -45,6 +46,14 @@ export const getBranchByIdAsync = createAsyncThunk(
     'Branch/getBranchByIdApi',
     async (payload: any): Promise<any> => {
         const response = await getBranchByIdApi(payload);
+        return response.data;
+    }
+);
+
+export const getAllBranchAsync = createAsyncThunk(
+    'Branch/getBranchByIdApi',
+    async (payload: any): Promise<any> => {
+        const response = await getAllBranchApi(payload);
         return response.data;
     }
 );

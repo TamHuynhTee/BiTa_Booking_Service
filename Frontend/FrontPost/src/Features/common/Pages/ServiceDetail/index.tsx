@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Slider from 'react-slick';
 import { ServiceCard } from '../../../../Components/ServiceCard';
 import { PageContainer } from '../../../../Components/PageContainer';

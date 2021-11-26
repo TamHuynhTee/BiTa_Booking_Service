@@ -12,7 +12,7 @@ const createBranch = catchAsync(async (req, res) => {
 
 const updateBranch = catchAsync(async (req, res) => {
   const branch = await branchService.updateBranch(req.body);
-  sendSuccess(res, branch, httpStatus.OK, 'Branch updated');
+  sendSuccess(res, branch, httpStatus.OK, 'Đã cập nhật chi nhánh');
 });
 
 const deleteBranch = catchAsync(async (req, res) => {
@@ -32,11 +32,34 @@ const getBranchesByService = catchAsync(async (req, res) => {
   sendSuccess(res, branches, httpStatus.OK, 'Branch found');
 });
 
+const getAllBranches = catchAsync(async (req, res) => {
+  const branches = await branchService.getAllBranches(req.query.businessId);
+  if (!branches) throw new ApiError(httpStatus.NOT_FOUND, "Branches doesn't exists");
+  sendSuccess(res, branches, httpStatus.OK, 'Branches found');
+});
+
 const queryBranches = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'isActive', 'business']);
+  const filter = pick(req.query, [
+    'name',
+    'address.street',
+    'address.ward',
+    'address.district',
+    'address.province',
+    'isActive',
+    'business',
+  ]);
+  console.log(filter);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const branches = await branchService.queryBranches(filter, options);
   sendSuccess(res, branches, httpStatus.OK, 'Branches found');
 });
 
-module.exports = { createBranch, queryBranches, updateBranch, deleteBranch, getBranchById, getBranchesByService };
+module.exports = {
+  createBranch,
+  queryBranches,
+  updateBranch,
+  deleteBranch,
+  getBranchById,
+  getBranchesByService,
+  getAllBranches,
+};

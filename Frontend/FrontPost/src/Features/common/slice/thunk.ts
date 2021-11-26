@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     getBranchesByServiceApi,
+    getBusinessDetailApi,
     getServiceDetailApi,
     queryBusinessApi,
 } from '../Apis/common.api';
@@ -23,9 +24,17 @@ export const queryBusinessAsync = createAsyncThunk(
 );
 
 export const getBranchesByServiceAsync = createAsyncThunk(
-    'Common/queryBusiness',
+    'Common/getBranchesByService',
     async (serviceId: any): Promise<any> => {
         const response: any = await getBranchesByServiceApi(serviceId);
+        return response.data;
+    }
+);
+
+export const getBusinessDetailAsync = createAsyncThunk(
+    'Common/fetchBusinessDetail',
+    async (params: any): Promise<any> => {
+        const response: any = await getBusinessDetailApi(params);
         return response.data;
     }
 );

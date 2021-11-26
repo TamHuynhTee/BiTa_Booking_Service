@@ -9,28 +9,29 @@ import {
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreateBookingSchema } from '../../../../validations/booking';
+import { createAppointmentApi } from '../../Apis/customer.api';
+import moment from 'moment';
+import { timeFormatter } from '../../../../utils/timeFormatter';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { getBranchesByServiceForSelectAsync } from '../../slice/thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectBranchesForSelect } from '../../slice/selector';
+import { useHistory } from 'react-router';
 
-interface BookingFormProps {
-    service?: any;
-    user?: any;
-}
+const weekdays = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+];
 
-export const BookingForm = (props: BookingFormProps) => {
-    const [bookingDate, setBookingDate] = React.useState();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-        reset,
-        control,
-    } = useForm({ resolver: yupResolver(CreateBookingSchema) });
-    // Stopped here
-    const onDayChange = (e: any) => {
-        const value = e.target.value;
-        const dt = new Date(value);
-        console.log(dt.getDay());
-    };
-
+export const BookingForm = (props: { service?: any; user?: any }) => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { service, user } = props;
     const thisDay = () => {
         const date = new Date();
         const now =
@@ -41,15 +42,85 @@ export const BookingForm = (props: BookingFormProps) => {
             date.getDate();
         return now;
     };
+    const date = new Date(thisDay());
+    const weekday = date.getDay();
+    const key = service?.schedule?.find(
+        (x: any) => x.weekDay === weekdays[weekday]
+    );
+    const refPaymentUrl = React.useRef<any>(null);
+    const [bookingTime, setBookingTime] = React.useState<any>(
+        key?.time?.map((e: any) => {
+            return { value: e, label: timeFormatter(e) };
+        })
+    );
+    const branches = useSelector(selectBranchesForSelect);
 
-    const onSubmit = (data: any, e: any) => {
+    React.useEffect(() => {
+        dispatch(
+            getBranchesByServiceForSelectAsync({ serviceId: service?.id })
+        );
+    }, []);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset,
+        control,
+    } = useForm({
+        resolver: yupResolver(CreateBookingSchema),
+    });
+
+    const onDayChange = (e: any) => {
+        const value = e.target.value;
+        const date = new Date(value);
+        const weekday = date.getDay();
+        const key = service?.schedule?.find(
+            (x: any) => x.weekDay === weekdays[weekday]
+        );
+        setBookingTime(
+            key.time.map((e: any) => {
+                return { value: e, label: timeFormatter(e) };
+            })
+        );
+    };
+
+    console.log(branches);
+
+    const handleCreateApp = async (data: any, e: any) => {
         e.preventDefault();
-        const dt = new Date(data.appointmentDate);
-        console.log(data, dt.getDay());
+        data.appointmentTime = timeFormatter(data.appointmentTime);
+        const startTime = moment
+            .utc(data.appointmentDate + ' ' + data.appointmentTime)
+            .toDate();
+        const minutes =
+            service?.duration?.unit === 'hour'
+                ? moment
+                      .duration(service?.duration?.quantity, 'hour')
+                      .asMinutes()
+                : service?.duration?.quantity;
+        const result = await createAppointmentApi({
+            business: service?.business?.id,
+            customerName: data.customerName,
+            customerPhoneNumber: data.customerPhone,
+            service: service?.id,
+            branch: data.appointmentBranch,
+            price: service?.price,
+            hasDeposit: service?.hasDeposit,
+            depositPrice: service?.depositPrice,
+            notify: data.customerTime,
+            paid: data.payNow,
+            duration: minutes,
+            startTime: startTime,
+        });
+        console.log(result);
+        if (result.code === 200) {
+            window.location.href = result.data;
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleCreateApp)}>
             <SectionHeader title="Thông tin khách hàng" order={1} />
             <div className="form-group mb-2">
                 <label
@@ -98,13 +169,21 @@ export const BookingForm = (props: BookingFormProps) => {
             </div>
             <SectionHeader title="Chọn giờ đặt hẹn" order={3} />
             <CustomSelect
-                options={APPOINTMENT_TIME}
+                options={bookingTime}
                 placeholder="Chọn giờ hẹn"
                 name="appointmentTime"
                 control={control}
                 errors={errors.appointmentTime}
             />
-            <SectionHeader title="Chú thích" order={4} />
+            <SectionHeader title="Chọn nơi hẹn" order={4} />
+            <CustomSelect
+                options={branches}
+                placeholder="Chọn nơi hẹn"
+                name="appointmentBranch"
+                control={control}
+                errors={errors.appointmentBranch}
+            />
+            <SectionHeader title="Chú thích" order={5} />
             <CustomSelect
                 options={TIME_TO_COME}
                 placeholder="Chú thích"
@@ -112,8 +191,28 @@ export const BookingForm = (props: BookingFormProps) => {
                 control={control}
                 errors={errors.customerTime}
             />
+            <div className="form-check">
+                <input
+                    className="form-check-input"
+                    {...register('payNow')}
+                    type="checkbox"
+                    id="payNow"
+                />
+                <label className="form-check-label" htmlFor="payNow">
+                    Thanh toán dịch vụ
+                </label>
+            </div>
             <button type="submit" className="btn btn-success mt-2">
                 Đặt hẹn
+            </button>
+            <button
+                type="button"
+                className="btn btn-success mt-2"
+                onClick={() => {
+                    history.push(refPaymentUrl.current);
+                }}
+            >
+                Thanh toán
             </button>
         </form>
     );

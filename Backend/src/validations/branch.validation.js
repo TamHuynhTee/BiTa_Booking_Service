@@ -49,9 +49,16 @@ const getBranchByService = {
   }),
 };
 
+const getAllBranches = {
+  query: Joi.object().keys({
+    businessId: Joi.string().required().custom(objectId),
+  }),
+};
+
 const queryBranches = {
   query: Joi.object().keys({
-    name: Joi.string().allow(null, ''),
+    keyword: Joi.string().allow(null, ''),
+    filter: Joi.string().valid('name', 'address'),
     isActive: Joi.boolean(),
     business: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),
@@ -60,4 +67,12 @@ const queryBranches = {
   }),
 };
 
-module.exports = { createBranch, updateBranch, deleteBranch, getBranchById, queryBranches, getBranchByService };
+module.exports = {
+  createBranch,
+  updateBranch,
+  deleteBranch,
+  getBranchById,
+  queryBranches,
+  getBranchByService,
+  getAllBranches,
+};

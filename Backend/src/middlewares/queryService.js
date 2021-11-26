@@ -3,7 +3,7 @@ const queryServices = (req, res, next) => {
     req.query.name = { $regex: req.query.name, $options: 'si' };
   }
   if (req.query.minPrice || req.query.maxPrice) {
-    req.query.price = { $lte: req.query.maxPrice || 10000000, $gte: req.query.minPrice || 0 };
+    req.query.price = { $lte: req.query.maxPrice || 2000000, $gte: req.query.minPrice || 0 };
   }
   delete req.query.minPrice;
   delete req.query.maxPrice;

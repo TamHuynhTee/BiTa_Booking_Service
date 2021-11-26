@@ -27,7 +27,7 @@ router.delete(
   validate(businessValidation.deleteBusinessById),
   businessController.deleteBusinessById
 );
-router.get('/get-business-by-id', auth(), validate(businessValidation.getBusinessById), businessController.getBusinessById);
+router.get('/get-business-by-id', validate(businessValidation.getBusinessById), businessController.getBusinessById);
 router.get(
   '/query-business',
   validate(businessValidation.queryBusinesses),

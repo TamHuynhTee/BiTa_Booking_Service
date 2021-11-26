@@ -92,7 +92,10 @@ export const ServiceList = (props: Props) => {
                                         servicesResult.results?.map(
                                             (e: any, i: number) => (
                                                 <div className="col-4" key={i}>
-                                                    <ServiceListItem data={e} />
+                                                    <ServiceListItem
+                                                        data={e}
+                                                        withBusiness={true}
+                                                    />
                                                 </div>
                                             )
                                         )

@@ -92,6 +92,18 @@ businessSchema.pre(/^find/, function (next) {
     path: 'businessAccount',
     select: 'avatar username firstName surName avatar email phoneNumber',
   });
+  //   this.populate({
+  //     path: 'branches',
+  //     select: 'name',
+  //   });
+  //   this.populate({
+  //     path: 'services',
+  //     select: 'name',
+  //   });
+  //   this.populate({
+  //     path: 'members',
+  //     select: 'username',
+  //   });
   next();
 });
 

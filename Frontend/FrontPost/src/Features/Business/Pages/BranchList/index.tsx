@@ -1,154 +1,123 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchBar } from '../../../../Components';
+import {
+    LoadingComponent,
+    NoDataView,
+    Pagination,
+    SearchBar,
+} from '../../../../Components';
+import { ACTIVE_OPTIONS, BRANCH_FILTER } from '../../../../utils/selectOptions';
 import { BranchCard } from '../../Components';
-import { selectBranches } from '../../slice/selector';
+import { selectBranches, selectLoading } from '../../slice/selector';
 import { queryBranchAsync } from '../../slice/thunk';
+import { IQueryBranchApi } from '../../type';
 
-interface Props {
-    business?: string;
-}
-
-const listPage = [
-    { page: 1, name: 'Đang hoạt động' },
-    { page: 2, name: 'Ngưng hoạt động' },
-];
-
-export const BranchList = (props: Props) => {
+export const BranchList = (props: { business?: string }) => {
     const dispatch = useDispatch();
     const { business } = props;
-    const [page, setPage] = React.useState(1);
-    const [pagination, setPagination] = React.useState(1);
     const branches = useSelector(selectBranches);
-    const fetchData = () => {
-        dispatch(
-            queryBranchAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-            })
-        );
-    };
+    const loading = useSelector(selectLoading);
+    const [query, setQuery] = React.useState<IQueryBranchApi>({
+        isActive: ACTIVE_OPTIONS[0].value,
+        filter: BRANCH_FILTER[0].value,
+        business: business,
+    });
+
     React.useEffect(() => {
-        fetchData();
-        document.getElementById(`nav-link-${page}`)?.classList.add('active');
-        document
-            .getElementById(`page-item-${pagination}`)
-            ?.classList.add('active');
-    }, [dispatch, page]);
+        dispatch(queryBranchAsync(query));
+    }, []);
 
-    console.log(branches);
-    const onSubmit = (data: any) => {
-        if (!data.keyword) {
-            fetchData();
-            return;
-        }
-        dispatch(
-            queryBranchAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-                name: data.keyword,
-            })
-        );
+    const handleSubmit = () => {
+        dispatch(queryBranchAsync(query));
     };
 
-    const handleChangeActive = (newPage: number) => {
-        if (page === newPage) return;
-        setPage(newPage);
-        document.getElementById(`nav-link-${page}`)?.classList.remove('active');
-        document.getElementById(`nav-link-${newPage}`)?.classList.add('active');
+    const handleChangeActive = (e: any) => {
+        const value = e.target.value;
         dispatch(
             queryBranchAsync({
-                isActive: newPage === 1 ? true : false,
-                business: business,
+                ...query,
+                isActive: value === 'true' ? true : false,
             })
         );
+        setQuery({
+            ...query,
+            isActive: value === 'true' ? true : false,
+        });
     };
 
-    const handleChangePage = (thisPage: number) => {
-        if (thisPage === pagination) return;
-        setPagination(thisPage);
-        document
-            .getElementById(`page-item-${pagination}`)
-            ?.classList.remove('active');
-        document
-            .getElementById(`page-item-${thisPage}`)
-            ?.classList.add('active');
-        dispatch(
-            queryBranchAsync({
-                isActive: page === 1 ? true : false,
-                business: business,
-                page: thisPage,
-            })
-        );
+    const handleSearch = (data: any) => {
+        const { keyword } = data;
+        setQuery({ ...query, keyword: keyword });
+    };
+
+    const handleChangePage = (page: number) => {
+        dispatch(queryBranchAsync({ ...query, page: page }));
     };
 
     return (
         <div className="container">
-            <h3 className="fw-bold">Chi nhánh của tôi</h3>
+            <h4 className="fw-bold">Chi nhánh của tôi</h4>
             <hr />
-            {/* Navbar */}
-            <ul className="nav nav-tabs">
-                {listPage.map((e: any, i: number) => (
-                    <li className="nav-item" key={i}>
-                        <button
-                            className="nav-link"
-                            id={`nav-link-${i + 1}`}
-                            onClick={() => handleChangeActive(i + 1)}
-                        >
-                            {e.name}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-            {/* Search bar */}
-            <div className="my-3">
+            <div className="input-group my-3 row">
                 <SearchBar
-                    placeholder="Tìm kiếm theo tên chi nhánh"
-                    submit={onSubmit}
+                    className="col-md-7"
+                    placeholder="Tìm kiếm chi nhánh theo"
+                    submit={handleSearch}
                 />
+                <select
+                    className="form-select col-md-2"
+                    onChange={(e: any) =>
+                        setQuery({
+                            ...query,
+                            filter: e.target.value,
+                        })
+                    }
+                >
+                    {BRANCH_FILTER.map((e: any, i: number) => (
+                        <option value={e.value} key={i}>
+                            {e.label}
+                        </option>
+                    ))}
+                </select>
+                <select
+                    className="form-select col-md-2"
+                    onChange={handleChangeActive}
+                >
+                    {ACTIVE_OPTIONS.map((e: any, i: number) => (
+                        <option value={e.value} key={i}>
+                            {e.label}
+                        </option>
+                    ))}
+                </select>
+                <button
+                    className="btn btn-primary col-1"
+                    onClick={handleSubmit}
+                >
+                    Tìm
+                </button>
             </div>
-            <div className="d-flex flex-column gap-2">
-                {branches?.totalResults === 0 ? (
-                    <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: '10rem' }}
-                    >
-                        <h5>Không có dữ liệu</h5>
+            {loading === 'idle' ? (
+                <>
+                    <div className="my-3">
+                        {branches?.results?.length === 0 ? (
+                            <NoDataView />
+                        ) : (
+                            branches?.results?.map((e: any, i: number) => (
+                                <BranchCard data={e} key={i} />
+                            ))
+                        )}
                     </div>
-                ) : (
-                    <>
-                        <div className="mb-3">
-                            {/* Pagination */}
-                            <nav>
-                                <ul className="pagination">
-                                    {[...Array(branches?.totalPages)].map(
-                                        (e: any, i: number) => (
-                                            <li
-                                                className="page-item"
-                                                id={`page-item-${i + 1}`}
-                                                key={i}
-                                            >
-                                                <button
-                                                    className="page-link"
-                                                    onClick={() =>
-                                                        handleChangePage(i + 1)
-                                                    }
-                                                >
-                                                    {i + 1}
-                                                </button>
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </nav>
-                        </div>
-                        {/* Results */}
-                        {branches?.results.map((e: any, i: number) => (
-                            <BranchCard key={i} data={e} />
-                        ))}
-                    </>
-                )}
-            </div>
+                    <div className="my-3">
+                        <Pagination
+                            totalPages={branches?.totalPages}
+                            query={handleChangePage}
+                            page={branches?.page}
+                        />
+                    </div>
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
         </div>
     );
 };

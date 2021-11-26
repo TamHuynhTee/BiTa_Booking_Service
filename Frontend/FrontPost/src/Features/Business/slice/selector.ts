@@ -9,3 +9,5 @@ export const selectServiceDetail = (state: RootState) =>
     state?.business.businessServiceDetail;
 export const selectBranchDetail = (state: RootState) =>
     state?.business.businessBranchDetail;
+export const selectBusinessBranches = (state: RootState) =>
+    state?.business.businessBranches;

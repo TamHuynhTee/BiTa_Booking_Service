@@ -30,7 +30,7 @@ import { updateServiceApi } from '../../Apis/business.api';
 interface Props {}
 
 const getNumber = (money: any) => {
-    return typeof money === 'string' ? Number(money.replace(/,/g, '')) : money;
+    return typeof money === 'string' ? ~~money.replaceAll('.', '') : money;
 };
 
 export const ServiceDetail = (props: Props) => {

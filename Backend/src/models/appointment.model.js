@@ -8,6 +8,8 @@ const appointmentSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    customerName: { type: String, required: false, trim: true },
+    customerPhoneNumber: { type: String, required: false, trim: true },
     business: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'Business',
@@ -27,12 +29,12 @@ const appointmentSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    appointmentDate: {
+    startTime: {
       type: Date,
       required: true,
     },
-    appointmentTime: {
-      type: String,
+    endTime: {
+      type: Date,
       required: true,
     },
     notify: {

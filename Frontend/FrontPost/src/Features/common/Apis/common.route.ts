@@ -11,6 +11,10 @@ export const routeCommon: Record<string, ApiRoutes> = {
         method: ApiMethods.GET,
         url: 'business/query-business',
     },
+    getBusinessDetail: {
+        method: ApiMethods.GET,
+        url: 'business/get-business-by-id',
+    },
     // Branches
     getBranchesByService: {
         method: ApiMethods.GET,

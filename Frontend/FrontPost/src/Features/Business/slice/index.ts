@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notifyError, notifySuccess } from '../../../utils/notify';
 import { BusinessStateTypes } from '../type';
 import {
+    getAllBranchAsync,
     getAllServiceAsync,
     getBranchByIdAsync,
     getServiceByIdAsync,
@@ -11,7 +12,8 @@ import {
 
 const initialState: Partial<BusinessStateTypes> = {
     services: undefined,
-    branches: null,
+    branches: undefined,
+    businessBranches: [],
     businessServiceDetail: null,
     businessBranchDetail: null,
     status: 'idle',
@@ -100,7 +102,19 @@ export const businessSlice = createSlice({
         },
         [getBranchByIdAsync.rejected.toString()]: (state, action) => {
             state.status = 'idle';
-            state.businessBranchDetail = action.payload;
+        },
+        [getAllBranchAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getAllBranchAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.businessBranches = action.payload;
+        },
+        [getAllBranchAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
         },
     },
 });

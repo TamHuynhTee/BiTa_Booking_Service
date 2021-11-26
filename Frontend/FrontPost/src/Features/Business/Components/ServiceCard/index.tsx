@@ -4,6 +4,7 @@ import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { getDetailService } from '../../slice';
+import { durationFormatter } from '../../../../utils/durationFormatter';
 
 interface Props {
     data?: any;
@@ -23,7 +24,7 @@ export const ServiceCard = (props: Props) => {
     };
 
     return (
-        <div className="card bg-light">
+        <div className="card bg-light mb-3">
             <div className="row g-0">
                 <div className="col-md-4">
                     <img
@@ -39,7 +40,7 @@ export const ServiceCard = (props: Props) => {
                         <p className="card-text">{description}</p>
                         <p className="card-text">
                             <i className="bi bi-clock"></i>{' '}
-                            {`Thời hạn: ${quantity} ${unit}`}
+                            {`Thời hạn: ${quantity} ${durationFormatter(unit)}`}
                         </p>
                         <p className="card-text">
                             <i className="bi bi-cash"></i>{' '}

@@ -1,6 +1,7 @@
 import Repository from '../../../Apis/repositoryApi';
 import { ReturnListResponse, ReturnResponse } from '../../../Apis/response';
 import { IQueryServiceApi } from '../../common/type';
+import { IQueryBranchApi } from '../type';
 import { routeBusiness } from './business.route';
 
 export const createServiceApi = async (
@@ -41,7 +42,7 @@ export const createBranchApi = async (
 };
 
 export const queryBranchApi = async (
-    query: any
+    query: IQueryBranchApi
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['queryBranch'], query);
 };
@@ -56,4 +57,10 @@ export const updateBranchApi = async (
     payload: any
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['updateBranch'], payload);
+};
+
+export const getAllBranchApi = async (
+    businessId: any
+): Promise<ReturnListResponse<any>> => {
+    return await Repository(routeBusiness['getAllBranch'], businessId);
 };
