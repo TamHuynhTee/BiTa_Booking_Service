@@ -1,0 +1,11 @@
+@import '/src/styles/variables.scss';
+
+.login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 0;
+    &-form {
+        min-width: 480px;
+    }
+}

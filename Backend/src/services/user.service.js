@@ -7,10 +7,17 @@ const ApiError = require('../utils/ApiError');
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody) => {
+const createUser = async (userBody, role = 'user') => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  if (await User.usernameExists(userBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
+  }
+  if (await User.isPhoneTaken(userBody.phoneNumber)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
+  }
+  userBody.role = role;
   return User.create(userBody);
 };
 
@@ -37,13 +44,25 @@ const getUserById = async (id) => {
   return User.findById(id);
 };
 
+const checkVerifyEmail = async (id) => {
+  const user = await getUserById(id);
+  const { isEmailVerified } = user;
+  return isEmailVerified;
+};
+
+const checkIsActive = async (id) => {
+  const user = await getUserById(id);
+  const { isActive } = user;
+  return isActive;
+};
+
 /**
  * Get user by email
  * @param {string} email
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findOne({ $or: [{ email: email }, { username: email }] });
 };
 
 /**
@@ -60,7 +79,40 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  if (await User.usernameExists(updateBody.username, userId)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already exists');
+  }
+  if (await User.isPhoneTaken(updateBody.phoneNumber, userId)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
+  }
+  if (updateBody.dayOfBirth) {
+    const { dayOfBirth } = updateBody;
+    const day = ('0' + dayOfBirth.getDate()).slice(-2);
+    const month = ('0' + (dayOfBirth.getMonth() + 1)).slice(-2);
+    const today = dayOfBirth.getFullYear() + '-' + month + '-' + day;
+    updateBody.dayOfBirth = today;
+  }
   Object.assign(user, updateBody);
+  await user.save();
+  return user;
+};
+
+const updateUserAccess = async (userId) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy người dùng');
+  }
+  Object.assign(user, { isActive: !user.isActive });
+  await user.save();
+  return user;
+};
+
+const updateUserAvatarById = async (userId, avatar) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  user.avatar = avatar;
   await user.save();
   return user;
 };
@@ -85,5 +137,9 @@ module.exports = {
   getUserById,
   getUserByEmail,
   updateUserById,
+  updateUserAvatarById,
   deleteUserById,
+  checkVerifyEmail,
+  checkIsActive,
+  updateUserAccess,
 };

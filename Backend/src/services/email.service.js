@@ -1,6 +1,11 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
+const htmlEmailConfirm = require('../constant/confirmEmail');
+const htmlResetPassword = require('../constant/resetPassEmail');
+const htmlWelcome = require('../constant/welcomeEmail');
+const htmlReject = require('../constant/rejectEmail');
+const htmlApprove = require('../constant/approveEmail');
 
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
@@ -8,7 +13,9 @@ if (config.env !== 'test') {
   transport
     .verify()
     .then(() => logger.info('Connected to email server'))
-    .catch(() => logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env'));
+    .catch((e) =>
+      logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env', e)
+    );
 }
 
 /**
@@ -18,8 +25,8 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, text) => {
-  const msg = { from: config.email.from, to, subject, text };
+const sendEmail = async (to, subject, text = '', html = '') => {
+  const msg = { from: config.email.from, to, subject, text, html };
   await transport.sendMail(msg);
 };
 
@@ -30,13 +37,10 @@ const sendEmail = async (to, subject, text) => {
  * @returns {Promise}
  */
 const sendResetPasswordEmail = async (to, token) => {
-  const subject = 'Reset password';
-  // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://link-to-app/reset-password?token=${token}`;
-  const text = `Dear user,
-To reset your password, click on this link: ${resetPasswordUrl}
-If you did not request any password resets, then ignore this email.`;
-  await sendEmail(to, subject, text);
+  const subject = 'Lấy lại mật khẩu';
+  const resetPasswordUrl = `${config.frontEndUrl}/reset-password?token=${token}`;
+  const html = htmlResetPassword(resetPasswordUrl);
+  await sendEmail(to, subject, '', html);
 };
 
 /**
@@ -46,13 +50,44 @@ If you did not request any password resets, then ignore this email.`;
  * @returns {Promise}
  */
 const sendVerificationEmail = async (to, token) => {
-  const subject = 'Email Verification';
-  // replace this url with the link to the email verification page of your front-end app
-  const verificationEmailUrl = `http://link-to-app/verify-email?token=${token}`;
-  const text = `Dear user,
-To verify your email, click on this link: ${verificationEmailUrl}
-If you did not create an account, then ignore this email.`;
-  await sendEmail(to, subject, text);
+  const subject = 'Xác thực tài khoản';
+  const verificationEmailUrl = `${config.frontEndUrl}/verify-email?token=${token}`;
+  const html = htmlEmailConfirm(verificationEmailUrl);
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send welcome business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendWelcomeBusinessEmail = async (to) => {
+  const subject = 'Thông báo đăng ký doanh nghiệp';
+  const html = htmlWelcome();
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send approve business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendApproveBusinessEmail = async (to, token, username) => {
+  const subject = 'Thông báo hợp tác';
+  const accountBusiness = `${config.frontEndUrl}/verify-email?token=${token}`;
+  const html = htmlApprove(accountBusiness, username);
+  await sendEmail(to, subject, '', html);
+};
+
+/**
+ * Send reject business email
+ * @param {string} to
+ * @returns {Promise}
+ */
+const sendRejectBusinessEmail = async (to) => {
+  const subject = 'Thông báo hợp tác';
+  const html = htmlReject();
+  await sendEmail(to, subject, '', html);
 };
 
 module.exports = {
@@ -60,4 +95,7 @@ module.exports = {
   sendEmail,
   sendResetPasswordEmail,
   sendVerificationEmail,
+  sendWelcomeBusinessEmail,
+  sendApproveBusinessEmail,
+  sendRejectBusinessEmail,
 };

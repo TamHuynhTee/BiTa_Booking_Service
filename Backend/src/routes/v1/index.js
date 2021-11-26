@@ -1,7 +1,12 @@
 const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
+const categoryRoute = require('./category.route');
+const businessRoute = require('./business.route');
+const branchRoute = require('./branch.route');
+const appointmentRoute = require('./appointment.route');
 const docsRoute = require('./docs.route');
+const serviceRoute = require('./service.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -14,6 +19,26 @@ const defaultRoutes = [
   {
     path: '/users',
     route: userRoute,
+  },
+  {
+    path: '/category',
+    route: categoryRoute,
+  },
+  {
+    path: '/business',
+    route: businessRoute,
+  },
+  {
+    path: '/service',
+    route: serviceRoute,
+  },
+  {
+    path: '/branch',
+    route: branchRoute,
+  },
+  {
+    path: '/appointment',
+    route: appointmentRoute,
   },
 ];
 

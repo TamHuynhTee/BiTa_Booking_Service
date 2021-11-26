@@ -1,0 +1,29 @@
+@import '/src/styles/variables.scss';
+
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: $pm-20 $pm-80;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    z-index: 1001;
+    min-height: $h-header;
+    background-color: #fff;
+    &-left {
+        display: flex;
+        align-items: center;
+        gap: 0 $pm-80;
+    }
+    &-right {
+        display: flex;
+        align-items: center;
+        gap: 0 $pm-40;
+    }
+}
+
+.header-btn {
+    background-color: #3fa3db;
+    border-color: #3fa3db;
+}

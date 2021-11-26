@@ -1,0 +1,105 @@
+// Margin padding
+$pm-10: 0.25rem;
+$pm-20: 0.5rem;
+$pm-40: 1rem;
+$pm-60: 1.5rem;
+$pm-80: 2rem;
+$pm-100: 2.5rem;
+$pm-120: 3rem;
+$pm-140: 3.5rem;
+$pm-160: 4rem;
+
+// color
+$base-color: #3fa3db;
+$bg-color: #f5fcff;
+
+// Header height
+$h-header: 76px;
+
+// Screen responsive
+$mobile-width: 480px;
+$tablet-width: 768px;
+$ipad-width: 1024px;
+$laptop-width: 1224px;
+$desktop-width: 1824px;
+
+@mixin mobile {
+    @media only screen and (min-width: #{$mobile-width}) and (max-width: #{$tablet-width}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (min-width: #{$tablet-width}) and (max-width: #{$ipad-width}) {
+        @content;
+    }
+}
+
+@mixin ipad {
+    @media only screen and (min-width: #{$ipad-width}) and (max-width: #{$laptop-width}) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media only screen and (min-width: #{$laptop-width}) and (max-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media only screen and (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin fromMobile {
+    @media only screen and (min-width: #{$mobile-width}) {
+        @content;
+    }
+}
+@mixin fromTablet {
+    @media only screen and (min-width: #{$tablet-width}) {
+        @content;
+    }
+}
+@mixin fromIpad {
+    @media only screen and (min-width: #{$ipad-width}) {
+        @content;
+    }
+}
+@mixin fromLaptop {
+    @media only screen and (min-width: #{$laptop-width}) {
+        @content;
+    }
+}
+@mixin maxMobile {
+    @media only screen and (max-width: #{$tablet-width}) {
+        @content;
+    }
+}
+@mixin maxTablet {
+    @media only screen and (max-width: #{$ipad-width}) {
+        @content;
+    }
+}
+@mixin maxIpad {
+    @media only screen and (max-width: #{$laptop-width}) {
+        @content;
+    }
+}
+@mixin maxLaptop {
+    @media only screen and (max-width: #{$desktop-width}) {
+        @content;
+    }
+}
+@mixin fromCustom($size) {
+    @media only screen and (min-width: #{$size}) {
+        @content;
+    }
+}
+@mixin maxCustom($size) {
+    @media only screen and (max-width: #{$size}) {
+        @content;
+    }
+}

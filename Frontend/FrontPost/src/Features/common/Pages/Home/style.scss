@@ -1,0 +1,157 @@
+@import '/src/styles/variables.scss';
+
+.homepage {
+    padding-top: $h-header;
+    &-banner {
+        display: flex;
+        align-items: center;
+        // height: 700px;
+        border-bottom: 1px solid #e4e4e4;
+        // @include tablet {
+        //     height: 500px;
+        // }
+        @include laptop {
+            height: 550px;
+        }
+        @include desktop {
+            height: 700px;
+        }
+        @include maxTablet {
+            flex-direction: column-reverse;
+        }
+        &-description {
+            padding: $pm-80;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            & > * {
+                width: 50%;
+            }
+            & h1 {
+                font-weight: 600;
+                text-align: center;
+            }
+            @include tablet {
+                width: 100%;
+            }
+        }
+        &-image {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: $pm-80;
+            & .slick-slider {
+                width: 100%;
+            }
+            &-container {
+                display: flex !important;
+                justify-content: center;
+                & img {
+                    height: 50vh;
+                    width: 100%;
+                }
+            }
+            @include tablet {
+                width: 100%;
+            }
+        }
+    }
+    &-utilities {
+        gap: $pm-40;
+        min-height: 420px;
+        &-item {
+            transition: all 0.5s ease;
+            border: 1px solid #fff;
+            &:hover {
+                border: 1px solid rgba(105, 105, 105, 0.2);
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                border-radius: 10px;
+                margin-top: -15px;
+            }
+            padding: $pm-40;
+            & h1 {
+                text-align: center;
+                color: #3fa3db;
+                font-weight: 600;
+            }
+            &-image {
+                height: 250px;
+                display: flex;
+                justify-content: center;
+                padding: $pm-40 0;
+                & img {
+                    height: 100%;
+                }
+            }
+            & p {
+                text-align: justify;
+                margin-top: $pm-40;
+            }
+        }
+    }
+    &-instruction {
+        background-color: #f1f6ff;
+        padding: $pm-40;
+        min-height: 124px;
+        &:hover {
+            background-color: #0b3052;
+            & h4,
+            h5 {
+                color: #fff;
+            }
+            transition: all 1s ease-out;
+        }
+        &-title {
+            color: #0b3052;
+            font-weight: 600;
+        }
+        &-description {
+            text-align: justify;
+            margin-top: auto;
+        }
+    }
+}
+
+.slick-next:before,
+.slick-prev:before {
+    color: #0d6efd;
+}
+
+.sectionTitle {
+    color: #0b3052;
+    font-weight: 600;
+    text-align: center;
+    margin: $pm-120 0;
+}
+
+.chooseAccount {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &-card {
+        border: 3px solid #e8e8e8;
+        border-radius: 10px;
+        padding: $pm-40;
+        width: 40%;
+        cursor: pointer;
+        & h2 {
+            text-align: center;
+        }
+        &-image {
+            width: 100%;
+            & img {
+                width: 100%;
+                height: 250px;
+            }
+        }
+        &:hover {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+    }
+}

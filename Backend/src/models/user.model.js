@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     firstName: { type: String, required: false, trim: true },
-    lastName: { type: String, required: false, trim: true },
+    surName: { type: String, required: false, trim: true },
     email: {
       type: String,
       required: true,
@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
       trim: true,
       validate: {
         validator: function (val) {
-          return val.match(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/);
+          return val.match(/^(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})$/);
         },
         message: 'Number phone {VALUE} is invalid. Please try again.',
       },
@@ -63,14 +63,17 @@ const userSchema = mongoose.Schema(
       default: true,
     },
     dayOfBirth: {
-      type: Date,
+      type: String,
       required: false,
-      default: Date.now(),
     },
     gender: {
       type: String,
       enum: ['male', 'female'],
       default: 'male',
+    },
+    avatar: {
+      type: String,
+      required: false,
     },
   },
   {
@@ -93,6 +96,15 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   return !!user;
 };
 
+userSchema.statics.usernameExists = async function (username, excludeUserId) {
+  const user = await this.findOne({ username, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+userSchema.statics.isPhoneTaken = async function (phoneNumber, excludeUserId) {
+  const user = await this.findOne({ phoneNumber, _id: { $ne: excludeUserId } });
+  return !!user;
+};
 /**
  * Check if password matches the user's password
  * @param {string} password

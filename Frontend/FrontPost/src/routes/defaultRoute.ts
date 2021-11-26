@@ -1,0 +1,17 @@
+export const defaultRoute = {
+    UnauthenticatedHome: '/',
+    Login: '/login',
+    VerifyEmail: '/verify-email',
+    ResetPassword: '/reset-password',
+    RegisterCustomer: '/register-customer',
+    RegisterBusiness: '/register-business',
+    AuthenticatedHome: '/home',
+    Profile: '/profile',
+    Search: '/search',
+    ServiceList: '/services',
+    Service: '/service/:id',
+    BusinessList: '/businesses',
+    Business: '/business/:id',
+    BookManagement: '/book-management',
+    Book: '/book/:id',
+};

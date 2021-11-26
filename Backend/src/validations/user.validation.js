@@ -21,7 +21,13 @@ const getUsers = {
 };
 
 const getUser = {
-  params: Joi.object().keys({
+  query: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+  }),
+};
+
+const changeUserAccess = {
+  body: Joi.object().keys({
     userId: Joi.string().custom(objectId),
   }),
 };
@@ -45,10 +51,25 @@ const deleteUser = {
   }),
 };
 
+const queryBusinesses = {
+  query: Joi.object().keys({
+    keyword: Joi.string().allow(null, ''),
+    filter: Joi.string().valid('username', 'firstName', 'email', 'phoneNumber'),
+    isActive: Joi.boolean().allow(null),
+    role: Joi.string().valid('user'),
+    gender: Joi.string().valid('male', 'female').allow(null, ''),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+  }),
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  queryBusinesses,
+  changeUserAccess,
 };

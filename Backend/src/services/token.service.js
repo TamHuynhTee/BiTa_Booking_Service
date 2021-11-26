@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const httpStatus = require('http-status');
+const crypto = require('crypto');
 const config = require('../config/config');
 const userService = require('./user.service');
 const { Token } = require('../models');
@@ -26,26 +27,6 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
 };
 
 /**
- * Save a token
- * @param {string} token
- * @param {ObjectId} userId
- * @param {Moment} expires
- * @param {string} type
- * @param {boolean} [blacklisted]
- * @returns {Promise<Token>}
- */
-const saveToken = async (token, userId, expires, type, blacklisted = false) => {
-  const tokenDoc = await Token.create({
-    token,
-    user: userId,
-    expires: expires.toDate(),
-    type,
-    blacklisted,
-  });
-  return tokenDoc;
-};
-
-/**
  * Verify token and return token doc (or throw an error if it is not valid)
  * @param {string} token
  * @param {string} type
@@ -53,7 +34,7 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
  */
 const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
-  const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
+  const tokenDoc = await Token.findOne({ token, type, user: payload.sub });
   if (!tokenDoc) {
     throw new Error('Token not found');
   }
@@ -69,20 +50,25 @@ const generateAuthTokens = async (user) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
   const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
 
-  const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
-  const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH);
-  await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH);
+  return accessToken;
+};
 
-  return {
-    access: {
-      token: accessToken,
-      expires: accessTokenExpires.toDate(),
-    },
-    refresh: {
-      token: refreshToken,
-      expires: refreshTokenExpires.toDate(),
-    },
-  };
+/**
+ * Save a token
+ * @param {string} token
+ * @param {ObjectId} userId
+ * @param {Moment} expires
+ * @param {string} type
+ * @returns {Promise<Token>}
+ */
+const saveToken = async (token, userId, expires, type) => {
+  const tokenDoc = await Token.create({
+    token,
+    user: userId,
+    expires: expires.toDate(),
+    type,
+  });
+  return tokenDoc;
 };
 
 /**
@@ -115,7 +101,6 @@ const generateVerifyEmailToken = async (user) => {
 
 module.exports = {
   generateToken,
-  saveToken,
   verifyToken,
   generateAuthTokens,
   generateResetPasswordToken,

@@ -1,0 +1,11 @@
+@import '/src/styles/variables.scss';
+
+.businessDashboard {
+    height: 100vh;
+    display: flex;
+    &-content {
+        flex: 4;
+        overflow-y: auto;
+        padding: $pm-80;
+    }
+}
