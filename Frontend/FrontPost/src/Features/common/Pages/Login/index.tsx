@@ -6,7 +6,10 @@ import { defaultRoute } from '../../../../routes/defaultRoute';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ILoginApi } from '../../../../App/auth/type';
-import { loginAsync } from '../../../../App/auth/slice/thunk';
+import {
+    getCurrentUserAsync,
+    loginAsync,
+} from '../../../../App/auth/slice/thunk';
 import { SignInSchema } from '../../../../validations/auth';
 import logo from '../../../../images/logo.svg';
 import { useHistory } from 'react-router';
@@ -41,8 +44,9 @@ export const Login = (props: LoginProps) => {
                         password: data.password,
                     };
                     const result: any = await dispatch(loginAsync(payload));
-                    console.log(result);
+                    // console.log(result);
                     if (result.payload?.code === 200) {
+                        dispatch(getCurrentUserAsync());
                         history.push(
                             result.payload?.data.role === 'user'
                                 ? defaultRoute.AuthenticatedHome

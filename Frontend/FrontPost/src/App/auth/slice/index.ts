@@ -15,6 +15,7 @@ export const authSlice = createSlice({
         logoutUser: (state) => {
             state.user = null;
             localStorage.removeItem('token');
+            localStorage.removeItem('userId');
             notifySuccess('Đăng xuất thành công');
         },
     },
@@ -31,6 +32,7 @@ export const authSlice = createSlice({
             if (data.code === 200) {
                 if (data.data.token) {
                     localStorage.setItem('token', data.data.token);
+                    localStorage.setItem('userId', data.data.userId);
                     notifySuccess('Đăng nhập thành công');
                 }
             } else {

@@ -16,12 +16,6 @@ interface HeaderProps {}
 export const Header = (props: HeaderProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const onSubmit = (data: any) => {
-        history.push({
-            pathname: '/search',
-            search: `?keyword=${data.keyword}`,
-        });
-    };
     const user = useSelector(selectUser);
     React.useEffect(() => {
         const token = localStorage.getItem('token');
@@ -45,83 +39,73 @@ export const Header = (props: HeaderProps) => {
                 </div>
                 {/* right */}
                 <div className="header-right">
-                    {/* <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <a
-                                    className="nav-link active"
-                                    aria-current="page"
-                                    href="#"
-                                >
-                                    Home
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Features
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    Pricing
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link disabled">Disabled</a>
-                            </li>
-                        </ul>
-                    </div> */}
                     {user ? (
-                        <div className="dropdown">
-                            <a
-                                className="d-flex gap-2 align-items-center dropdown-toggle"
-                                role="button"
-                                id="dropdownMenuLink"
-                                data-bs-toggle="dropdown"
-                            >
-                                <img
-                                    src={user?.user?.avatar || tempAvatar}
-                                    alt="avatar"
-                                    width="48"
-                                />
-                                <span>{user?.user?.username}</span>
-                            </a>
-                            <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuLink"
-                            >
-                                <li>
-                                    <Link
-                                        to="/profile"
-                                        className="dropdown-item"
-                                    >
-                                        Thông tin cá nhân
+                        <>
+                            <ul className="navbar">
+                                <li className="nav-item">
+                                    <Link to="/services" className="nav-link">
+                                        Dịch vụ
                                     </Link>
                                 </li>
-                                <li>
-                                    <hr />
-                                </li>
-                                <li>
-                                    <a
-                                        className="dropdown-item"
-                                        onClick={logout}
-                                    >
-                                        Đăng xuất
-                                    </a>
+                                <li className="nav-item">
+                                    <Link to="/businesses" className="nav-link">
+                                        Doanh nghiệp
+                                    </Link>
                                 </li>
                             </ul>
-                        </div>
+                            <div className="dropdown">
+                                <a
+                                    className="d-flex fw-bold gap-2 align-items-center dropdown-toggle"
+                                    role="button"
+                                    id="dropdownMenuLink"
+                                    data-bs-toggle="dropdown"
+                                    style={{
+                                        textDecoration: 'none',
+                                        fontSize: '1.25rem',
+                                    }}
+                                >
+                                    <img
+                                        src={user?.user?.avatar || tempAvatar}
+                                        alt="avatar"
+                                        width="48"
+                                        height="48"
+                                    />
+                                    <span>{user?.user?.username}</span>
+                                </a>
+                                <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby="dropdownMenuLink"
+                                >
+                                    <li>
+                                        <Link
+                                            to="/home"
+                                            className="dropdown-item"
+                                        >
+                                            Lịch hẹn của tôi
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/profile"
+                                            className="dropdown-item"
+                                        >
+                                            Thông tin cá nhân
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <hr />
+                                    </li>
+                                    <li>
+                                        <a
+                                            className="dropdown-item"
+                                            onClick={logout}
+                                        >
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </>
                     ) : (
                         <>
                             <button

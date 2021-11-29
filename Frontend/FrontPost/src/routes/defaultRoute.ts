@@ -14,4 +14,6 @@ export const defaultRoute = {
     Business: '/business/:id',
     BookManagement: '/book-management',
     Book: '/book/:id',
+    PaymentSuccessfully: '/payment-success',
+    PaymentFailed: '/payment-denied',
 };

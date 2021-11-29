@@ -122,12 +122,12 @@ export const Sidebar = (props: SidebarProps) => {
                             </li>
                         </ul>
                     </div>
-                    <li>
+                    {/* <li>
                         <Link to={`${url}/customers`} className="text-truncate">
                             <SidebarIcon type="bi-people" />
                             Khách hàng
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link
                             to={`${url}/order-history`}

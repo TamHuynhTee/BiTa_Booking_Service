@@ -15,6 +15,7 @@ import { selectServiceBranch, selectServiceDetail } from '../../slice/selector';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { weekDayFormatter } from '../../../../utils/weekDayFormatter';
 import { timeFormatter } from '../../../../utils/timeFormatter';
+import { getDetailService } from '../../slice';
 
 interface ServiceDetailProps {}
 
@@ -31,6 +32,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
     }, []);
 
     const handleBook = () => {
+        dispatch(getDetailService(service));
         history.push(`/book/${id}`);
     };
 
@@ -63,7 +65,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                             <img
                                 src={service?.image}
                                 alt="..."
-                                className="img-fluid img-thumbnail"
+                                className="img-fluid img-thumbnail mx-auto d-block"
                             />
                         </li>
                         <li>
@@ -139,19 +141,23 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                                 </span>
                             </label>
                             {service?.schedule?.map((e: any, i: number) => (
-                                <p key={i}>
-                                    <label>
+                                <div key={i}>
+                                    <label className="text-primary fw-bold">
                                         {weekDayFormatter(e.weekDay)}:
                                     </label>
-                                    {e.time?.map((time: any, index: number) => (
-                                        <p
-                                            className="badge rounded-pill bg-primary ms-2"
-                                            key={index}
-                                        >
-                                            {timeFormatter(time)}
-                                        </p>
-                                    ))}
-                                </p>
+                                    {e.time?.length !== 0
+                                        ? e.time?.map(
+                                              (time: any, index: number) => (
+                                                  <p
+                                                      className="badge rounded-pill bg-primary ms-2"
+                                                      key={index}
+                                                  >
+                                                      {timeFormatter(time)}
+                                                  </p>
+                                              )
+                                          )
+                                        : ' Không có'}
+                                </div>
                             ))}
                         </li>
                         <li>
@@ -175,12 +181,12 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                     </ul>
                 </div>
             </PageWrapper>
-            <div className=" mb-5 bg-body rounded">
+            {/* <div className=" mb-5 bg-body rounded">
                 <OtherService title="Các dịch vụ cùng nhà cung cấp" />
             </div>
             <div className=" mb-5 bg-body rounded">
                 <OtherService title="Các dịch vụ liên quan" />
-            </div>
+            </div> */}
         </PageContainer>
     );
 };

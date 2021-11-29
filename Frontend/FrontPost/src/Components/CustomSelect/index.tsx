@@ -14,8 +14,22 @@ export const CustomSelect = (props: {
     control: any;
     errors: any;
     placeholder: string;
+    noOptionsMessage?: any;
+    handleChange?: any;
+    objKey?: string;
 }) => {
-    const { options, control, name, errors, placeholder, ...rest } = props;
+    const {
+        options,
+        control,
+        name,
+        errors,
+        placeholder,
+        noOptionsMessage,
+        handleChange,
+        objKey,
+        ...rest
+    } = props;
+
     return (
         <>
             <Controller
@@ -28,9 +42,14 @@ export const CustomSelect = (props: {
                         value={options?.find(
                             (option: any) => option.value === value
                         )}
-                        onChange={(val: any) => onChange(val.value)}
+                        onChange={(val: any) => {
+                            onChange(val.value);
+                            handleChange(objKey, val.value);
+                        }}
                         onBlur={onBlur}
                         placeholder={placeholder}
+                        noOptionsMessage={noOptionsMessage}
+                        isClearable={true}
                         {...rest}
                     />
                 )}

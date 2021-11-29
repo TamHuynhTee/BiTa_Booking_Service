@@ -18,7 +18,11 @@ const initialState: Partial<CommonStateTypes> = {
 export const commonSlice = createSlice({
     name: 'Business',
     initialState,
-    reducers: {},
+    reducers: {
+        getDetailService: (state, action: PayloadAction<any>) => {
+            state.serviceDetail = action.payload;
+        },
+    },
     extraReducers: {
         [getServiceDetailAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -75,5 +79,5 @@ export const commonSlice = createSlice({
     },
 });
 
-export const {} = commonSlice.actions;
+export const { getDetailService } = commonSlice.actions;
 export default commonSlice.reducer;

@@ -1,8 +1,6 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { Appointment } = require('../models');
-const paypal = require('paypal-rest-sdk');
-const paypalConfig = require('../config/paypal');
 
 const createAppointment = async (appointmentBody) => {
   const pendingApps = await getAppointmentsToCheck(
@@ -34,13 +32,15 @@ const getAppointmentsToCheck = async (customerId, startTime, endTime) => {
 const updateAppointment = async (appointmentBody) => {
   const appointment = await getAppointmentById(appointmentBody.appointmentId);
   if (!appointment) throw new ApiError(httpStatus.NOT_FOUND, "Appointment doesn't exists");
+  if (appointment.state === 'Done') throw new ApiError(httpStatus.NOT_FOUND, 'Không thể cập nhật cuộc hẹn đã hoàn tất');
+  if (appointment.state === 'Canceled') throw new ApiError(httpStatus.NOT_FOUND, 'Không thể cập nhật cuộc hẹn đã bị hủy');
   Object.assign(appointment, appointmentBody);
   await appointment.save();
 };
 
 const deleteAppointment = async (appointmentBody) => {
   const appointment = await getAppointmentById(appointmentBody.appointmentId);
-  if (!appointment) throw new ApiError(httpStatus.NOT_FOUND, "Sppointment doesn't exists");
+  if (!appointment) throw new ApiError(httpStatus.NOT_FOUND, "Appointment doesn't exists");
   await appointment.remove();
   return appointment;
 };

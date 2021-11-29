@@ -1,15 +1,24 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { durationFormatter } from '../../../../utils/durationFormatter';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
+import { getDetailService } from '../../slice';
 
 export const ServiceListItem = (props: {
     data?: any;
     withBusiness?: boolean;
 }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const { data, withBusiness } = props;
+
+    const handleClick = () => {
+        dispatch(getDetailService(data));
+        history.push(`/book/${data?.id}`);
+    };
+
     return (
         <div className="card">
             <img
@@ -44,7 +53,7 @@ export const ServiceListItem = (props: {
                     <li className="list-group-item">
                         <button
                             className="btn btn-warning"
-                            onClick={() => history.push(`/book/${data?.id}`)}
+                            onClick={handleClick}
                         >
                             Đặt ngay
                         </button>

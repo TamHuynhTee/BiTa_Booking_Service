@@ -1,3 +1,4 @@
+export * from './AppointmentBusinessCard';
 export * from './AppointmentManagement';
 export * from './Sidebar';
 export * from './ServiceCard';

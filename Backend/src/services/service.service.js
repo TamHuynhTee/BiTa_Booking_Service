@@ -4,7 +4,7 @@ const { Service } = require('../models');
 const { businessService } = require('.');
 
 const createService = async (serviceBody) => {
-  if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
+  //   if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
   const service = await Service.create(serviceBody);
   return service;
 };

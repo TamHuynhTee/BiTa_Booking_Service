@@ -32,7 +32,7 @@ export const BusinessList = (props: Props) => {
 
     const handleSubmitSearch = () => {
         console.log(query);
-        // dispatch(queryBusinessAsync(query));
+        dispatch(queryBusinessAsync(query));
     };
 
     console.log(businessesResult);

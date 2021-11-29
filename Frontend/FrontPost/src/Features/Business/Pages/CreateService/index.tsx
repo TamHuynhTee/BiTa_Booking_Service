@@ -191,6 +191,7 @@ export const CreateService = (props: Props) => {
                     </label>
                     <CurrencyInput
                         id="price"
+                        groupSeparator="."
                         {...register('price')}
                         allowNegativeValue={false}
                         className="form-control"
@@ -210,6 +211,7 @@ export const CreateService = (props: Props) => {
                         </label>
                         <CurrencyInput
                             id="depositPrice"
+                            groupSeparator="."
                             {...register('depositPrice')}
                             allowNegativeValue={false}
                             className="form-control"
@@ -241,6 +243,7 @@ export const CreateService = (props: Props) => {
                 <div className="input-group mb-3">
                     <CurrencyInput
                         id="quantity"
+                        groupSeparator="."
                         {...register('quantity')}
                         allowNegativeValue={false}
                         className="form-control"

@@ -24,7 +24,7 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const token = await tokenService.generateAuthTokens(user);
   const { role } = user;
-  sendSuccess(res, { token, role }, httpStatus.OK, 'Logged in');
+  sendSuccess(res, { token, role, userId: user._id }, httpStatus.OK, 'Đăng nhập thành công');
 });
 
 const forgotPassword = catchAsync(async (req, res) => {
