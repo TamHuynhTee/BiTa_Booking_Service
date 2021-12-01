@@ -26,7 +26,10 @@ import {
     uploadBytesResumable,
 } from '@firebase/storage';
 import storage from '../../../../firebase';
-import { updateServiceApi } from '../../Apis/business.api';
+import {
+    updateServiceActivationApi,
+    updateServiceApi,
+} from '../../Apis/business.api';
 interface Props {}
 
 const getNumber = (money: any) => {
@@ -128,8 +131,6 @@ export const ServiceDetail = (props: Props) => {
         </div>
     ));
 
-    console.log(service, categories);
-
     const onSubmit = (data: any, e: any) => {
         try {
             e.preventDefault();
@@ -189,6 +190,24 @@ export const ServiceDetail = (props: Props) => {
                     .setAttribute('src', e.target.result);
             };
             reader.readAsDataURL(avatarInput.current.files[0]);
+        }
+    };
+
+    const handleChangeActivation = async () => {
+        if (
+            confirm(
+                `Bạn chắc muốn ${
+                    service?.isActive ? 'ngưng' : 'tiếp tục'
+                } dịch vụ chứ?`
+            )
+        ) {
+            const result = await updateServiceActivationApi({ serviceId: id });
+            if (result.code === 200) {
+                notifySuccess(result.message);
+                history.push('/business-dashboard/services');
+            } else {
+                notifyError(result.message);
+            }
         }
     };
 
@@ -328,13 +347,26 @@ export const ServiceDetail = (props: Props) => {
                             Lịch phục vụ
                         </label>
                         <div className="mb-3">{schedule}</div>
-                        <button
-                            className="btn btn-primary mb-2"
-                            type="submit"
-                            disabled={isSubmitting}
-                        >
-                            {!isSubmitting ? 'Chỉnh sửa' : <ButtonSpinner />}
-                        </button>
+                        <div className="g-2">
+                            <button
+                                className="btn btn-primary me-2"
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
+                                {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
+                            </button>
+                            <button
+                                className={`btn btn-${
+                                    service?.isActive ? 'danger' : 'success'
+                                }`}
+                                type="button"
+                                onClick={handleChangeActivation}
+                            >
+                                {service?.isActive
+                                    ? 'Ngưng dịch vụ'
+                                    : 'Tiếp tục dịch vụ'}
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

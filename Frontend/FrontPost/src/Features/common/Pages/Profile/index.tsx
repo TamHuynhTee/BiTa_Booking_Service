@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
+import { selectUser } from '../../../../App/auth/slice/selector';
 import { PageContainer, PageWrapper } from '../../../../Components';
-import { ProfileSchema } from '../../../../validations/auth';
 import { AppointmentHistory } from '../../Components';
 import { ChangePassForm } from '../../Components/ChangePassForm';
 import { UserInfoForm } from '../../Components/UserInfoForm';
@@ -21,6 +22,9 @@ export const Profile = (props: ProfileProps) => {
             .querySelector('.profile-nav-item')!
             .classList.add('profile-nav-active');
     }, []);
+
+    const user = useSelector(selectUser);
+    console.log(user);
 
     const handleChangePage = (currentPage: number) => {
         if (currentPage === page) return;
@@ -51,7 +55,7 @@ export const Profile = (props: ProfileProps) => {
                     </div>
                     <div className="profile-content px-2">
                         {page === 1 ? (
-                            <UserInfoForm />
+                            <UserInfoForm info={user?.user} />
                         ) : page === 2 ? (
                             <ChangePassForm />
                         ) : (

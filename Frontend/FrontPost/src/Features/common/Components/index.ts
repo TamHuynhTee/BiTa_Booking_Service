@@ -1,5 +1,6 @@
 export * from './UserInfoForm';
 export * from './ChangePassForm';
+export * from './AvatarFrame';
 export * from './AppointmentHistory';
 export * from './ServiceCardHome';
 export * from './ServiceListItem';

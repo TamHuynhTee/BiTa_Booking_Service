@@ -5,6 +5,8 @@ import * as relativeTime from 'dayjs/plugin/relativeTime';
 import * as utc from 'dayjs/plugin/utc';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { APPOINTMENT_PAID_FILTER } from '../../../../utils/selectOptions';
+import { useDispatch } from 'react-redux';
+import { getDetailAppointment } from '../../slice';
 
 dayjs.locale('vi');
 dayjs.extend(relativeTime);
@@ -12,6 +14,7 @@ dayjs.extend(utc);
 
 export const AppointmentCard = (props: { data?: any }) => {
     const { data } = props;
+    const dispatch = useDispatch();
 
     const momentDate = (date: any) => {
         const time = dayjs(date).utc().format('DD/MM/YYYY HH:mm');
@@ -43,6 +46,10 @@ export const AppointmentCard = (props: { data?: any }) => {
         );
     };
 
+    const handleGetAppointment = () => {
+        dispatch(getDetailAppointment(data));
+    };
+
     return (
         <div className="card">
             <div className="card-header">
@@ -65,7 +72,14 @@ export const AppointmentCard = (props: { data?: any }) => {
                     {momentDate(data?.endTime)}
                 </p>
                 {renderPayment(data?.payment)}
-                <button className="btn btn-link">Chi tiết</button>
+                <button
+                    className="btn btn-link"
+                    data-bs-toggle="modal"
+                    data-bs-target="#AppointmentDetailCustomer"
+                    onClick={handleGetAppointment}
+                >
+                    Chi tiết
+                </button>
             </div>
             <div className="card-footer">
                 {dayjs(data?.startTime).subtract(7, 'hours').fromNow()}

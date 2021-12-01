@@ -8,7 +8,10 @@ import Select from 'react-select';
 import { ButtonSpinner } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { CreateBranchSchema } from '../../../../validations/branch';
-import { updateBranchApi } from '../../Apis/business.api';
+import {
+    updateBranchActivationApi,
+    updateBranchApi,
+} from '../../Apis/business.api';
 import {
     selectBranchDetail,
     selectServicesForSelect,
@@ -19,7 +22,6 @@ interface Props {}
 
 export const BranchDetail = (props: Props) => {
     const { id } = useParams<any>();
-
     const history = useHistory();
     const dispatch = useDispatch();
     const branch = useSelector(selectBranchDetail);
@@ -40,6 +42,8 @@ export const BranchDetail = (props: Props) => {
     });
     React.useEffect(() => {
         dispatch(getBranchByIdAsync({ branchId: id }));
+    }, []);
+    React.useEffect(() => {
         dispatch(getAllServiceAsync({ businessId: branch?.business }));
     }, []);
 
@@ -72,6 +76,24 @@ export const BranchDetail = (props: Props) => {
             });
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const handleChangeActivation = async () => {
+        if (
+            confirm(
+                `Bạn chắc muốn ${
+                    branch?.isActive ? 'ngưng' : 'tiếp tục'
+                } hoạt động của chi nhánh chứ?`
+            )
+        ) {
+            const result = await updateBranchActivationApi({ branchId: id });
+            if (result.code === 200) {
+                notifySuccess(result.message);
+                history.push('/business-dashboard/branches');
+            } else {
+                notifyError(result.message);
+            }
         }
     };
 
@@ -175,13 +197,24 @@ export const BranchDetail = (props: Props) => {
                         }}
                     />
                 </div>
-                <button
-                    className="btn btn-primary mb-2"
-                    type="submit"
-                    disabled={isSubmitting}
-                >
-                    {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
-                </button>
+                <div className="g-2">
+                    <button
+                        className="btn btn-primary me-2"
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
+                    </button>
+                    <button
+                        className={`btn btn-${
+                            branch?.isActive ? 'danger' : 'success'
+                        }`}
+                        type="button"
+                        onClick={handleChangeActivation}
+                    >
+                        {branch?.isActive ? 'Ngưng hoạt động' : 'Kích hoạt lại'}
+                    </button>
+                </div>
             </form>
         </div>
     );

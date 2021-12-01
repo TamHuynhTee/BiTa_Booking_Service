@@ -114,6 +114,11 @@ export const BUSINESS_FILTER = [
     { value: 'ownerName', label: 'Tên chủ doanh nghiệp' },
 ];
 
+export const GENDER_OPTIONS = [
+    { value: 'male', label: 'Nam' },
+    { value: 'female', label: 'Nữ' },
+];
+
 export const ACTIVE_OPTIONS = [
     { value: true, label: 'Đang hoạt động' },
     { value: false, label: 'Ngưng hoạt động' },

@@ -29,4 +29,20 @@ export const routeAuth: Record<string, ApiRoutes> = {
         method: ApiMethods.POST,
         url: 'auth/forgot-password',
     },
+    updateProfile: {
+        method: ApiMethods.PUT,
+        url: 'auth/update-profile',
+    },
+    updateBusiness: {
+        method: ApiMethods.PUT,
+        url: 'business/update-business-info',
+    },
+    updateAvatar: {
+        method: ApiMethods.PUT,
+        url: 'auth/update-avatar',
+    },
+    changePassword: {
+        method: ApiMethods.PUT,
+        url: 'auth/change-password',
+    },
 };

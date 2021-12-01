@@ -1,196 +1,130 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ColorLabel } from '../../../../Components';
-import { ProfileSchema } from '../../../../validations/auth';
-import { IUserInfo } from '../../type';
+import { useDispatch } from 'react-redux';
+import { AvatarFrame } from '..';
+import { updateProfileApi } from '../../../../App/auth/apis/auth.api';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
+import {
+    ButtonSpinner,
+    CustomDateInput,
+    CustomInput,
+    SelectCustom,
+} from '../../../../Components';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { GENDER_OPTIONS } from '../../../../utils/selectOptions';
+import { ProfileInfoSchema } from '../../../../validations/auth';
+import './style.scss';
 
-interface UserInfoFormProps {
-    data?: IUserInfo;
-}
-
-const thumbnail = 'https://cdn.fakercloud.com/avatars/oktayelipek_128.jpg';
-
-export const UserInfoForm = (props: UserInfoFormProps) => {
-    const [editAvatar, setEditAvatar] = React.useState(false);
-    const avatarInput = React.useRef<any>(null);
+export const UserInfoForm = (props: { info?: any }) => {
+    const { info } = props;
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting, isDirty },
-        reset,
     } = useForm({
-        resolver: yupResolver(ProfileSchema),
-        defaultValues: props.data,
+        resolver: yupResolver(ProfileInfoSchema),
+        defaultValues: {
+            username: info?.username,
+            surName: info?.surName,
+            firstName: info?.firstName,
+            phoneNumber: info?.phoneNumber,
+            email: info?.email,
+            gender: info?.gender,
+            dayOfBirth: info?.dayOfBirth,
+        },
     });
 
-    const onAvatarClick = () => {
-        avatarInput.current.click();
-    };
-
-    const showNewAvatar = async () => {
-        const validImageTypes = [
-            'image/jpg',
-            'image/jpeg',
-            'image/png',
-            'image/svg',
-        ];
-        if (!validImageTypes.includes(avatarInput.current.files[0].type)) {
-            alert('File không phải hình ảnh');
-        } else if (avatarInput.current.files && avatarInput.current.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e: any) {
-                setEditAvatar(true);
-                document
-                    .getElementById('user-avatar')!
-                    .setAttribute('src', e.target.result);
-            };
-            reader.readAsDataURL(avatarInput.current.files[0]);
+    const onSubmit = (data: any, e: any) => {
+        try {
+            e.preventDefault();
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    const result = await updateProfileApi(data);
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(getCurrentUserAsync());
+                    } else notifyError(result.message);
+                    resolve(true);
+                }, 2000);
+            });
+        } catch (error) {
+            console.log(error);
         }
     };
 
-    const onSubmit = (data: any, e: any) => {
-        e.preventDefault();
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                alert('Changed');
-                resolve(true);
-            }, 2000);
-        });
-    };
-
     return (
-        <div className="d-flex h-100">
-            <div className="profile-avatar d-flex flex-column align-items-center">
-                <div className="avatar-container mb-3">
-                    <img src={thumbnail} id="user-avatar" />
-                    <input
-                        type="file"
-                        id="file"
-                        accept=".jpg,.png,.jpeg"
-                        ref={avatarInput}
-                        onChange={showNewAvatar}
-                        hidden
-                    />
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-primary mb-3"
-                    onClick={onAvatarClick}
-                >
-                    Chọn ảnh đại diện
-                </button>
-                {editAvatar && (
-                    <button
-                        type="button"
-                        className="btn btn-success"
-                        // onClick={uploadAvatar}
-                    >
-                        {!isSubmitting ? (
-                            'Lưu ảnh'
-                        ) : (
-                            <span
-                                className="spinner-border spinner-border-sm"
-                                role="status"
-                                aria-hidden="true"
-                            ></span>
-                        )}
-                    </button>
-                )}
+        <div className="row">
+            <div className="col-md-4">
+                {/* avatar */}
+                <AvatarFrame avatar={info?.avatar} />
             </div>
-            <div className="profile-info px-5">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Username" for="username" />
-                        <input
+            <div className="col-md-8">
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
+                    <CustomInput
+                        type="text"
+                        register={register}
+                        name="username"
+                        errors={errors}
+                        title="Tên đăng nhập"
+                        placeholder="Tên đăng nhập"
+                    />
+                    <div className="input-group gap-3">
+                        <CustomInput
                             type="text"
-                            className="form-control"
-                            id="username"
-                            placeholder="Username"
-                            disabled
-                        />
-                    </div>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Họ" for="surName" />
-                        <input
-                            type="text"
-                            className="form-control"
-                            {...register('surName')}
-                            id="surName"
+                            register={register}
+                            name="surName"
+                            errors={errors}
+                            title="Họ"
                             placeholder="Họ"
                         />
-                        <p className="text-danger">{errors.surName?.message}</p>
-                    </div>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Tên" for="firstName" />
-                        <input
+                        <CustomInput
                             type="text"
-                            className="form-control"
-                            {...register('firstName')}
-                            id="firstName"
+                            register={register}
+                            name="firstName"
+                            errors={errors}
+                            title="Tên"
                             placeholder="Tên"
                         />
-                        <p className="text-danger">
-                            {errors.firstName?.message}
-                        </p>
-                    </div>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Email" for="email" />
-                        <input
-                            type="text"
-                            className="form-control"
-                            {...register('email')}
-                            id="email"
-                            placeholder="Email"
-                        />
-                        <p className="text-danger">{errors.email?.message}</p>
-                    </div>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Số điện thoại" for="phone" />
-                        <input
-                            type="text"
-                            className="form-control"
-                            {...register('phone')}
-                            id="phone"
-                            placeholder="Số điện thoại"
-                        />
-                        <p className="text-danger">{errors.phone?.message}</p>
-                    </div>
-                    <div className="form-group mb-2">
-                        <ColorLabel title="Giới tính" for="gender" />
-                        <select
-                            id="gender"
-                            className="form-select"
-                            {...register('gender')}
+                        <SelectCustom
+                            options={GENDER_OPTIONS}
+                            register={register}
+                            name="gender"
+                            errors={errors}
+                            title="Giới tính"
                             placeholder="Giới tính"
-                        >
-                            <option value="m">Nam</option>
-                            <option value="f">Nữ</option>
-                        </select>
-                        <p className="text-danger">{errors.gender?.message}</p>
+                        />
                     </div>
+                    <CustomInput
+                        type="email"
+                        register={register}
+                        name="email"
+                        errors={errors}
+                        title="Email"
+                        placeholder="Email"
+                    />
+                    <CustomInput
+                        type="text"
+                        register={register}
+                        name="phoneNumber"
+                        errors={errors}
+                        title="Số điện thoại"
+                        placeholder="Số điện thoại"
+                    />
+                    <CustomDateInput
+                        register={register}
+                        name="dayOfBirth"
+                        errors={errors}
+                        title="Ngày sinh"
+                        placeholder="Ngày sinh"
+                    />
                     <button
                         type="submit"
                         className="btn btn-success me-3"
-                        disabled={!isDirty}
+                        disabled={isSubmitting || !isDirty}
                     >
-                        {!isSubmitting ? (
-                            'Cập nhật'
-                        ) : (
-                            <span
-                                className="spinner-border spinner-border-sm"
-                                role="status"
-                                aria-hidden="true"
-                            ></span>
-                        )}
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => reset()}
-                        disabled={!isDirty}
-                    >
-                        <i className="bi bi-arrow-repeat"></i> Reset
+                        {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
                     </button>
                 </form>
             </div>

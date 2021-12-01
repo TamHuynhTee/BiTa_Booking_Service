@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import logo from '../../images/logo.svg';
 import { SearchBar } from '..';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import { defaultRoute } from '../../routes/defaultRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../App/auth/slice/selector';
@@ -23,7 +23,11 @@ export const Header = (props: HeaderProps) => {
             dispatch(getCurrentUserAsync());
         }
     }, []);
-    console.log(user);
+
+    if (user?.user?.role === 'business') {
+        history.push('/business-dashboard');
+    }
+
     const logout = () => {
         dispatch(logoutUser());
         history.push(defaultRoute.UnauthenticatedHome);
@@ -69,6 +73,7 @@ export const Header = (props: HeaderProps) => {
                                         alt="avatar"
                                         width="48"
                                         height="48"
+                                        style={{ borderRadius: '50%' }}
                                     />
                                     <span>{user?.user?.username}</span>
                                 </a>

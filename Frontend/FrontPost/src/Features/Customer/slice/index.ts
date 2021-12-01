@@ -17,7 +17,11 @@ const initialState: Partial<CustomerStateTypes> = {
 export const customerSlice = createSlice({
     name: 'Customer',
     initialState,
-    reducers: {},
+    reducers: {
+        getDetailAppointment: (state, action: PayloadAction<any>) => {
+            state.appointment = action.payload;
+        },
+    },
     extraReducers: {
         [getBranchesByServiceForSelectAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -49,12 +53,6 @@ export const customerSlice = createSlice({
             action: PayloadAction<any>
         ) => {
             state.status = 'idle';
-            // const data = action.payload?.map((e: any) => {
-            //     return {
-            //         value: e.id,
-            //         label: `${e.name}: ${e.address.street}, ${e.address.ward}, ${e.address.district}, ${e.address.province}`,
-            //     };
-            // });
             state.queryAppointments = action.payload;
         },
         [queryAppointmentAsync.rejected.toString()]: (state, action) => {
@@ -68,12 +66,6 @@ export const customerSlice = createSlice({
             action: PayloadAction<any>
         ) => {
             state.status = 'idle';
-            // const data = action.payload?.map((e: any) => {
-            //     return {
-            //         value: e.id,
-            //         label: `${e.name}: ${e.address.street}, ${e.address.ward}, ${e.address.district}, ${e.address.province}`,
-            //     };
-            // });
             state.appointment = action.payload;
         },
         [getAppointmentByIdAsync.rejected.toString()]: (state, action) => {
@@ -82,5 +74,5 @@ export const customerSlice = createSlice({
     },
 });
 
-export const {} = customerSlice.actions;
+export const { getDetailAppointment } = customerSlice.actions;
 export default customerSlice.reducer;

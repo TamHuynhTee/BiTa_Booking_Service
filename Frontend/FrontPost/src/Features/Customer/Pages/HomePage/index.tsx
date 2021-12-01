@@ -9,7 +9,7 @@ import {
     Pagination,
 } from '../../../../Components';
 import { APPOINTMENT_PAID_FILTER } from '../../../../utils/selectOptions';
-import { AppointmentCard } from '../../Components';
+import { AppointmentCard, AppointmentDetailCustomer } from '../../Components';
 import {
     selectCustomerLoading,
     selectQueryAppointments,
@@ -18,19 +18,9 @@ import { queryAppointmentAsync } from '../../slice/thunk';
 import { IQueryAppointment } from '../../type';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
+import { thisDay } from '../../../../utils/thisDay';
 
 dayjs.extend(utc);
-
-const thisDay = () => {
-    const date = new Date();
-    const now =
-        date.getFullYear() +
-        '-' +
-        ('0' + (date.getMonth() + 1)).slice(-2) +
-        '-' +
-        date.getDate();
-    return now;
-};
 
 const startOfDay = dayjs().startOf('day').toDate();
 const endOfDay = dayjs()
@@ -61,7 +51,7 @@ export const CustomerHomepage = () => {
 
     const handleChangeDate = (e: any, type?: 'start' | 'end') => {
         const date = dayjs(e.target.value).utc().toDate();
-        console.log(date);
+        // console.log(date);
         if (type === 'start') {
             setQuery({ ...query, startTime: date });
             dispatch(queryAppointmentAsync({ ...query, startTime: date }));
@@ -140,6 +130,7 @@ export const CustomerHomepage = () => {
                     )}
                 </div>
             </PageWrapper>
+            <AppointmentDetailCustomer />
         </PageContainer>
     );
 };

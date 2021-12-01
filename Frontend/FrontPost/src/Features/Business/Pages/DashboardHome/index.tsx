@@ -9,8 +9,11 @@ import {
 } from '../../../Customer/slice/selector';
 import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
 import { IQueryAppointment } from '../../../Customer/type';
-import { AppointmentBusinessCard } from '../../Components';
-
+import {
+    AppointmentBusinessCard,
+    AppointmentDetailBusiness,
+} from '../../Components';
+import * as dayjs from 'dayjs';
 interface Props {}
 
 export const TestUserDataHome = [
@@ -64,12 +67,15 @@ export const TestUserDataHome = [
     },
 ];
 
+const startOfDay = dayjs().startOf('day').toDate();
+
 export const DashboardHome = (props: { business?: any }) => {
     const dispatch = useDispatch();
     const { business } = props;
     const [query, setQuery] = React.useState<IQueryAppointment>({
         business: business,
         state: 'Pending',
+        startTime: startOfDay,
     });
     const loading = useSelector(selectCustomerLoading);
     const appointments = useSelector(selectQueryAppointments);
@@ -136,6 +142,7 @@ export const DashboardHome = (props: { business?: any }) => {
                     grid
                 />
             </div>
+            <AppointmentDetailBusiness />
         </div>
     );
 };

@@ -39,16 +39,7 @@ export const BookingForm = (props: {
     const dispatch = useDispatch();
     const history = useHistory();
     const { service, user, thisDay, handleChange, serviceId } = props;
-    // const thisDay = () => {
-    //     const date = new Date();
-    //     const now =
-    //         date.getFullYear() +
-    //         '-' +
-    //         ('0' + (date.getMonth() + 1)).slice(-2) +
-    //         '-' +
-    //         date.getDate();
-    //     return now;
-    // };
+
     const date = new Date(thisDay);
     const weekday = date.getDay();
     const key = service?.schedule?.find(

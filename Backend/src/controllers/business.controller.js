@@ -7,12 +7,18 @@ const ApiError = require('../utils/ApiError');
 
 const createBusiness = catchAsync(async (req, res) => {
   await businessService.createBusiness(req.body);
-  sendSuccess(res, {}, httpStatus.CREATED, 'Created');
+  sendSuccess(
+    res,
+    {},
+    httpStatus.CREATED,
+    'Đăng ký doanh nghiệp thành công, hãy kiểm tra email và chờ quản trị viên của chúng tôi duyệt tài khoản của bạn.'
+  );
 });
 
 const updateBusinessInfo = catchAsync(async (req, res) => {
-  const service = await businessService.updateBusinessInfo(req.body);
-  sendSuccess(res, {}, httpStatus.Ok, 'Business info changed');
+  const { businessId, ...rest } = req.body;
+  const business = await businessService.updateBusinessById(businessId, rest);
+  sendSuccess(res, business, httpStatus.Ok, 'Đã cập nhật thông tin doanh nghiệp');
 });
 
 const deleteBusinessById = catchAsync(async (req, res) => {

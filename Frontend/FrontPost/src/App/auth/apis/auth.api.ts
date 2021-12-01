@@ -1,11 +1,15 @@
 import Repository from '../../../Apis/repositoryApi';
 import { ReturnResponse } from '../../../Apis/response';
 import {
+    IChangePasswordApi,
     IForgotPassword,
     ILoginApi,
     IRegisterBusinessApi,
     IRegisterCustomerApi,
     IResetPassword,
+    IUpdateAvatarApi,
+    IUpdateBusinessApi,
+    IUpdateProfileApi,
     IVerifyEmail,
 } from '../type';
 import { routeAuth } from './auth.route';
@@ -48,4 +52,28 @@ export const forgotPasswordApi = async (
     payload: IForgotPassword
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeAuth['forgotPassword'], payload);
+};
+
+export const updateProfileApi = async (
+    payload: IUpdateProfileApi
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAuth['updateProfile'], payload);
+};
+
+export const updateBusinessApi = async (
+    payload: IUpdateBusinessApi
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAuth['updateBusiness'], payload);
+};
+
+export const updateAvatarApi = async (
+    payload: IUpdateAvatarApi
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAuth['updateAvatar'], payload);
+};
+
+export const changePasswordApi = async (
+    payload: IChangePasswordApi
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAuth['changePassword'], payload);
 };

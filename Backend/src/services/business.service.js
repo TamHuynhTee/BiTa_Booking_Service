@@ -51,17 +51,11 @@ const updateBusinessById = async (businessId, updateBody) => {
   if (!business) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Business not found');
   }
-  if (await Business.nameExists(updateBody.businessName)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Business name already taken');
+  if (await Business.nameExists(updateBody.businessName, businessId)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Tên doanh nghiệp đã tồn tại');
   }
-  if (await Business.displayNameExists(updateBody.displayName)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Display name already taken');
-  }
-  if (await User.isEmailTaken(updateBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
-  if (await User.isPhoneTaken(updateBody.phoneNumber)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone number already exists');
+  if (await Business.displayNameExists(updateBody.displayName, businessId)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Tên hiển thị đã tồn tại');
   }
   Object.assign(business, updateBody);
   await business.save();

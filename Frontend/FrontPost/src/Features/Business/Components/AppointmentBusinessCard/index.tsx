@@ -5,6 +5,8 @@ import * as relativeTime from 'dayjs/plugin/relativeTime';
 import * as utc from 'dayjs/plugin/utc';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { APPOINTMENT_PAID_FILTER } from '../../../../utils/selectOptions';
+import { useDispatch } from 'react-redux';
+import { getDetailAppointment } from '../../../Customer/slice';
 
 dayjs.locale('vi');
 dayjs.extend(relativeTime);
@@ -12,7 +14,7 @@ dayjs.extend(utc);
 
 export const AppointmentBusinessCard = (props: { data?: any }) => {
     const { data } = props;
-
+    const dispatch = useDispatch();
     const momentDate = (date: any) => {
         const time = dayjs(date).utc().format('DD/MM/YYYY HH:mm');
         return time;
@@ -43,6 +45,10 @@ export const AppointmentBusinessCard = (props: { data?: any }) => {
         );
     };
 
+    const handleGetAppointment = () => {
+        dispatch(getDetailAppointment(data));
+    };
+
     console.log(data);
 
     return (
@@ -66,7 +72,18 @@ export const AppointmentBusinessCard = (props: { data?: any }) => {
                     {momentDate(data?.endTime)}
                 </p>
                 {renderPayment(data?.payment)}
-                <button className="btn btn-link">Chi tiết</button>
+                <button
+                    className="btn btn-link"
+                    data-bs-toggle="modal"
+                    data-bs-target="#AppointmentDetailBusiness"
+                    onClick={handleGetAppointment}
+                >
+                    Chi tiết
+                </button>
+                <div className="d-flex gap-2">
+                    <button className="btn btn-success">Hoàn tất</button>
+                    <button className="btn btn-danger">Hủy hẹn</button>
+                </div>
             </div>
             <div className="card-footer">
                 {dayjs(data?.startTime).subtract(7, 'hours').fromNow()}

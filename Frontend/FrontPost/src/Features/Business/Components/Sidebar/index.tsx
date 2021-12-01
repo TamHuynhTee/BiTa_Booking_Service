@@ -32,7 +32,11 @@ export const Sidebar = (props: SidebarProps) => {
                 data-bs-toggle="collapse"
                 href="#profileCollapse"
             >
-                <img src={img} alt="avatar" className="avatar" />{' '}
+                <img
+                    src={user?.user?.avatar || img}
+                    alt="avatar"
+                    className="avatar"
+                />{' '}
                 <h4 className="text-truncate">{user?.business?.displayName}</h4>
             </a>
             <div className="collapse mt-2" id="profileCollapse">
@@ -44,15 +48,6 @@ export const Sidebar = (props: SidebarProps) => {
                         >
                             <SidebarIcon type="bi-person-circle" />
                             Tài khoản doanh nghiệp
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to={`${url}/business-info`}
-                            className="text-truncate"
-                        >
-                            <SidebarIcon type="bi-folder" />
-                            Thông tin doanh nghiệp
                         </Link>
                     </li>
                 </ul>

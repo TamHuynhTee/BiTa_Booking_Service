@@ -15,10 +15,10 @@ const createBusiness = {
 
 const updateBusinessInfo = {
   body: Joi.object().keys({
+    businessId: Joi.string().required().custom(objectId),
     businessName: Joi.string().required(),
     displayName: Joi.string().required(),
     ownerName: Joi.string().required(),
-    businessCertificate: Joi.string().allow(null, ''),
     shortDescription: Joi.string().allow(null, ''),
   }),
 };

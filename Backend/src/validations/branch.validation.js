@@ -55,6 +55,12 @@ const getAllBranches = {
   }),
 };
 
+const changeBranchActivation = {
+  body: Joi.object().keys({
+    branchId: Joi.string().custom(objectId),
+  }),
+};
+
 const queryBranches = {
   query: Joi.object().keys({
     keyword: Joi.string().allow(null, ''),
@@ -75,4 +81,5 @@ module.exports = {
   queryBranches,
   getBranchByService,
   getAllBranches,
+  changeBranchActivation,
 };

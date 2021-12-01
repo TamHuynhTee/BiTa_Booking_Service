@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.put(
   '/update-business-info',
-  auth(),
+  auth('business'),
   validate(businessValidation.updateBusinessInfo),
   businessController.updateBusinessInfo
 );

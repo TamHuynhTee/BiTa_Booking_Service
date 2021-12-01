@@ -22,6 +22,10 @@ export const routeBusiness: Record<string, ApiRoutes> = {
         method: ApiMethods.GET,
         url: 'service/get-all-services',
     },
+    updateServiceActivation: {
+        method: ApiMethods.PUT,
+        url: 'service/change-service-activation',
+    },
     // Branch
     createBranch: {
         method: ApiMethods.POST,
@@ -42,5 +46,9 @@ export const routeBusiness: Record<string, ApiRoutes> = {
     getAllBranch: {
         method: ApiMethods.GET,
         url: 'branch/get-all-branches',
+    },
+    updateBranchActivation: {
+        method: ApiMethods.PUT,
+        url: 'branch/change-branch-activation',
     },
 };

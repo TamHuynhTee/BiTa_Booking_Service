@@ -26,6 +26,16 @@ const updateService = async (serviceBody) => {
   await service.save();
 };
 
+const updateServiceActivation = async (serviceId) => {
+  const service = await getServiceById(serviceId);
+  if (!service) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy dịch vụ');
+  }
+  Object.assign(service, { isActive: !service.isActive });
+  await service.save();
+  return service;
+};
+
 const deleteService = async (serviceBody) => {
   const service = await getServiceById(serviceBody.serviceId);
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
@@ -45,4 +55,5 @@ module.exports = {
   getServiceById,
   queryServices,
   getAllServices,
+  updateServiceActivation,
 };

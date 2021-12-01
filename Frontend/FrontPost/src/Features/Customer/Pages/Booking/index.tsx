@@ -17,6 +17,7 @@ import { TIME_TO_COME } from '../../../../utils/selectOptions';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import * as localizedFormat from 'dayjs/plugin/localizedFormat';
+import { thisDay } from '../../../../utils/thisDay';
 
 dayjs.locale('vi');
 dayjs.extend(localizedFormat);
@@ -26,17 +27,6 @@ export const Booking = () => {
     const { id } = useParams<any>();
     const user = useSelector(selectUser);
     const service = useSelector(selectServiceDetail);
-
-    const thisDay = () => {
-        const date = new Date();
-        const now =
-            date.getFullYear() +
-            '-' +
-            ('0' + (date.getMonth() + 1)).slice(-2) +
-            '-' +
-            date.getDate();
-        return now;
-    };
 
     const [payment, setPayment] = React.useState({
         customerName: `${user?.user?.surName} ${user?.user?.firstName}`,
