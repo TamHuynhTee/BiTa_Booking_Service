@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../../../App/auth/slice/selector';
 import {
     LoadingComponent,
     NoDataView,
@@ -17,11 +18,14 @@ export const BranchList = (props: { business?: string }) => {
     const { business } = props;
     const branches = useSelector(selectBranches);
     const loading = useSelector(selectLoading);
+    const businessInfo = useSelector(selectUser);
     const [query, setQuery] = React.useState<IQueryBranchApi>({
         isActive: ACTIVE_OPTIONS[0].value,
         filter: BRANCH_FILTER[0].value,
         business: business,
     });
+
+    // console.log(businessInfo);
 
     React.useEffect(() => {
         dispatch(queryBranchAsync(query));
@@ -98,12 +102,23 @@ export const BranchList = (props: { business?: string }) => {
             </div>
             {loading === 'idle' ? (
                 <>
+                    <div className="my-2">
+                        <h5 className="fw-bold">
+                            Tìm thấy {branches?.totalResults} chi nhánh
+                        </h5>
+                    </div>
                     <div className="my-3">
                         {branches?.results?.length === 0 ? (
                             <NoDataView />
                         ) : (
                             branches?.results?.map((e: any, i: number) => (
-                                <BranchCard data={e} key={i} />
+                                <BranchCard
+                                    data={e}
+                                    key={i}
+                                    headquarter={
+                                        businessInfo?.business?.headquarter
+                                    }
+                                />
                             ))
                         )}
                     </div>

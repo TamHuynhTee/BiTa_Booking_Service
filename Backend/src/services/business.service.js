@@ -76,6 +76,17 @@ const deleteBusinessById = async (businessId) => {
   return business;
 };
 
+const setHeadquarter = async (businessBody) => {
+  const business = await getBusinessById(businessBody.businessId);
+  if (!business) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Doanh nghiệp không tồn tại');
+  }
+  console.log(business);
+  business.headquarter = businessBody.branchId;
+  //   await business.save();
+  return business.save();
+};
+
 const queryBusinesses = async (filter, options) => {
   const businesses = await Business.paginate(filter, options);
   return businesses;
@@ -88,4 +99,5 @@ module.exports = {
   deleteBusinessById,
   getBusinessByAccountId,
   queryBusinesses,
+  setHeadquarter,
 };

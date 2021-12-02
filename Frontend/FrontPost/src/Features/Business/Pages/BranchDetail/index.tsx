@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { selectUser } from '../../../../App/auth/slice/selector';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { ButtonSpinner } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
-import { CreateBranchSchema } from '../../../../validations/branch';
+import { UpdateBranchSchema } from '../../../../validations/branch';
 import {
+    setHeadquarterApi,
     updateBranchActivationApi,
     updateBranchApi,
 } from '../../Apis/business.api';
@@ -25,13 +28,14 @@ export const BranchDetail = (props: Props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const branch = useSelector(selectBranchDetail);
+    const business = useSelector(selectUser);
     const services = useSelector(selectServicesForSelect);
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm({
-        resolver: yupResolver(CreateBranchSchema),
+        resolver: yupResolver(UpdateBranchSchema),
         defaultValues: {
             name: branch?.name,
             street: branch?.address.street,
@@ -44,7 +48,7 @@ export const BranchDetail = (props: Props) => {
         dispatch(getBranchByIdAsync({ branchId: id }));
     }, []);
     React.useEffect(() => {
-        dispatch(getAllServiceAsync({ businessId: branch?.business }));
+        dispatch(getAllServiceAsync({ businessId: business?.business?.id }));
     }, []);
 
     const [list, setList] = React.useState<any>(branch?.services || []);
@@ -97,12 +101,49 @@ export const BranchDetail = (props: Props) => {
         }
     };
 
+    const [loading, setLoading] = React.useState(false);
+
+    const handleSetHeadquarter = () => {
+        if (confirm(`Bạn chắc muốn cập nhật chi nhánh này làm trụ sở chứ?`)) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await setHeadquarterApi({
+                        businessId: business?.business?.id,
+                        branchId: id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(getCurrentUserAsync());
+                        history.push('/business-dashboard/branches');
+                    } else {
+                        notifyError(result.message);
+                    }
+                    res(true);
+                }, 2000);
+            });
+        }
+    };
+
     return (
         <div className="container">
             <Link to="/business-dashboard/branches">{'< '}Trở về</Link>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3">
+                {business?.business?.headquarter === id ? (
+                    <span className="badge rounded-pill bg-primary">
+                        Trụ sở chính
+                    </span>
+                ) : (
+                    <button
+                        type="button"
+                        className="btn btn-dark"
+                        onClick={handleSetHeadquarter}
+                    >
+                        {loading ? <ButtonSpinner /> : 'Đặt trụ sở chính'}
+                    </button>
+                )}
+                <div className="my-3">
                     <label htmlFor="name" className="form-label">
                         Tên chi nhánh *
                     </label>

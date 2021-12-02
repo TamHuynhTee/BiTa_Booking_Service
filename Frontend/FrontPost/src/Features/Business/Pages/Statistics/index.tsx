@@ -3,5 +3,5 @@ import React from 'react';
 interface Props {}
 
 export const Statistics = (props: Props) => {
-    return <div>Statistics</div>;
+    return <div className="container">Statistics</div>;
 };

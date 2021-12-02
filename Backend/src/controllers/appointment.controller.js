@@ -78,7 +78,7 @@ const createAppointment = catchAsync(async (req, res) => {
 });
 
 const doneAppointment = catchAsync(async (req, res) => {
-  req.body.status = 'Done';
+  req.body.state = 'Done';
   req.body.payment = 'FullyPaid';
   const appointment = await appointmentService.updateAppointment(req.body);
   sendSuccess(res, appointment, httpStatus.OK, 'Đã hoàn tất cuộc hẹn');

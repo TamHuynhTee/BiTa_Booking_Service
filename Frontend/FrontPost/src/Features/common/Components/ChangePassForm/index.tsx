@@ -48,7 +48,7 @@ export const ChangePassForm = (props: Props) => {
                     id="newPassword"
                     placeholder="Mật khẩu mới"
                 />
-                <p className="text-danger">{errors.oldPassword?.message}</p>
+                <p className="text-danger">{errors.newPassword?.message}</p>
             </div>
             <div className="form-group mb-2">
                 <ColorLabel

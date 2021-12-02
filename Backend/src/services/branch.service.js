@@ -9,6 +9,7 @@ const createBranch = async (branchBody) => {
   const business = await businessService.getBusinessById(branchBody.business);
   if (!business) throw new ApiError(httpStatus.NOT_FOUND, 'Doanh nghiệp không tồn tại');
   business.branches.push(branch._id);
+  if (branchBody.headquarter) business.headquarter = branch._id;
   await business.save();
   return branch;
 };

@@ -76,3 +76,18 @@ export const updateBranchActivationApi = async (payload: {
 }): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['updateBranchActivation'], payload);
 };
+
+// Business
+export const setHeadquarterApi = async (payload: {
+    businessId?: string;
+    branchId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['setHeadquarter'], payload);
+};
+
+// Appointment
+export const doneAppointmentApi = async (payload: {
+    appointmentId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['doneAppointment'], payload);
+};

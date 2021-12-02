@@ -51,4 +51,14 @@ export const routeBusiness: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'branch/change-branch-activation',
     },
+    // Business
+    setHeadquarter: {
+        method: ApiMethods.PUT,
+        url: 'business/set-headquarter',
+    },
+    // Appointment
+    doneAppointment: {
+        method: ApiMethods.PUT,
+        url: 'appointment/done-appointment',
+    },
 };

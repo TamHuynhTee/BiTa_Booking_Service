@@ -20,7 +20,7 @@ export const Sidebar = (props: SidebarProps) => {
         dispatch(logoutUser());
         history.push('/');
     };
-    console.log(user);
+    // console.log(user);
     return (
         <div className="sidebar">
             <div className="sidebar-logo d-flex justify-content-center">

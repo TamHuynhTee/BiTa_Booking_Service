@@ -17,8 +17,4 @@ export const routeCustomer: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'appointment/update-appointment-customer',
     },
-    cancelAppointment: {
-        method: ApiMethods.PUT,
-        url: 'appointment/cancel-appointment',
-    },
 };

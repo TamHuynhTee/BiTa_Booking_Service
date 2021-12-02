@@ -15,7 +15,7 @@ export const CustomSelect = (props: {
     errors: any;
     placeholder: string;
     noOptionsMessage?: any;
-    handleChange?: any;
+    handleChange?: Function | any;
     objKey?: string;
 }) => {
     const {

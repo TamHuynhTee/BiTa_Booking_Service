@@ -7,13 +7,18 @@ import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { APPOINTMENT_PAID_FILTER } from '../../../../utils/selectOptions';
 import { useDispatch } from 'react-redux';
 import { getDetailAppointment } from '../../../Customer/slice';
+import { doneAppointmentApi } from '../../Apis/business.api';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
+import { ButtonSpinner } from '../../../../Components';
+import { cancelAppointmentApi } from '../../../common/Apis/common.api';
 
 dayjs.locale('vi');
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 
-export const AppointmentBusinessCard = (props: { data?: any }) => {
-    const { data } = props;
+export const AppointmentBusinessCard = (props: { data?: any; query?: any }) => {
+    const { data, query } = props;
     const dispatch = useDispatch();
     const momentDate = (date: any) => {
         const time = dayjs(date).utc().format('DD/MM/YYYY HH:mm');
@@ -49,7 +54,46 @@ export const AppointmentBusinessCard = (props: { data?: any }) => {
         dispatch(getDetailAppointment(data));
     };
 
-    console.log(data);
+    const [loading, setLoading] = React.useState(false);
+    const handleDoneAppointment = () => {
+        if (confirm(`Xác nhận xong cuộc hẹn?`)) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await doneAppointmentApi({
+                        appointmentId: data?.id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(queryAppointmentAsync(query));
+                    } else {
+                        notifyError(result.message);
+                    }
+                    res(() => setLoading(false));
+                }, 2000);
+            });
+        }
+    };
+
+    const handleCancelAppointment = () => {
+        if (confirm(`Bạn chắc muốn hủy hẹn chứ?`)) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await cancelAppointmentApi({
+                        appointmentId: data?.id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(queryAppointmentAsync(query));
+                    } else {
+                        notifyError(result.message);
+                    }
+                    res(() => setLoading(false));
+                }, 2000);
+            });
+        }
+    };
 
     return (
         <div className="card">
@@ -81,8 +125,18 @@ export const AppointmentBusinessCard = (props: { data?: any }) => {
                     Chi tiết
                 </button>
                 <div className="d-flex gap-2">
-                    <button className="btn btn-success">Hoàn tất</button>
-                    <button className="btn btn-danger">Hủy hẹn</button>
+                    <button
+                        className="btn btn-success"
+                        onClick={handleDoneAppointment}
+                    >
+                        {loading ? <ButtonSpinner /> : 'Hoàn tất'}
+                    </button>
+                    <button
+                        className="btn btn-danger"
+                        onClick={handleCancelAppointment}
+                    >
+                        {loading ? <ButtonSpinner /> : 'Hủy hẹn'}
+                    </button>
                 </div>
             </div>
             <div className="card-footer">

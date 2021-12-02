@@ -62,14 +62,7 @@ export const BusinessInfoSchema = yup.object().shape({
 });
 
 export const ChangePassSchema = yup.object().shape({
-    oldPassword: yup
-        .string()
-        .required('Chưa nhập mật khẩu hiện tại')
-        .min(8, 'Mật khẩu ít nhất 8 ký tự')
-        .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            'Mật khẩu phải chứa ít nhất 1 số và 1 ký tự'
-        ),
+    oldPassword: yup.string().required('Chưa nhập mật khẩu hiện tại'),
     newPassword: yup
         .string()
         .required('Chưa nhập mật khẩu mới')

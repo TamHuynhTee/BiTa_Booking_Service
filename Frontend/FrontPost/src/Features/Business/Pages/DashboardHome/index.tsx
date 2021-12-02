@@ -14,7 +14,6 @@ import {
     AppointmentDetailBusiness,
 } from '../../Components';
 import * as dayjs from 'dayjs';
-interface Props {}
 
 export const TestUserDataHome = [
     {
@@ -99,7 +98,10 @@ export const DashboardHome = (props: { business?: any }) => {
                                 appointments.results?.map(
                                     (e: any, i: number) => (
                                         <div className="col-sm-3" key={i}>
-                                            <AppointmentBusinessCard data={e} />
+                                            <AppointmentBusinessCard
+                                                data={e}
+                                                query={query}
+                                            />
                                         </div>
                                     )
                                 )
@@ -138,7 +140,7 @@ export const DashboardHome = (props: { business?: any }) => {
                 <LineChartResponsive
                     data={TestUserDataHome}
                     dataKey="Active User"
-                    title="Phan tich luong nguoi dung"
+                    title="Doanh thu theo ngày"
                     grid
                 />
             </div>

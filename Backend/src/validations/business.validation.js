@@ -29,6 +29,13 @@ const deleteBusinessById = {
   }),
 };
 
+const setHeadquarter = {
+  body: Joi.object().keys({
+    businessId: Joi.string().required().custom(objectId),
+    branchId: Joi.string().required().custom(objectId),
+  }),
+};
+
 const getBusinessById = {
   query: Joi.object().keys({
     businessId: Joi.string().required().custom(objectId),
@@ -53,4 +60,5 @@ module.exports = {
   deleteBusinessById,
   getBusinessById,
   queryBusinesses,
+  setHeadquarter,
 };

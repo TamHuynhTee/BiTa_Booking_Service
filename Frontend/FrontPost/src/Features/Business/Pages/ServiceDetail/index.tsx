@@ -255,7 +255,6 @@ export const ServiceDetail = (props: Props) => {
                                 {errors.name?.message}
                             </p>
                         </div>
-
                         <div className="mb-3">
                             <label htmlFor="category" className="form-label">
                                 Loại dịch vụ *

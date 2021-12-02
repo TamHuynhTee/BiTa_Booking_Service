@@ -30,8 +30,3 @@ export const updateAppointmentApi = async (
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeCustomer['updateAppointment'], query);
 };
-export const cancelAppointmentApi = async (
-    query: ICancelAppointmentApi
-): Promise<ReturnResponse<any>> => {
-    return await Repository(routeCustomer['cancelAppointment'], query);
-};

@@ -20,4 +20,9 @@ export const routeCommon: Record<string, ApiRoutes> = {
         method: ApiMethods.GET,
         url: 'branch/get-branches-by-service',
     },
+    // Appointment
+    cancelAppointment: {
+        method: ApiMethods.PUT,
+        url: 'appointment/cancel-appointment',
+    },
 };

@@ -56,7 +56,7 @@ export const BookingForm = (props: {
         dispatch(getBranchesByServiceForSelectAsync({ serviceId: serviceId }));
     }, []);
 
-    console.log(branches);
+    // console.log(branches);
 
     const {
         register,

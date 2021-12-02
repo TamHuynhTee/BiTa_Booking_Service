@@ -28,7 +28,19 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
         dispatch(getAllBranchAsync({ businessId: id }));
         dispatch(queryServiceAsync({ business: id, isActive: true }));
     }, []);
-    console.log(business, branches, services);
+    // console.log(business, branches, services);
+
+    const renderHeadquarter = () => {
+        const headquarter = branches?.find(
+            (item: any) => item.id === business?.headquarter
+        );
+        return (
+            <p className="ms-5">
+                <span className="badge bg-primary">{headquarter?.name}</span>{' '}
+                {`${headquarter?.address.street}, ${headquarter?.address.ward}, ${headquarter?.address.district}, ${headquarter?.address.province}`}
+            </p>
+        );
+    };
     return (
         <div className="container">
             <div className="businessInfo">
@@ -62,7 +74,7 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                                 <span className="badge bg-secondary">
                                     Trụ sở
                                 </span>
-                                <p>TPHCM</p>
+                                {renderHeadquarter()}
                             </li>
                             <li>
                                 <span className="badge bg-secondary">

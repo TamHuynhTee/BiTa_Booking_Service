@@ -11,7 +11,7 @@ const createBranch = {
       district: Joi.string().required(),
       province: Joi.string().required(),
     }),
-    coordinates: Joi.array().allow(null),
+    headquarter: Joi.boolean().allow(null),
   }),
 };
 
@@ -26,7 +26,6 @@ const updateBranch = {
       district: Joi.string().required(),
       province: Joi.string().required(),
     }),
-    coordinates: Joi.array().allow(null),
     services: Joi.array().items(Joi.string().custom(objectId)).optional(),
   }),
 };

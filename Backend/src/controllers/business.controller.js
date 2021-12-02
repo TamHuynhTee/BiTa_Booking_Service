@@ -32,6 +32,11 @@ const getBusinessById = catchAsync(async (req, res) => {
   sendSuccess(res, business, httpStatus.OK, 'Business found');
 });
 
+const setHeadquarter = catchAsync(async (req, res) => {
+  const business = await businessService.setHeadquarter(req.body);
+  sendSuccess(res, business, httpStatus.OK, 'Đã cập nhật trụ sở chính');
+});
+
 const queryBusinesses = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['businessName', 'displayName', 'ownerName', 'isActive', 'isConfirmed']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -45,4 +50,5 @@ module.exports = {
   deleteBusinessById,
   getBusinessById,
   queryBusinesses,
+  setHeadquarter
 };
