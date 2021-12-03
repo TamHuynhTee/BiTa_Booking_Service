@@ -1,6 +1,6 @@
 const allRoles = {
   user: ['appointment', 'customer'],
-  business: ['service', 'branch', 'business'],
+  business: ['service', 'branch', 'business', 'appointment'],
   manager: ['approveBusiness', 'manageCategories', 'manager'],
   admin: ['getUsers', 'manageUsers', 'admin'],
 };

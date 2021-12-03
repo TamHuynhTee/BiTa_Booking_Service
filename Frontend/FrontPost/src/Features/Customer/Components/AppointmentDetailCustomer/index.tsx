@@ -1,17 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectAppointmentDetail } from '../../slice/selector';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import * as utc from 'dayjs/plugin/utc';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
 import {
     APPOINTMENT_PAID_FILTER,
+    APPOINTMENT_STATE_FILTER,
     TIME_TO_COME,
 } from '../../../../utils/selectOptions';
 import { updateAppointmentApi } from '../../Apis/customer.api';
-import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { selectAppointmentDetail } from '../../slice/selector';
 
 dayjs.locale('vi');
 dayjs.extend(relativeTime);
@@ -19,7 +20,7 @@ dayjs.extend(utc);
 
 export const AppointmentDetailCustomer = () => {
     const appointment = useSelector(selectAppointmentDetail);
-
+    const dispatch = useDispatch();
     const momentDate = (date: any) => {
         const time = dayjs(date).utc().format('DD/MM/YYYY HH:mm');
         return time;
@@ -49,6 +50,53 @@ export const AppointmentDetailCustomer = () => {
             </p>
         );
     };
+    const renderState = (state: string) => {
+        return (
+            <p
+                className="fw-bold"
+                style={{
+                    color:
+                        state === 'Pending'
+                            ? '#e3b44b'
+                            : state === 'Canceled'
+                            ? 'red'
+                            : 'green',
+                }}
+            >
+                {' '}
+                {
+                    APPOINTMENT_STATE_FILTER[
+                        APPOINTMENT_STATE_FILTER.findIndex(
+                            (e: any) => e.value === state
+                        )
+                    ]?.label
+                }
+            </p>
+        );
+    };
+
+    const renderNotify = () => {
+        return (
+            <select
+                className="form-select"
+                defaultValue={
+                    TIME_TO_COME[
+                        TIME_TO_COME.findIndex(
+                            (e: any) => e.value === appointment?.notify
+                        )
+                    ]?.label
+                }
+                onChange={handleChangeNotify}
+            >
+                {TIME_TO_COME.map((e: any, i: number) => (
+                    <option value={e.value} key={i}>
+                        {e.label}
+                    </option>
+                ))}
+            </select>
+        );
+    };
+    console.log(appointment?.notify);
 
     const handleChangeNotify = async (e: any) => {
         const value = e.target.value;
@@ -58,16 +106,6 @@ export const AppointmentDetailCustomer = () => {
         });
         if (result.code === 200) notifySuccess(result.message);
         else notifyError(result.message);
-    };
-
-    const handleCancelAppointment = async () => {
-        if (
-            confirm(
-                'Bạn chắc muốn hủy hẹn chứ, tiền cọc sẽ không được hoàn lại.'
-            )
-        ) {
-            console.log('tes');
-        }
     };
 
     return (
@@ -91,6 +129,7 @@ export const AppointmentDetailCustomer = () => {
                         ></button>
                     </div>
                     <div className="modal-body">
+                        {renderState(appointment?.state)}
                         <div className="card fs-5">
                             <div className="card-body">
                                 <h5 className="fw-bold mt-2">
@@ -140,40 +179,12 @@ export const AppointmentDetailCustomer = () => {
                                     {momentDate(appointment?.endTime)}
                                 </p>
                                 <p className="card-text">
-                                    <select
-                                        className="form-select"
-                                        defaultValue={
-                                            TIME_TO_COME[
-                                                TIME_TO_COME.findIndex(
-                                                    (e: any) =>
-                                                        e.value ===
-                                                        appointment?.notify
-                                                )
-                                            ]?.label
-                                        }
-                                        onChange={handleChangeNotify}
-                                    >
-                                        {TIME_TO_COME.map(
-                                            (e: any, i: number) => (
-                                                <option value={e.value} key={i}>
-                                                    {e.label}
-                                                </option>
-                                            )
-                                        )}
-                                    </select>
+                                    {appointment?.state === 'Pending' &&
+                                        renderNotify()}
                                 </p>
                                 {renderPayment(appointment?.payment)}
                             </div>
                         </div>
-                    </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button"
-                            className="btn btn-danger"
-                            onClick={handleCancelAppointment}
-                        >
-                            Hủy hẹn
-                        </button>
                     </div>
                 </div>
             </div>

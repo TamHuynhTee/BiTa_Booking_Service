@@ -12,7 +12,7 @@ import './style.scss';
 
 interface ProfileProps {}
 
-const navItems = ['Thông tin cá nhân', 'Đổi mật khẩu', 'Lịch sử đặt hẹn'];
+const navItems = ['Thông tin cá nhân', 'Đổi mật khẩu'];
 
 export const Profile = (props: ProfileProps) => {
     const [page, setPage] = React.useState(1);

@@ -6,6 +6,7 @@ import {
     Pagination,
     SearchBar,
 } from '../../../../Components';
+import { ResultNumber } from '../../../../Components/ResultNumber';
 import { ACTIVE_OPTIONS } from '../../../../utils/selectOptions';
 import { IQueryServiceApi } from '../../../common/type';
 import { ServiceCard } from '../../Components';
@@ -82,11 +83,10 @@ export const ServiceList = (props: { business?: string }) => {
             </div>
             {loading === 'idle' ? (
                 <>
-                    <div className="my-2">
-                        <h5 className="fw-bold">
-                            Tìm thấy {services?.totalResults} dịch vụ
-                        </h5>
-                    </div>
+                    <ResultNumber
+                        number={services?.totalResults}
+                        suffix="dịch vụ"
+                    />
                     <div className="my-3">
                         {services?.results?.length === 0 ? (
                             <NoDataView />

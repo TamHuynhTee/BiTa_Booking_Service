@@ -56,8 +56,6 @@ export const BookingForm = (props: {
         dispatch(getBranchesByServiceForSelectAsync({ serviceId: serviceId }));
     }, []);
 
-    // console.log(branches);
-
     const {
         register,
         handleSubmit,
@@ -211,6 +209,8 @@ export const BookingForm = (props: {
                 name="appointmentBranch"
                 control={control}
                 errors={errors.appointmentBranch}
+                handleChange={() => {}}
+                objKey=""
             />
             <p className="text-danger">{errors?.appointmentBranch?.message}</p>
             <SectionHeader title="Chú thích" order={5} />

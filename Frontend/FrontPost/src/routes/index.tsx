@@ -22,6 +22,7 @@ import { NotFound } from '../static/404';
 import { BusinessDashboard } from '../Features/Business/Pages';
 import { CustomerHomepage } from '../Features/Customer/Pages/HomePage';
 import { PaymentDenied, PaymentSuccess } from '../Features/Customer/Pages';
+import { AppointmentHistory } from '../Features/common/Components';
 
 interface IRoute {
     exact: Boolean;
@@ -200,6 +201,17 @@ const routes: Array<IRoute> = [
             </>
         ),
         path: defaultRoute.PaymentFailed,
+        exact: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <AppointmentHistory />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.AppointmentHistory,
         exact: true,
     },
 ];

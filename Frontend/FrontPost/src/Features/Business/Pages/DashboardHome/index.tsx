@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingComponent, Pagination } from '../../../../Components';
@@ -9,11 +10,7 @@ import {
 } from '../../../Customer/slice/selector';
 import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
 import { IQueryAppointment } from '../../../Customer/type';
-import {
-    AppointmentBusinessCard,
-    AppointmentDetailBusiness,
-} from '../../Components';
-import * as dayjs from 'dayjs';
+import { AppointmentBusinessCard } from '../../Components';
 
 export const TestUserDataHome = [
     {
@@ -144,7 +141,6 @@ export const DashboardHome = (props: { business?: any }) => {
                     grid
                 />
             </div>
-            <AppointmentDetailBusiness />
         </div>
     );
 };

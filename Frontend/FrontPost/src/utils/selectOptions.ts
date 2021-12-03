@@ -135,3 +135,15 @@ export const APPOINTMENT_PAID_FILTER = [
     { value: 'PartialPaid', label: 'Thanh toán tiền cọc' },
     { value: 'FullyPaid', label: 'Đã thanh toán' },
 ];
+
+export const APPOINTMENT_STATE_FILTER = [
+    { value: '', label: 'Tất cả' },
+    { value: 'Pending', label: 'Đang chờ' },
+    { value: 'Done', label: 'Hoàn tất' },
+    { value: 'Canceled', label: 'Đã hủy' },
+];
+
+export const APPOINTMENT_FILTER = [
+    { value: 'customerName', label: 'Tên khách hàng' },
+    { value: 'customerPhoneNumber', label: 'Số điện thoại khách hàng' },
+];

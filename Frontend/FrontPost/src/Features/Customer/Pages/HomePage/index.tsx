@@ -78,7 +78,7 @@ export const CustomerHomepage = () => {
     };
 
     const handleChangePayment = (e: any) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         const value = e.target.value;
         if (!value) {
             delete query.payment;
@@ -108,7 +108,10 @@ export const CustomerHomepage = () => {
                                     appointments.results?.map(
                                         (e: any, i: number) => (
                                             <div className="col-sm-3" key={i}>
-                                                <AppointmentCard data={e} />
+                                                <AppointmentCard
+                                                    data={e}
+                                                    query={query}
+                                                />
                                             </div>
                                         )
                                     )
@@ -145,7 +148,7 @@ const AppointmentFiler = (props: {
         <>
             <div className="input-group mb-2">
                 <div className="me-3 row">
-                    <label className="col-form-labe col-sm-2">Từ</label>
+                    <label className="col-form-label col-sm-2">Từ</label>
                     <div className="col-sm-10">
                         <input
                             type="date"
@@ -156,7 +159,7 @@ const AppointmentFiler = (props: {
                     </div>
                 </div>
                 <div className="me-3 row">
-                    <label className="col-form-labe col-sm-2">Đến</label>
+                    <label className="col-form-label col-sm-2">Đến</label>
                     <div className="col-sm-10">
                         <input
                             type="date"

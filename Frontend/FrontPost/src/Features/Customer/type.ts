@@ -22,6 +22,8 @@ export interface ICreateAppointment {
     startTime?: Date;
 }
 export interface IQueryAppointment extends IQueryApi {
+    keyword?: string;
+    filter?: string;
     startTime?: Date;
     endTime?: Date;
     payment?: 'NotPaid' | 'PartialPaid' | 'FullyPaid';

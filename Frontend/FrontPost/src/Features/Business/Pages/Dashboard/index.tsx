@@ -18,7 +18,7 @@ import {
 } from '..';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
-import { Sidebar } from '../../Components';
+import { AppointmentDetailBusiness, Sidebar } from '../../Components';
 import './style.scss';
 
 interface BusinessDashboardProps {}
@@ -76,6 +76,7 @@ export const BusinessDashboard = (props: BusinessDashboardProps) => {
                     />
                 </Switch>
             </div>
+            <AppointmentDetailBusiness />
         </div>
     );
 };

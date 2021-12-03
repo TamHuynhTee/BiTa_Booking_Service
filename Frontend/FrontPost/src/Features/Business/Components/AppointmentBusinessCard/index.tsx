@@ -124,20 +124,22 @@ export const AppointmentBusinessCard = (props: { data?: any; query?: any }) => {
                 >
                     Chi tiết
                 </button>
-                <div className="d-flex gap-2">
-                    <button
-                        className="btn btn-success"
-                        onClick={handleDoneAppointment}
-                    >
-                        {loading ? <ButtonSpinner /> : 'Hoàn tất'}
-                    </button>
-                    <button
-                        className="btn btn-danger"
-                        onClick={handleCancelAppointment}
-                    >
-                        {loading ? <ButtonSpinner /> : 'Hủy hẹn'}
-                    </button>
-                </div>
+                {data?.state === 'Pending' && (
+                    <div className="d-flex gap-2">
+                        <button
+                            className="btn btn-success"
+                            onClick={handleDoneAppointment}
+                        >
+                            {loading ? <ButtonSpinner /> : 'Hoàn tất'}
+                        </button>
+                        <button
+                            className="btn btn-danger"
+                            onClick={handleCancelAppointment}
+                        >
+                            {loading ? <ButtonSpinner /> : 'Hủy hẹn'}
+                        </button>
+                    </div>
+                )}
             </div>
             <div className="card-footer">
                 {dayjs(data?.startTime).subtract(7, 'hours').fromNow()}

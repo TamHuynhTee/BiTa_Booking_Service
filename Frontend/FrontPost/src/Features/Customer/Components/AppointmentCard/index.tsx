@@ -7,15 +7,20 @@ import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { APPOINTMENT_PAID_FILTER } from '../../../../utils/selectOptions';
 import { useDispatch } from 'react-redux';
 import { getDetailAppointment } from '../../slice';
+import { cancelAppointmentApi } from '../../../common/Apis/common.api';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { queryAppointmentAsync } from '../../slice/thunk';
+import { ButtonSpinner } from '../../../../Components';
 
 dayjs.locale('vi');
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 
-export const AppointmentCard = (props: { data?: any }) => {
-    const { data } = props;
+export const AppointmentCard = (props: { data?: any; query?: any }) => {
+    const { data, query } = props;
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = React.useState(false);
     const momentDate = (date: any) => {
         const time = dayjs(date).utc().format('DD/MM/YYYY HH:mm');
         return time;
@@ -50,6 +55,26 @@ export const AppointmentCard = (props: { data?: any }) => {
         dispatch(getDetailAppointment(data));
     };
 
+    const handleCancelAppointment = () => {
+        if (confirm(`Bạn chắc muốn hủy hẹn chứ?`)) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await cancelAppointmentApi({
+                        appointmentId: data?.id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(queryAppointmentAsync(query));
+                    } else {
+                        notifyError(result.message);
+                    }
+                    res(() => setLoading(false));
+                }, 2000);
+            });
+        }
+    };
+
     return (
         <div className="card">
             <div className="card-header">
@@ -80,6 +105,14 @@ export const AppointmentCard = (props: { data?: any }) => {
                 >
                     Chi tiết
                 </button>
+                {data?.state === 'Pending' && (
+                    <button
+                        className="btn btn-danger"
+                        onClick={handleCancelAppointment}
+                    >
+                        {loading ? <ButtonSpinner /> : 'Hủy hẹn'}
+                    </button>
+                )}
             </div>
             <div className="card-footer">
                 {dayjs(data?.startTime).subtract(7, 'hours').fromNow()}

@@ -28,7 +28,6 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
         dispatch(getAllBranchAsync({ businessId: id }));
         dispatch(queryServiceAsync({ business: id, isActive: true }));
     }, []);
-    // console.log(business, branches, services);
 
     const renderHeadquarter = () => {
         const headquarter = branches?.find(

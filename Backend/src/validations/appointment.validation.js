@@ -45,6 +45,8 @@ const cancelAppointment = {
 
 const queryAppointments = {
   query: Joi.object().keys({
+    keyword: Joi.string().allow(null, ''),
+    filter: Joi.string().valid('customerName', 'customerPhoneNumber'),
     startTime: Joi.date().allow(null),
     endTime: Joi.date().allow(null),
     payment: Joi.string().allow(null, '').valid('NotPaid', 'PartialPaid', 'FullyPaid'),

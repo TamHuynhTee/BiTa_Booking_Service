@@ -97,7 +97,7 @@ const updateAppointmentCustomer = catchAsync(async (req, res) => {
 });
 
 const cancelAppointment = catchAsync(async (req, res) => {
-  req.body.status = 'Canceled';
+  req.body.state = 'Canceled';
   const appointment = await appointmentService.updateAppointment(req.body);
   sendSuccess(res, appointment, httpStatus.OK, 'Đã hủy cuộc hẹn');
 });
@@ -125,6 +125,8 @@ const queryAppointments = catchAsync(async (req, res) => {
     'hasDeposit',
     'payment',
     'state',
+    'customerName',
+    'customerPhoneNumber',
   ]);
   console.log(filter);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);

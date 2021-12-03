@@ -7,6 +7,7 @@ import * as utc from 'dayjs/plugin/utc';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import {
     APPOINTMENT_PAID_FILTER,
+    APPOINTMENT_STATE_FILTER,
     TIME_TO_COME,
 } from '../../../../utils/selectOptions';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
@@ -48,17 +49,31 @@ export const AppointmentDetailBusiness = () => {
             </p>
         );
     };
-
-    const handleCancelAppointment = async () => {
-        if (
-            confirm(
-                'Bạn chắc muốn hủy hẹn chứ, tiền cọc sẽ không được hoàn lại.'
-            )
-        ) {
-            console.log('tes');
-        }
+    const renderState = (state: string) => {
+        return (
+            <p
+                className="fw-bold"
+                style={{
+                    color:
+                        state === 'Pending'
+                            ? '#e3b44b'
+                            : state === 'Canceled'
+                            ? 'red'
+                            : 'green',
+                }}
+            >
+                {' '}
+                {
+                    APPOINTMENT_STATE_FILTER[
+                        APPOINTMENT_STATE_FILTER.findIndex(
+                            (e: any) => e.value === state
+                        )
+                    ]?.label
+                }
+            </p>
+        );
     };
-    console.log(appointment);
+
     return (
         <div
             className="modal fade"
@@ -80,6 +95,7 @@ export const AppointmentDetailBusiness = () => {
                         ></button>
                     </div>
                     <div className="modal-body">
+                        {renderState(appointment?.state)}
                         <div className="card fs-5">
                             <div className="card-body">
                                 <h5 className="fw-bold mt-2">
@@ -147,20 +163,6 @@ export const AppointmentDetailBusiness = () => {
                             </div>
                         </div>
                     </div>
-                    {appointment?.state === 'Pending' && (
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-success">
-                                Hoàn tất
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                onClick={handleCancelAppointment}
-                            >
-                                Hủy hẹn
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

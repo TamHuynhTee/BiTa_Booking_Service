@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post(
   '/create-appointment',
-  auth('appointment'),
+  auth('customer'),
   validate(appointmentValidation.createNewAppointment),
   appointmentController.createAppointment
 );
@@ -27,7 +27,7 @@ router.put(
 );
 router.put(
   '/cancel-appointment',
-  auth('customer', 'business'),
+  auth('appointment'),
   validate(appointmentValidation.cancelAppointment),
 
   appointmentController.cancelAppointment

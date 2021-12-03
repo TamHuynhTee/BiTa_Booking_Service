@@ -91,6 +91,14 @@ export const Header = (props: HeaderProps) => {
                                     </li>
                                     <li>
                                         <Link
+                                            to="/appointment-history"
+                                            className="dropdown-item"
+                                        >
+                                            Lịch sử cuộc hẹn
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
                                             to="/profile"
                                             className="dropdown-item"
                                         >
