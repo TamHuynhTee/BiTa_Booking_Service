@@ -1,6 +1,7 @@
 export interface AuthStateTypes {
     user?: any;
     status?: string;
+    needAuth?: boolean;
 }
 
 export interface ILoginApi {

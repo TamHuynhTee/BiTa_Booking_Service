@@ -38,7 +38,7 @@ export const managerSlice = createSlice({
             state.categories = action.payload;
         },
         [getAllCategoriesAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getCategoryByIdAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -51,7 +51,7 @@ export const managerSlice = createSlice({
             state.categoryDetail = action.payload;
         },
         [getCategoryByIdAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [queryBusinessAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -64,7 +64,7 @@ export const managerSlice = createSlice({
             state.queryBusiness = action.payload;
         },
         [queryBusinessAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getBusinessByIdAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -77,7 +77,7 @@ export const managerSlice = createSlice({
             state.businessDetail = action.payload;
         },
         [getBusinessByIdAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
     },
 });

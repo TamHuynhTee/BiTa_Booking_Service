@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { Profile } from '..';
+import { PrivateRoute } from '../../../../routes/privateRoute';
 import {
     AdminDashboard,
     AdminStatistics,
@@ -38,27 +39,85 @@ export const Dashboard = (props: Props) => {
             <Sidebar />
             <div className="businessDashboard-content">
                 <Switch>
-                    <Route exact path={`${path}`}>
+                    <PrivateRoute
+                        exact={true}
+                        path={`${path}`}
+                        option={true}
+                        roleRoute={['manager', 'admin']}
+                    >
                         {user?.role === 'admin' ? (
                             <AdminDashboard />
                         ) : (
                             <ManagerDashboard />
                         )}
-                    </Route>
-                    <Route exact path={`${path}/profile`}>
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/profile`}
+                        option={true}
+                        roleRoute={['manager', 'admin']}
+                    >
                         <Profile data={user} />
-                    </Route>
-                    <Route
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/businesses`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <BusinessList />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/business/:id`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <BusinessDetail />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/categories`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <CategoryList />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/category/:id`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <CategoryDetail />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/create-category`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <CreateCategory />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/revenue`}
+                        option={true}
+                        roleRoute={['manager']}
+                    >
+                        <Revenue />
+                    </PrivateRoute>
+                    {/* <Route
                         exact
                         path={`${path}/businesses`}
                         component={BusinessList}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         exact
                         path={`${path}/business/:id`}
                         component={BusinessDetail}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         exact
                         path={`${path}/categories`}
                         component={CategoryList}
@@ -67,15 +126,39 @@ export const Dashboard = (props: Props) => {
                         exact
                         path={`${path}/category/:id`}
                         component={CategoryDetail}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         exact
                         path={`${path}/create-category`}
                         component={CreateCategory}
-                    />
-                    <Route exact path={`${path}/revenue`} component={Revenue} />
-                    <Route exact path={`${path}/users`} component={UserList} />
-                    <Route
+                    /> */}
+                    {/* <Route exact path={`${path}/revenue`} component={Revenue} /> */}
+                    <PrivateRoute
+                        exact
+                        path={`${path}/users`}
+                        option={true}
+                        roleRoute={['admin']}
+                    >
+                        <UserList />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/user/:id`}
+                        option={true}
+                        roleRoute={['admin']}
+                    >
+                        <UserDetail />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        exact
+                        path={`${path}/create-user`}
+                        option={true}
+                        roleRoute={['admin']}
+                    >
+                        <CreateUser />
+                    </PrivateRoute>
+                    {/* <Route exact path={`${path}/users`} component={UserList} /> */}
+                    {/* <Route
                         exact
                         path={`${path}/user/:id`}
                         component={UserDetail}
@@ -84,14 +167,19 @@ export const Dashboard = (props: Props) => {
                         exact
                         path={`${path}/create-user`}
                         component={CreateUser}
-                    />
-                    <Route exact path={`${path}/statistics`}>
+                    /> */}
+                    <PrivateRoute
+                        path={`${path}/statistics`}
+                        exact={true}
+                        option={true}
+                        roleRoute={['manager', 'admin']}
+                    >
                         {user?.role === 'admin' ? (
                             <AdminStatistics />
                         ) : (
                             <ManagerStatistics />
                         )}
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
             </div>
         </div>

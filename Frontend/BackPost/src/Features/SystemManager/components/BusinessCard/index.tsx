@@ -59,12 +59,12 @@ export const BusinessCard = (props: { data?: any }) => {
                             </span>{' '}
                             {services.length}
                         </p>
-                        <p className="card-text">
+                        {/* <p className="card-text">
                             <span className="fw-bold">
                                 <i className="bi bi-people"></i> Số khách hàng:
                             </span>{' '}
                             {members.length}
-                        </p>
+                        </p> */}
                         <p className="card-text">
                             <span className="fw-bold">
                                 <i className="bi bi-building"></i> Số chi nhánh:

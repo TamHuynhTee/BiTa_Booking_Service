@@ -16,13 +16,16 @@ import { useHistory } from 'react-router';
 import { ForgotPassForm } from '../../Components/ForgotPassForm';
 import { loginApi } from '../../../../App/auth/apis/auth.api';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGoBack } from '../../../../App/auth/slice/selector';
+import { setNeedAuth } from '../../../../App/auth/slice';
 
 interface LoginProps {}
 
 export const Login = (props: LoginProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const goBack = useSelector(selectGoBack);
     const {
         register,
         handleSubmit,
@@ -46,12 +49,17 @@ export const Login = (props: LoginProps) => {
                     const result: any = await dispatch(loginAsync(payload));
                     // console.log(result);
                     if (result.payload?.code === 200) {
-                        dispatch(getCurrentUserAsync());
-                        history.push(
-                            result.payload?.data.role === 'user'
-                                ? defaultRoute.AuthenticatedHome
-                                : '/business-dashboard'
-                        );
+                        if (goBack) {
+                            history.goBack();
+                            dispatch(setNeedAuth(false));
+                        } else {
+                            dispatch(getCurrentUserAsync());
+                            history.push(
+                                result.payload?.data.role === 'user'
+                                    ? defaultRoute.AuthenticatedHome
+                                    : '/business-dashboard'
+                            );
+                        }
                     }
                     resolve(true);
                 }, 2000);

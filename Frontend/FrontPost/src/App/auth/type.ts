@@ -1,5 +1,6 @@
 export interface AuthStateTypes {
     user?: any;
+    needAuth?: boolean;
     status?: string;
 }
 

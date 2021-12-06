@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { BookingManagement } from '../Features/Customer/Pages/BookingManagement';
 import { defaultRoute } from './defaultRoute';
@@ -23,11 +23,21 @@ import { BusinessDashboard } from '../Features/Business/Pages';
 import { CustomerHomepage } from '../Features/Customer/Pages/HomePage';
 import { PaymentDenied, PaymentSuccess } from '../Features/Customer/Pages';
 import { AppointmentHistory } from '../Features/common/Components';
+import { PrivateRoute } from './privateRoute';
 
-interface IRoute {
+export interface IRoute {
     exact: Boolean;
     path: string;
     child: React.ReactChild | any;
+}
+
+interface IPrivateRoute {
+    exact: Boolean;
+    path: string;
+    child: React.ReactChild | any;
+    private?: Boolean;
+    roleRoute?: Array<string>;
+    option?: boolean;
 }
 
 const routes: Array<IRoute> = [
@@ -98,27 +108,27 @@ const routes: Array<IRoute> = [
         path: defaultRoute.Search,
         exact: true,
     },
-    {
-        child: (
-            <>
-                <Header />
-                <CustomerHomepage />
-                <Footer />
-            </>
-        ),
-        path: defaultRoute.AuthenticatedHome,
-        exact: true,
-    },
-    {
-        child: (
-            <>
-                <Header />
-                <Profile />
-            </>
-        ),
-        path: defaultRoute.Profile,
-        exact: true,
-    },
+    // {
+    //     child: (
+    //         <>
+    //             <Header />
+    //             <CustomerHomepage />
+    //             <Footer />
+    //         </>
+    //     ),
+    //     path: defaultRoute.AuthenticatedHome,
+    //     exact: true,
+    // },
+    // {
+    //     child: (
+    //         <>
+    //             <Header />
+    //             <Profile />
+    //         </>
+    //     ),
+    //     path: defaultRoute.Profile,
+    //     exact: true,
+    // },
     {
         child: (
             <>
@@ -141,28 +151,17 @@ const routes: Array<IRoute> = [
         path: defaultRoute.Business,
         exact: true,
     },
-    {
-        child: (
-            <>
-                <Header />
-                <BookingManagement />
-                <Footer />
-            </>
-        ),
-        path: defaultRoute.BookManagement,
-        exact: true,
-    },
-    {
-        child: (
-            <>
-                <Header />
-                <Booking />
-                <Footer />
-            </>
-        ),
-        path: defaultRoute.Book,
-        exact: true,
-    },
+    // {
+    //     child: (
+    //         <>
+    //             <Header />
+    //             <Booking />
+    //             <Footer />
+    //         </>
+    //     ),
+    //     path: defaultRoute.Book,
+    //     exact: true,
+    // },
     {
         child: (
             <>
@@ -203,6 +202,58 @@ const routes: Array<IRoute> = [
         path: defaultRoute.PaymentFailed,
         exact: true,
     },
+    // {
+    //     child: (
+    //         <>
+    //             <Header />
+    //             <AppointmentHistory />
+    //             <Footer />
+    //         </>
+    //     ),
+    //     path: defaultRoute.AppointmentHistory,
+    //     exact: true,
+    // },
+];
+
+const privateRoutes: Array<IPrivateRoute> = [
+    {
+        child: (
+            <>
+                <Header />
+                <Profile />
+            </>
+        ),
+        path: defaultRoute.Profile,
+        exact: true,
+        roleRoute: ['user'],
+        option: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <CustomerHomepage />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.AuthenticatedHome,
+        exact: true,
+        roleRoute: ['user'],
+        option: true,
+    },
+    {
+        child: (
+            <>
+                <Header />
+                <Booking />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Book,
+        exact: true,
+        roleRoute: ['user'],
+        option: true,
+    },
     {
         child: (
             <>
@@ -213,8 +264,34 @@ const routes: Array<IRoute> = [
         ),
         path: defaultRoute.AppointmentHistory,
         exact: true,
+        roleRoute: ['user'],
+        option: true,
     },
 ];
+
+const renderPrivateRoutes = (routes: Array<IPrivateRoute>) => {
+    return routes.map((r, i) => {
+        if (r.exact) {
+            return (
+                <PrivateRoute
+                    path={r.path}
+                    exact
+                    option={r.option}
+                    key={i}
+                    roleRoute={r?.roleRoute}
+                >
+                    {r.child}
+                </PrivateRoute>
+            );
+        } else {
+            return (
+                <PrivateRoute path={r.path} key={i} roleRoute={r?.roleRoute}>
+                    {r.child}
+                </PrivateRoute>
+            );
+        }
+    });
+};
 
 const renderRoutes = (routes: Array<IRoute>) => {
     return routes.map((r, i) => {
@@ -237,10 +314,15 @@ const Router = () => {
         <BrowserRouter>
             <Switch>
                 {renderRoutes(routes)}
+                {renderPrivateRoutes(privateRoutes)}
                 {/* business routes */}
-                <Route path="/business-dashboard">
+                <PrivateRoute
+                    path="/business-dashboard"
+                    option={true}
+                    roleRoute={['business']}
+                >
                     <BusinessDashboard />
-                </Route>
+                </PrivateRoute>
                 <Route path="*">
                     <NotFound />
                 </Route>

@@ -5,6 +5,7 @@ import { DefaultAvatar } from '../../../../Components';
 import { selectBusinessDetail } from '../../slice/selector';
 import { getBusinessByIdAsync } from '../../slice/thunk';
 import logo from '../../../../images/favicon.svg';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -18,7 +19,10 @@ export const BusinessDetail = (props: Props) => {
     console.log(business);
     return (
         <div className="container">
-            <h4>Thông tin doanh nghiệp</h4>
+            <div className="d-flex justify-content-between">
+                <h4 className="fw-bold">Thông tin doanh nghiệp</h4>
+                <Link to={'/dashboard/businesses'}>{'< '}Về danh sách</Link>
+            </div>
             <hr />
             <div className="card my-3 bg-light">
                 <div className="card-body">
@@ -59,7 +63,7 @@ export const BusinessDetail = (props: Props) => {
                     >
                         Xem giấy phép kinh doanh
                     </button>
-                    <button className="btn btn-danger">Ngưng hợp tác</button>
+                    {/* <button className="btn btn-danger">Ngưng hợp tác</button> */}
                 </div>
             </div>
             <h4>Tài khoản doanh nghiệp</h4>

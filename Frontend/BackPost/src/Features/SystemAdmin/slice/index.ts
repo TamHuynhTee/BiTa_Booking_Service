@@ -28,7 +28,7 @@ export const adminSlice = createSlice({
             state.queryUser = action.payload;
         },
         [queryUserAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getUserByIdAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -41,7 +41,7 @@ export const adminSlice = createSlice({
             state.userDetail = action.payload;
         },
         [getUserByIdAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
     },
 });

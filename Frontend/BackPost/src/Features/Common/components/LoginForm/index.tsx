@@ -7,11 +7,14 @@ import { useHistory } from 'react-router';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { loginApi } from '../../apis/auth.api';
 import { ButtonSpinner } from '../../../../Components';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGoBack } from '../../slice/selector';
+import { setNeedAuth } from '../../slice';
 
-interface Props {}
-
-export const LoginForm = (props: Props) => {
+export const LoginForm = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const goBack = useSelector(selectGoBack);
     const {
         register,
         handleSubmit,
@@ -33,21 +36,29 @@ export const LoginForm = (props: Props) => {
                         password: data.password,
                     };
                     const result = await loginApi(payload);
-                    console.log(result);
+                    // console.log(result);
 
                     if (result.code === 200) {
-                        if (
-                            result.data.role === 'user' ||
-                            result.data.role === 'business'
-                        ) {
+                        if (['user', 'business'].includes(result.data.role)) {
                             notifyError(
                                 'Trang này chỉ dành cho quản trị viên và quản lý'
                             );
-                            resolve(true);
                         } else if (result.data.token) {
-                            localStorage.setItem('token', result.data.token);
-                            notifySuccess('Đăng nhập thành công');
-                            history.push('/dashboard');
+                            if (goBack) {
+                                dispatch(setNeedAuth(false));
+                                localStorage.setItem(
+                                    'token',
+                                    result.data.token
+                                );
+                                history.goBack();
+                            } else {
+                                localStorage.setItem(
+                                    'token',
+                                    result.data.token
+                                );
+                                notifySuccess('Đăng nhập thành công');
+                                history.push('/dashboard');
+                            }
                         }
                     } else {
                         notifyError(result.message);

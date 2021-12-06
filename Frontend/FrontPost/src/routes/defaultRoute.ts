@@ -12,9 +12,9 @@ export const defaultRoute = {
     Service: '/service/:id',
     BusinessList: '/businesses',
     Business: '/business/:id',
-    BookManagement: '/book-management',
     Book: '/book/:id',
     AppointmentHistory: '/appointment-history',
     PaymentSuccessfully: '/payment-success',
     PaymentFailed: '/payment-denied',
+    TestPrivate: '/test',
 };

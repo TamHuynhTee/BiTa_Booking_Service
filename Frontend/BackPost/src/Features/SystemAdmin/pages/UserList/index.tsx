@@ -1,13 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NoDataView, Pagination, SearchBar } from '../../../../Components';
+import {
+    LoadingComponent,
+    NoDataView,
+    Pagination,
+    SearchBar,
+} from '../../../../Components';
 import {
     ACTIVE_OPTIONS,
     GENDER_SEARCH_OPTIONS,
     USER_FILTER,
 } from '../../../../static/options';
 import { UserCard } from '../../components';
-import { selectQueryUser } from '../../slice/selector';
+import { selectAdminLoading, selectQueryUser } from '../../slice/selector';
 import { queryUserAsync } from '../../slice/thunk';
 import { IQueryUserApi } from '../../type';
 
@@ -16,6 +21,7 @@ interface Props {}
 export const UserList = (props: Props) => {
     const dispatch = useDispatch();
     const users = useSelector(selectQueryUser);
+    const loading = useSelector(selectAdminLoading);
     const [query, setQuery] = React.useState<IQueryUserApi>({
         isActive: true,
         role: 'user',
@@ -34,6 +40,14 @@ export const UserList = (props: Props) => {
 
     const handleChangePage = (page: number) => {
         dispatch(queryUserAsync({ ...query, page: page }));
+    };
+
+    const handleChangeGender = (e: any) => {
+        const value = e.target.value;
+        if (!value) {
+            delete query.gender;
+            setQuery(query);
+        } else setQuery({ ...query, gender: e.target.value });
     };
 
     React.useEffect(() => {
@@ -64,9 +78,7 @@ export const UserList = (props: Props) => {
                 </select>
                 <select
                     className="form-select col-md-1"
-                    onChange={(e: any) =>
-                        setQuery({ ...query, gender: e.target.value })
-                    }
+                    onChange={handleChangeGender}
                 >
                     {GENDER_SEARCH_OPTIONS.map((e: any, i: number) => (
                         <option value={e.value} key={i}>
@@ -96,7 +108,29 @@ export const UserList = (props: Props) => {
                     Tìm
                 </button>
             </div>
-            <div className="row my-3">
+            {loading === 'idle' ? (
+                <>
+                    <div className="row my-3">
+                        {users?.results?.length === 0 ? (
+                            <NoDataView />
+                        ) : (
+                            users?.results?.map((e: any, i: number) => (
+                                <UserCard data={e} key={i} />
+                            ))
+                        )}
+                    </div>
+                    <div className="my-3">
+                        <Pagination
+                            totalPages={users?.totalPages}
+                            query={handleChangePage}
+                            page={users?.page}
+                        />
+                    </div>
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
+            {/* <div className="row my-3">
                 {users?.results?.length === 0 ? (
                     <NoDataView />
                 ) : (
@@ -109,8 +143,9 @@ export const UserList = (props: Props) => {
                 <Pagination
                     totalPages={users?.totalPages}
                     query={handleChangePage}
+                    page={users?.page}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };

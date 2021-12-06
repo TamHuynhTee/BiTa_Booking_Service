@@ -6,10 +6,11 @@ export const DefaultAvatar = (props: { avatar?: string }) => {
     return (
         <img
             src={avatar || logo}
-            className="img-thumbnail rounded"
+            // className="img-thumbnail rounded"
             alt="logo"
             height="75"
             width="75"
+            style={{ borderRadius: '50%' }}
         />
     );
 };

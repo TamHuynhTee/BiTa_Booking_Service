@@ -1,9 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NoDataView, Pagination, SearchBar } from '../../../../Components';
+import {
+    LoadingComponent,
+    NoDataView,
+    Pagination,
+    SearchBar,
+} from '../../../../Components';
 import { BUSINESS_FILTER } from '../../../../static/options';
 import { BusinessCard } from '../../components';
-import { selectQueryBusiness } from '../../slice/selector';
+import { selectLoading, selectQueryBusiness } from '../../slice/selector';
 import { queryBusinessAsync } from '../../slice/thunk';
 import { IQueryBusinessApi } from '../../type';
 
@@ -12,6 +17,7 @@ interface Props {}
 export const BusinessList = (props: Props) => {
     const dispatch = useDispatch();
     const businesses = useSelector(selectQueryBusiness);
+    const loading = useSelector(selectLoading);
     const [query, setQuery] = React.useState<IQueryBusinessApi>({
         isActive: true,
         filter: BUSINESS_FILTER[0].value,
@@ -55,21 +61,28 @@ export const BusinessList = (props: Props) => {
                     ))}
                 </select>
             </div>
-            <div className="my-3">
-                {businesses?.results?.length === 0 ? (
-                    <NoDataView />
-                ) : (
-                    businesses?.results?.map((e: any, i: number) => (
-                        <BusinessCard data={e} key={i} />
-                    ))
-                )}
-            </div>
-            <div className="my-3">
-                <Pagination
-                    totalPages={businesses?.totalPages}
-                    query={handleChangePage}
-                />
-            </div>
+            {loading === 'idle' ? (
+                <>
+                    <div className="my-3">
+                        {businesses?.results?.length === 0 ? (
+                            <NoDataView />
+                        ) : (
+                            businesses?.results?.map((e: any, i: number) => (
+                                <BusinessCard data={e} key={i} />
+                            ))
+                        )}
+                    </div>
+                    <div className="my-3">
+                        <Pagination
+                            totalPages={businesses?.totalPages}
+                            query={handleChangePage}
+                            page={businesses?.page}
+                        />
+                    </div>
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { getCurrentUserAsync, loginAsync } from './thunk';
 const initialState: Partial<AuthStateTypes> = {
     user: null,
     status: 'idle',
+    needAuth: false,
 };
 
 export const authSlice = createSlice({
@@ -17,6 +18,9 @@ export const authSlice = createSlice({
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
             notifySuccess('Đăng xuất thành công');
+        },
+        setNeedAuth: (state, action) => {
+            state.needAuth = action.payload;
         },
     },
     extraReducers: {
@@ -59,5 +63,5 @@ export const authSlice = createSlice({
     },
 });
 
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, setNeedAuth } = authSlice.actions;
 export default authSlice.reducer;
