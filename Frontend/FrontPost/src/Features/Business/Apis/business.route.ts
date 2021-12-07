@@ -61,4 +61,13 @@ export const routeBusiness: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'appointment/done-appointment',
     },
+    // Statistics
+    businessStats: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-business-statistic',
+    },
+    businessRevenue: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-business-revenue',
+    },
 };

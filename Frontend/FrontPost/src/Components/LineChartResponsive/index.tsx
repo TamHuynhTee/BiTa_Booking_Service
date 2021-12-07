@@ -15,16 +15,17 @@ interface LineChartProps {
     data?: any;
     dataKey?: string;
     grid?: boolean;
+    name?: string;
 }
 
 export const LineChartResponsive = (props: LineChartProps) => {
-    const { title, data, dataKey, grid } = props;
+    const { title, data, dataKey, grid, name } = props;
     return (
         <div className="chart">
             <h5 className="text-center fw-bold">{title}</h5>
             <ResponsiveContainer width="100%" aspect={4 / 1}>
                 <LineChart data={data}>
-                    <XAxis dataKey="name" stroke="#5550bd" />
+                    <XAxis dataKey={name} stroke="#5550bd" />
                     <Line type="monotone" dataKey={dataKey} stroke="#5550bd" />
                     <Tooltip />
                     {grid && (

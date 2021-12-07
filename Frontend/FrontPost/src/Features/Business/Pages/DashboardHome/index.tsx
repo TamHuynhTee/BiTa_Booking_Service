@@ -11,6 +11,8 @@ import {
 import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
 import { IQueryAppointment } from '../../../Customer/type';
 import { AppointmentBusinessCard } from '../../Components';
+import { getBusinessRevenueAsync } from '../../slice/thunk';
+import { selectBusinessRevenue } from '../../slice/selector';
 
 export const TestUserDataHome = [
     {
@@ -75,8 +77,15 @@ export const DashboardHome = (props: { business?: any }) => {
     });
     const loading = useSelector(selectCustomerLoading);
     const appointments = useSelector(selectQueryAppointments);
+    const revenue = useSelector(selectBusinessRevenue);
     React.useEffect(() => {
         dispatch(queryAppointmentAsync(query));
+        dispatch(
+            getBusinessRevenueAsync({
+                businessId: business,
+                year: dayjs().year(),
+            })
+        );
     }, []);
 
     const handleChangePage = (page: number) => {
@@ -135,9 +144,10 @@ export const DashboardHome = (props: { business?: any }) => {
             <hr />
             <div>
                 <LineChartResponsive
-                    data={TestUserDataHome}
-                    dataKey="Active User"
-                    title="Doanh thu theo ngày"
+                    data={revenue}
+                    dataKey="count"
+                    title="Doanh thu"
+                    name="month"
                     grid
                 />
             </div>

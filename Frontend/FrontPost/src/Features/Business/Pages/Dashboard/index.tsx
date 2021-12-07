@@ -113,7 +113,7 @@ export const BusinessDashboard = () => {
                         exact={true}
                         roleRoute={['business']}
                     >
-                        <Statistics />
+                        <Statistics business={user?.business?.id} />
                     </PrivateRoute>
                     {/* <Route exact path={path}>
                         <DashboardHome business={user?.business?.id} />

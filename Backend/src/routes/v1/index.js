@@ -7,6 +7,7 @@ const branchRoute = require('./branch.route');
 const appointmentRoute = require('./appointment.route');
 const docsRoute = require('./docs.route');
 const serviceRoute = require('./service.route');
+const statisticRoute = require('./statistic.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -39,6 +40,10 @@ const defaultRoutes = [
   {
     path: '/appointment',
     route: appointmentRoute,
+  },
+  {
+    path: '/statistic',
+    route: statisticRoute,
   },
 ];
 

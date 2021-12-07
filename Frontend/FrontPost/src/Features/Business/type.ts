@@ -7,6 +7,8 @@ export interface BusinessStateTypes {
     businessServiceDetail?: any;
     businessBranchDetail?: any;
     servicesForSelect?: any;
+    stats?: IBusinessStatsApi;
+    revenue?: any;
     status?: string;
 }
 
@@ -15,4 +17,13 @@ export interface IQueryBranchApi extends IQueryApi {
     filter?: string;
     isActive?: boolean;
     business?: string;
+}
+
+export interface IBusinessStatsApi {
+    appointmentNumber?: number;
+    branchNumber?: number;
+    serviceNumber?: number;
+    appointments?: Array<number>;
+    branches?: Array<number>;
+    services?: Array<number>;
 }

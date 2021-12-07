@@ -91,3 +91,16 @@ export const doneAppointmentApi = async (payload: {
 }): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['doneAppointment'], payload);
 };
+// Statistic
+export const getBusinessStatsApi = async (payload: {
+    businessId?: string;
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['businessStats'], payload);
+};
+export const getBusinessRevenueApi = async (payload: {
+    businessId?: string;
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['businessRevenue'], payload);
+};
