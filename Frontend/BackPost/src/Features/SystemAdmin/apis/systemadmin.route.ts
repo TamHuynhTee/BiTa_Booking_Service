@@ -14,4 +14,13 @@ export const routeAdmin: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'users/change-user-access',
     },
+    // Stats
+    getRegisterStats: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-user-register-statistic',
+    },
+    getAdminStats: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-admin-statistic',
+    },
 };

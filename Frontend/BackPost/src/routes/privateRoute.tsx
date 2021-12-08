@@ -19,7 +19,7 @@ export const PrivateRoute = (props: Props) => {
     const dispatch = useDispatch();
     const fetchAuth = async () => {
         const res: any = await dispatch(getCurrentUserAsync());
-        console.log(res);
+        // console.log(res);
         if (res && !res.payload) {
             if (option) {
                 dispatch(setNeedAuth(true));

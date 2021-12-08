@@ -16,6 +16,7 @@ import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import { weekDayFormatter } from '../../../../utils/weekDayFormatter';
 import { timeFormatter } from '../../../../utils/timeFormatter';
 import { getDetailService } from '../../slice';
+import { Link } from 'react-router-dom';
 
 interface ServiceDetailProps {}
 
@@ -39,6 +40,7 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
     return (
         <PageContainer>
             <PageWrapper className="serviceDetail-wrapper ps-5 pe-5 pt-3 pb-3 mb-5 bg-body rounded">
+                <Link to="/services">{'<< '}Về danh sách</Link>
                 <div className="serviceDetail-wrapper-header">
                     <h1 className="text-truncate fw-bold">Chi tiết dịch vụ</h1>
                     <div className="btn-group flex-grow-1">
@@ -216,7 +218,13 @@ const OtherService = (props: { title?: string }) => {
 
 const Supplier = (props: { data?: any }) => {
     const { data } = props;
+    const history = useHistory();
     const thumbnail = 'https://picsum.photos/200/200';
+
+    const handleToBusiness = () => {
+        history.push(`/business/${data.id}`);
+    };
+
     return (
         <div className="card mt-2 mb-2">
             <div className="d-flex bd-highlight mh-100">
@@ -239,7 +247,11 @@ const Supplier = (props: { data?: any }) => {
                         <i className="bi bi-envelope"></i>{' '}
                         {data?.businessAccount?.email}
                     </p>
-                    <button type="button" className="btn btn-link fs-5">
+                    <button
+                        type="button"
+                        className="btn btn-link fs-5"
+                        onClick={handleToBusiness}
+                    >
                         Chi tiết
                     </button>
                 </div>

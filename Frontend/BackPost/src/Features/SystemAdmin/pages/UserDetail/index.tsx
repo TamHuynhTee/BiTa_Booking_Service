@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { ButtonSpinner } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { changeUserAccessApi } from '../../apis/systemadmin.api';
 import { selectDetailUser } from '../../slice/selector';
@@ -18,15 +19,24 @@ export const UserDetail = (props: Props) => {
         dispatch(getUserByIdAsync({ userId: id }));
     }, []);
     const user = useSelector(selectDetailUser);
-
-    const handleChangeAccess = async () => {
-        const result = await changeUserAccessApi({ userId: user?.id });
-        console.log(result);
-        if (result.code === 200) {
-            notifySuccess(result.message);
-            history.push('/dashboard/users');
-        } else {
-            notifyError(result.message);
+    const [loading, setLoading] = React.useState(false);
+    const handleChangeAccess = () => {
+        if (confirm('Bạn chắc muốn thay đổi quyền truy cập chứ?')) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await changeUserAccessApi({
+                        userId: user?.id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        history.push('/dashboard/users');
+                    } else {
+                        notifyError(result.message);
+                    }
+                }, 2000);
+                res(() => setLoading(false));
+            });
         }
     };
 
@@ -58,9 +68,13 @@ export const UserDetail = (props: Props) => {
                             }`}
                             onClick={handleChangeAccess}
                         >
-                            {user?.isActive
-                                ? 'Chặn truy cập'
-                                : 'Cho phép truy cập'}
+                            {loading ? (
+                                <ButtonSpinner />
+                            ) : user?.isActive ? (
+                                'Chặn truy cập'
+                            ) : (
+                                'Cho phép truy cập'
+                            )}
                         </button>
                     </div>
                 </div>

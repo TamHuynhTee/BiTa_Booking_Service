@@ -43,7 +43,7 @@ export const Statistics = (props: { business?: string }) => {
             </div>
             <div className="my-3">
                 <LineChartResponsive
-                    title="Thống kê dịch vụ"
+                    title={`Thống kê lượng dịch vụ trong năm ${dayjs().year()}`}
                     grid
                     name="month"
                     data={stats?.services}
@@ -52,7 +52,7 @@ export const Statistics = (props: { business?: string }) => {
             </div>
             <div className="my-3">
                 <LineChartResponsive
-                    title="Thống kê chi nhánh"
+                    title={`Thống kê lượng chi nhánh trong năm ${dayjs().year()}`}
                     grid
                     name="month"
                     data={stats?.branches}
@@ -61,7 +61,7 @@ export const Statistics = (props: { business?: string }) => {
             </div>
             <div className="my-3">
                 <LineChartResponsive
-                    title="Thống kê cuộc hẹn"
+                    title={`Thống kê lượng cuộc hẹn trong năm ${dayjs().year()}`}
                     grid
                     name="month"
                     data={stats?.appointments}

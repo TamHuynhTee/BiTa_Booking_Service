@@ -17,24 +17,21 @@ import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { selectServices } from '../../../Business/slice/selector';
-import { ServiceCardHome } from '../../Components';
+import { BusinessCardHome, ServiceCardHome } from '../../Components';
 import { SearchBar } from '../../../../Components';
 import { Link } from 'react-router-dom';
+import { queryBusinessAsync } from '../../slice/thunk';
+import { selectQueryBusiness } from '../../slice/selector';
 
-interface HomePageProps {}
-
-export const HomePage = (props: HomePageProps) => {
+export const HomePage = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const services = useSelector(selectServices);
-
+    const businesses = useSelector(selectQueryBusiness);
+    console.log(businesses);
     React.useEffect(() => {
         dispatch(queryServiceAsync({ limit: 4, isActive: true }));
+        dispatch(queryBusinessAsync({ limit: 4, isActive: true }));
     }, []);
-
-    const handleSearch = () => {
-        history.push('/search');
-    };
 
     return (
         <div className="homepage">
@@ -123,14 +120,19 @@ export const HomePage = (props: HomePageProps) => {
                         lưu vào dòng thời gian của người dùng."
                 />
                 <SectionTitle title="Đối tác" />
+                <div className="d-flex justify-content-between">
+                    <Link to="/businesses">Xem tất cả {' >'}</Link>
+                </div>
+                <hr />
+                <div className="row">
+                    {businesses?.results?.map((e: any, i: number) => (
+                        <div className="col-lg-3" key={i}>
+                            <BusinessCardHome data={e} />
+                        </div>
+                    ))}
+                </div>
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">
-                    <div className="d-inline-block">
-                        <SearchBar
-                            placeholder="Tìm kiếm dịch vụ"
-                            formSubmit={handleSearch}
-                        />
-                    </div>
                     <Link to="/services">Xem tất cả {' >'}</Link>
                 </div>
                 <hr />

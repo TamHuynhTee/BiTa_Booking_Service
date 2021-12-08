@@ -75,8 +75,8 @@ export const BusinessDetail = (props: Props) => {
                             src={business?.businessAccount?.avatar || logo}
                             height="200"
                             width="200"
-                            alt=""
-                            className="img-thumbnail rounded"
+                            alt="..."
+                            style={{ borderRadius: '50%' }}
                         />
                     </div>
                 </div>

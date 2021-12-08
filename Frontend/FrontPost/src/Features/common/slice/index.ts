@@ -16,11 +16,14 @@ const initialState: Partial<CommonStateTypes> = {
 };
 
 export const commonSlice = createSlice({
-    name: 'Business',
+    name: 'Common',
     initialState,
     reducers: {
         getDetailService: (state, action: PayloadAction<any>) => {
             state.serviceDetail = action.payload;
+        },
+        getDetailBusiness: (state, action: PayloadAction<any>) => {
+            state.businessDetail = action.payload;
         },
     },
     extraReducers: {
@@ -79,5 +82,5 @@ export const commonSlice = createSlice({
     },
 });
 
-export const { getDetailService } = commonSlice.actions;
+export const { getDetailService, getDetailBusiness } = commonSlice.actions;
 export default commonSlice.reducer;

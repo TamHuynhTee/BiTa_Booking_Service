@@ -49,3 +49,14 @@ export const approveBusinessApi = async (
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeManager['approveBusiness'], payload);
 };
+// Stats
+export const getManagerRevenueApi = async (query: {
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeManager['getManagerRevenue'], query);
+};
+export const getManagerStatsApi = async (query: {
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeManager['getManagerStats'], query);
+};

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { notifyError, notifySuccess } from '../../../utils/notify';
 import { BusinessStateTypes } from '../type';
 import {
     getAllBranchAsync,
@@ -129,7 +128,8 @@ export const businessSlice = createSlice({
             action: PayloadAction<any>
         ) => {
             state.status = 'idle';
-            state.stats = action.payload;
+            const data = action.payload;
+            state.stats = data;
         },
         [getBusinessStatsAsync.rejected.toString()]: (state, action) => {
             state.status = 'idle';

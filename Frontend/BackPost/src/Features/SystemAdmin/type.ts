@@ -3,6 +3,8 @@ import { IQueryResult } from '../Common/type';
 export interface AdminStateTypes {
     queryUser?: IQueryResult;
     userDetail?: any;
+    adminStats?: IAdminStatsApi;
+    userStats?: any;
     status?: string;
 }
 
@@ -15,4 +17,11 @@ export interface IQueryUserApi {
     sortBy?: string;
     limit?: number;
     page?: number;
+}
+
+export interface IAdminStatsApi {
+    userNumber?: number;
+    businessNumber?: number;
+    users?: Array<any>;
+    businesses?: Array<any>;
 }

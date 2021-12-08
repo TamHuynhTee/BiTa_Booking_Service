@@ -3,6 +3,7 @@ export * from './ChangePassForm';
 export * from './AvatarFrame';
 export * from './AppointmentHistory';
 export * from './ServiceCardHome';
+export * from './BusinessCardHome';
 export * from './ServiceListItem';
 export * from './BusinessListItem';
 export * from './ForgotPassForm';

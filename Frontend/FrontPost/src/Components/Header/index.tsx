@@ -43,20 +43,20 @@ export const Header = (props: HeaderProps) => {
                 </div>
                 {/* right */}
                 <div className="header-right">
+                    <ul className="navbar">
+                        <li className="nav-item">
+                            <Link to="/services" className="nav-link">
+                                Dịch vụ
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/businesses" className="nav-link">
+                                Doanh nghiệp
+                            </Link>
+                        </li>
+                    </ul>
                     {user ? (
                         <>
-                            <ul className="navbar">
-                                <li className="nav-item">
-                                    <Link to="/services" className="nav-link">
-                                        Dịch vụ
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/businesses" className="nav-link">
-                                        Doanh nghiệp
-                                    </Link>
-                                </li>
-                            </ul>
                             <div className="dropdown">
                                 <a
                                     className="d-flex fw-bold gap-2 align-items-center dropdown-toggle"

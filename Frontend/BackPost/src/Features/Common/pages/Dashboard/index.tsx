@@ -149,14 +149,14 @@ export const Dashboard = (props: Props) => {
                     >
                         <UserDetail />
                     </PrivateRoute>
-                    <PrivateRoute
+                    {/* <PrivateRoute
                         exact
                         path={`${path}/create-user`}
                         option={true}
                         roleRoute={['admin']}
                     >
                         <CreateUser />
-                    </PrivateRoute>
+                    </PrivateRoute> */}
                     {/* <Route exact path={`${path}/users`} component={UserList} /> */}
                     {/* <Route
                         exact

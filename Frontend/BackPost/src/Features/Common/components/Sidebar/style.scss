@@ -41,6 +41,7 @@
             user-select: none;
         }
         &-list {
+            padding: 0;
             & > li {
                 padding-left: $pm-80;
                 display: flex;
