@@ -34,7 +34,11 @@ export const authSlice = createSlice({
             state.status = 'idle';
             const data = action.payload;
             if (data.code === 200) {
-                if (data.data.token) {
+                if (['admin', 'manager'].includes(data.data.role)) {
+                    notifyError(
+                        'Trang này chỉ dành cho khách hàng và doanh nghiệp'
+                    );
+                } else if (data.data.token) {
                     localStorage.setItem('token', data.data.token);
                     localStorage.setItem('userId', data.data.userId);
                     notifySuccess('Đăng nhập thành công');

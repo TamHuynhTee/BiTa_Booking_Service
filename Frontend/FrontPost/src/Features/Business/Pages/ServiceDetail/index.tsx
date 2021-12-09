@@ -265,6 +265,7 @@ export const ServiceDetail = (props: Props) => {
                                 placeholder="Loại"
                                 errors={errors}
                                 control={control}
+                                handleChange={() => {}}
                             />
                         </div>
                         <div className="mb-3">

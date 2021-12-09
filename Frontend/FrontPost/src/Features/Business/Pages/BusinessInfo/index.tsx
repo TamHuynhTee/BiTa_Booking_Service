@@ -31,7 +31,6 @@ export const BusinessInfo = (props: { info?: any }) => {
             displayName: info?.displayName,
             ownerName: info?.ownerName,
             shortDescription: info?.shortDescription,
-            headquarter: info?.headquarter,
         },
     });
 
@@ -39,6 +38,7 @@ export const BusinessInfo = (props: { info?: any }) => {
         try {
             e.preventDefault();
             data.businessId = info?.id;
+            delete data.headquarter;
             return new Promise((resolve) => {
                 setTimeout(async () => {
                     console.log(data);

@@ -25,11 +25,8 @@ import {
     uploadBytesResumable,
 } from '@firebase/storage';
 import storage from '../../../../firebase';
-interface Props {
-    business?: string;
-}
 
-export const CreateService = (props: Props) => {
+export const CreateService = (props: { business?: string }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
@@ -183,6 +180,7 @@ export const CreateService = (props: Props) => {
                         placeholder="Loại"
                         errors={errors}
                         control={control}
+                        handleChange={() => {}}
                     />
                 </div>
                 <div className="mb-3">

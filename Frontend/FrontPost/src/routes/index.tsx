@@ -24,6 +24,7 @@ import { CustomerHomepage } from '../Features/Customer/Pages/HomePage';
 import { PaymentDenied, PaymentSuccess } from '../Features/Customer/Pages';
 import { AppointmentHistory } from '../Features/common/Components';
 import { PrivateRoute } from './privateRoute';
+import ScrollToTop from './scrollToTop';
 
 export interface IRoute {
     exact: Boolean;
@@ -312,21 +313,23 @@ const renderRoutes = (routes: Array<IRoute>) => {
 const Router = () => {
     return (
         <BrowserRouter>
-            <Switch>
-                {renderRoutes(routes)}
-                {renderPrivateRoutes(privateRoutes)}
-                {/* business routes */}
-                <PrivateRoute
-                    path="/business-dashboard"
-                    option={true}
-                    roleRoute={['business']}
-                >
-                    <BusinessDashboard />
-                </PrivateRoute>
-                <Route path="*">
-                    <NotFound />
-                </Route>
-            </Switch>
+            <ScrollToTop>
+                <Switch>
+                    {renderRoutes(routes)}
+                    {renderPrivateRoutes(privateRoutes)}
+                    {/* business routes */}
+                    <PrivateRoute
+                        path="/business-dashboard"
+                        option={true}
+                        roleRoute={['business']}
+                    >
+                        <BusinessDashboard />
+                    </PrivateRoute>
+                    <Route path="*">
+                        <NotFound />
+                    </Route>
+                </Switch>
+            </ScrollToTop>
         </BrowserRouter>
     );
 };

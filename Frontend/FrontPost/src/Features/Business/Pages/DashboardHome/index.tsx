@@ -146,7 +146,7 @@ export const DashboardHome = (props: { business?: any }) => {
                 <LineChartResponsive
                     data={revenue}
                     dataKey="count"
-                    title="Doanh thu"
+                    title={`Doanh thu năm ${dayjs().year()}`}
                     name="month"
                     grid
                 />

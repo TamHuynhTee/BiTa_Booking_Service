@@ -53,12 +53,18 @@ export const Login = (props: LoginProps) => {
                             history.goBack();
                             dispatch(setNeedAuth(false));
                         } else {
-                            dispatch(getCurrentUserAsync());
-                            history.push(
-                                result.payload?.data.role === 'user'
-                                    ? defaultRoute.AuthenticatedHome
-                                    : '/business-dashboard'
-                            );
+                            if (
+                                ['user', 'business'].includes(
+                                    result.payload?.data.role
+                                )
+                            ) {
+                                dispatch(getCurrentUserAsync());
+                                history.push(
+                                    result.payload?.data.role === 'user'
+                                        ? defaultRoute.AuthenticatedHome
+                                        : '/business-dashboard'
+                                );
+                            }
                         }
                     }
                     resolve(true);

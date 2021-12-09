@@ -67,14 +67,17 @@
         &-item {
             transition: all 0.5s ease;
             border: 1px solid #fff;
+            padding: $pm-40;
             &:hover {
                 border: 1px solid rgba(105, 105, 105, 0.2);
                 box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
                     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
                 border-radius: 10px;
-                margin-top: -15px;
+                // margin-top: -15px;
             }
-            padding: $pm-40;
+            &:hover .homepage-utilities-item-image img {
+                transform: scale(1.15);
+            }
             & h1 {
                 text-align: center;
                 color: #3fa3db;
@@ -87,6 +90,7 @@
                 padding: $pm-40 0;
                 & img {
                     height: 100%;
+                    transition: all 0.5s ease;
                 }
             }
             & p {
@@ -115,6 +119,12 @@
             text-align: justify;
             margin-top: auto;
         }
+    }
+    &-reviews {
+        background-color: #f1f8ff;
+        border-radius: 20px;
+        padding: $pm-40;
+        margin-bottom: 2rem;
     }
 }
 
@@ -154,4 +164,41 @@
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
     }
+}
+
+blockquote {
+    font-weight: 100;
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.4;
+    position: relative;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+blockquote:before,
+blockquote:after {
+    position: absolute;
+    color: #b1c8eb;
+    font-size: 8rem;
+    width: 4rem;
+    height: 4rem;
+}
+
+blockquote:before {
+    content: '“';
+    left: -5rem;
+    top: -2rem;
+}
+
+blockquote:after {
+    content: '”';
+    right: -5rem;
+    bottom: 1rem;
+}
+
+cite {
+    line-height: 3;
+    text-align: left;
+    font-weight: bold;
 }

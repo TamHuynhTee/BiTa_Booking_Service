@@ -6,7 +6,7 @@ const { businessService } = require('.');
 const createService = async (serviceBody) => {
   //   if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
   const service = await Service.create(serviceBody);
-  const business = await businessService.getBusinessById(branchBody.business);
+  const business = await businessService.getBusinessById(serviceBody.business);
   if (!business) throw new ApiError(httpStatus.NOT_FOUND, 'Doanh nghiệp không tồn tại');
   business.services.push(service._id);
   await business.save();
