@@ -35,7 +35,7 @@ const createAppointment = catchAsync(async (req, res) => {
         payment_method: 'paypal',
       },
       redirect_urls: {
-        return_url: `http://localhost:5000/v1/appointment/success-payment?costUSD=${costUSD}&appointment=${appointment._id}&paymentType=${paymentType}`,
+        return_url: `https://bita-booking.herokuapp.com/v1/appointment/success-payment?costUSD=${costUSD}&appointment=${appointment._id}&paymentType=${paymentType}`,
         cancel_url: 'http://localhost:3000/payment-denied',
       },
       transactions: [

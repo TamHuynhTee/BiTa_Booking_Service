@@ -1,23 +1,19 @@
-import { Form, Formik } from 'formik';
-import React from 'react';
-import './style.scss';
-import { ButtonSpinner, CustomSelect } from '../../../../Components';
-import {
-    APPOINTMENT_TIME,
-    TIME_TO_COME,
-} from '../../../../utils/selectOptions';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import moment from 'moment';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { ButtonSpinner, CustomSelect } from '../../../../Components';
+import { moneyFormatter } from '../../../../utils/moneyFormatter';
+import { notifyError, notifySuccess } from '../../../../utils/notify';
+import { TIME_TO_COME } from '../../../../utils/selectOptions';
+import { timeFormatter } from '../../../../utils/timeFormatter';
 import { CreateBookingSchema } from '../../../../validations/booking';
 import { createAppointmentApi } from '../../Apis/customer.api';
-import moment from 'moment';
-import { timeFormatter } from '../../../../utils/timeFormatter';
-import { notifyError, notifySuccess } from '../../../../utils/notify';
-import { getBranchesByServiceForSelectAsync } from '../../slice/thunk';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectBranchesForSelect } from '../../slice/selector';
-import { useHistory } from 'react-router';
-import { moneyFormatter } from '../../../../utils/moneyFormatter';
+import { getBranchesByServiceForSelectAsync } from '../../slice/thunk';
+import './style.scss';
 
 const weekdays = [
     'Sunday',
