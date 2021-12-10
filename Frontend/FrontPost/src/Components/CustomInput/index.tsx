@@ -9,8 +9,10 @@ export const CustomInput = (props: {
     placeholder?: string;
     errors?: any;
     title?: any;
+    disabled?: boolean;
 }) => {
-    const { type, register, name, placeholder, errors, title } = props;
+    const { type, register, name, placeholder, errors, title, disabled } =
+        props;
     return (
         <div className="form-group mb-3">
             <ColorLabel title={title} for={name} />
@@ -21,6 +23,7 @@ export const CustomInput = (props: {
                 {...register(name)}
                 placeholder={placeholder}
                 id={name}
+                disabled={disabled}
             />
             <ErrorMessage
                 errors={errors}

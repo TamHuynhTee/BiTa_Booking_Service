@@ -5,6 +5,8 @@ export interface ManagerStateTypes {
     categoryDetail?: any;
     businessDetail?: any;
     queryBusiness?: IQueryResult;
+    managerStats?: IManagerStatsApi;
+    managerRevenue?: any;
     status?: string;
 }
 
@@ -27,4 +29,14 @@ export interface IQueryBusinessApi {
     sortBy?: string;
     limit?: number;
     page?: number;
+}
+
+export interface IManagerStatsApi {
+    serviceNumber?: number;
+    businessNumber?: number;
+    appointmentNumber?: number;
+    categoryNumber?: number;
+    services?: Array<any>;
+    businesses?: Array<any>;
+    appointments?: Array<any>;
 }

@@ -7,3 +7,4 @@ module.exports.categoryService = require('./category.service');
 module.exports.serviceService = require('./service.service');
 module.exports.branchService = require('./branch.service');
 module.exports.appointmentService = require('./appointment.service');
+module.exports.statisticService = require('./statistic.service');

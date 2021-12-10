@@ -5,10 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { selectUser } from '../../../../App/auth/slice/selector';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { ButtonSpinner } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
-import { CreateBranchSchema } from '../../../../validations/branch';
-import { updateBranchApi } from '../../Apis/business.api';
+import { UpdateBranchSchema } from '../../../../validations/branch';
+import {
+    setHeadquarterApi,
+    updateBranchActivationApi,
+    updateBranchApi,
+} from '../../Apis/business.api';
 import {
     selectBranchDetail,
     selectServicesForSelect,
@@ -19,17 +25,17 @@ interface Props {}
 
 export const BranchDetail = (props: Props) => {
     const { id } = useParams<any>();
-
     const history = useHistory();
     const dispatch = useDispatch();
     const branch = useSelector(selectBranchDetail);
+    const business = useSelector(selectUser);
     const services = useSelector(selectServicesForSelect);
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm({
-        resolver: yupResolver(CreateBranchSchema),
+        resolver: yupResolver(UpdateBranchSchema),
         defaultValues: {
             name: branch?.name,
             street: branch?.address.street,
@@ -40,7 +46,9 @@ export const BranchDetail = (props: Props) => {
     });
     React.useEffect(() => {
         dispatch(getBranchByIdAsync({ branchId: id }));
-        dispatch(getAllServiceAsync({ businessId: branch?.business }));
+    }, []);
+    React.useEffect(() => {
+        dispatch(getAllServiceAsync({ businessId: business?.business?.id }));
     }, []);
 
     const [list, setList] = React.useState<any>(branch?.services || []);
@@ -75,12 +83,67 @@ export const BranchDetail = (props: Props) => {
         }
     };
 
+    const handleChangeActivation = async () => {
+        if (
+            confirm(
+                `Bạn chắc muốn ${
+                    branch?.isActive ? 'ngưng' : 'tiếp tục'
+                } hoạt động của chi nhánh chứ?`
+            )
+        ) {
+            const result = await updateBranchActivationApi({ branchId: id });
+            if (result.code === 200) {
+                notifySuccess(result.message);
+                history.push('/business-dashboard/branches');
+            } else {
+                notifyError(result.message);
+            }
+        }
+    };
+
+    const [loading, setLoading] = React.useState(false);
+
+    const handleSetHeadquarter = () => {
+        if (confirm(`Bạn chắc muốn cập nhật chi nhánh này làm trụ sở chứ?`)) {
+            setLoading(true);
+            return new Promise((res) => {
+                setTimeout(async () => {
+                    const result = await setHeadquarterApi({
+                        businessId: business?.business?.id,
+                        branchId: id,
+                    });
+                    if (result.code === 200) {
+                        notifySuccess(result.message);
+                        dispatch(getCurrentUserAsync());
+                        history.push('/business-dashboard/branches');
+                    } else {
+                        notifyError(result.message);
+                    }
+                    res(true);
+                }, 2000);
+            });
+        }
+    };
+
     return (
         <div className="container">
             <Link to="/business-dashboard/branches">{'< '}Trở về</Link>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3">
+                {business?.business?.headquarter === id ? (
+                    <span className="badge rounded-pill bg-primary">
+                        Trụ sở chính
+                    </span>
+                ) : (
+                    <button
+                        type="button"
+                        className="btn btn-dark"
+                        onClick={handleSetHeadquarter}
+                    >
+                        {loading ? <ButtonSpinner /> : 'Đặt trụ sở chính'}
+                    </button>
+                )}
+                <div className="my-3">
                     <label htmlFor="name" className="form-label">
                         Tên chi nhánh *
                     </label>
@@ -175,13 +238,24 @@ export const BranchDetail = (props: Props) => {
                         }}
                     />
                 </div>
-                <button
-                    className="btn btn-primary mb-2"
-                    type="submit"
-                    disabled={isSubmitting}
-                >
-                    {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
-                </button>
+                <div className="g-2">
+                    <button
+                        className="btn btn-primary me-2"
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        {!isSubmitting ? 'Cập nhật' : <ButtonSpinner />}
+                    </button>
+                    <button
+                        className={`btn btn-${
+                            branch?.isActive ? 'danger' : 'success'
+                        }`}
+                        type="button"
+                        onClick={handleChangeActivation}
+                    >
+                        {branch?.isActive ? 'Ngưng hoạt động' : 'Kích hoạt lại'}
+                    </button>
+                </div>
             </form>
         </div>
     );

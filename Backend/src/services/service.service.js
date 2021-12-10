@@ -4,8 +4,12 @@ const { Service } = require('../models');
 const { businessService } = require('.');
 
 const createService = async (serviceBody) => {
-  if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
+  //   if (await Service.nameExists(serviceBody.name)) throw new ApiError(httpStatus.BAD_REQUEST, 'Service name already taken');
   const service = await Service.create(serviceBody);
+  const business = await businessService.getBusinessById(serviceBody.business);
+  if (!business) throw new ApiError(httpStatus.NOT_FOUND, 'Doanh nghiệp không tồn tại');
+  business.services.push(service._id);
+  await business.save();
   return service;
 };
 
@@ -24,6 +28,16 @@ const updateService = async (serviceBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
   Object.assign(service, serviceBody);
   await service.save();
+};
+
+const updateServiceActivation = async (serviceId) => {
+  const service = await getServiceById(serviceId);
+  if (!service) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy dịch vụ');
+  }
+  Object.assign(service, { isActive: !service.isActive });
+  await service.save();
+  return service;
 };
 
 const deleteService = async (serviceBody) => {
@@ -45,4 +59,5 @@ module.exports = {
   getServiceById,
   queryServices,
   getAllServices,
+  updateServiceActivation,
 };

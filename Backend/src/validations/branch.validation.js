@@ -11,7 +11,7 @@ const createBranch = {
       district: Joi.string().required(),
       province: Joi.string().required(),
     }),
-    coordinates: Joi.array().allow(null),
+    headquarter: Joi.boolean().allow(null),
   }),
 };
 
@@ -26,7 +26,6 @@ const updateBranch = {
       district: Joi.string().required(),
       province: Joi.string().required(),
     }),
-    coordinates: Joi.array().allow(null),
     services: Joi.array().items(Joi.string().custom(objectId)).optional(),
   }),
 };
@@ -55,6 +54,12 @@ const getAllBranches = {
   }),
 };
 
+const changeBranchActivation = {
+  body: Joi.object().keys({
+    branchId: Joi.string().custom(objectId),
+  }),
+};
+
 const queryBranches = {
   query: Joi.object().keys({
     keyword: Joi.string().allow(null, ''),
@@ -75,4 +80,5 @@ module.exports = {
   queryBranches,
   getBranchByService,
   getAllBranches,
+  changeBranchActivation,
 };

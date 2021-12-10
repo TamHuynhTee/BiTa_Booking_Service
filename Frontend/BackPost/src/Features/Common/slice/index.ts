@@ -6,6 +6,7 @@ import { getCurrentUserAsync } from './thunk';
 const initialState: Partial<AuthStateTypes> = {
     user: null,
     status: 'idle',
+    needAuth: false,
 };
 
 export const authSlice = createSlice({
@@ -16,6 +17,9 @@ export const authSlice = createSlice({
             state.user = null;
             localStorage.removeItem('token');
             notifySuccess('Đăng xuất thành công');
+        },
+        setNeedAuth: (state, action) => {
+            state.needAuth = action.payload;
         },
     },
     extraReducers: {
@@ -31,10 +35,10 @@ export const authSlice = createSlice({
             state.user = user;
         },
         [getCurrentUserAsync.rejected.toString()]: (state, action) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
     },
 });
 
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, setNeedAuth } = authSlice.actions;
 export default authSlice.reducer;

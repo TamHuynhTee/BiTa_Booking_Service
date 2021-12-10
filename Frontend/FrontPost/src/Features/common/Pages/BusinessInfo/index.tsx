@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import {
     selectBusinessBranches,
     selectServices,
@@ -14,10 +15,8 @@ import { selectBusinessDetail } from '../../slice/selector';
 import { getBusinessDetailAsync } from '../../slice/thunk';
 import './style.scss';
 
-interface BusinessInfoProps {}
-
 const thumbnail = 'https://picsum.photos/200/200';
-export const BusinessInfo = (props: BusinessInfoProps) => {
+export const BusinessInfo = () => {
     const dispatch = useDispatch();
     const { id } = useParams<any>();
     const business = useSelector(selectBusinessDetail);
@@ -28,7 +27,18 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
         dispatch(getAllBranchAsync({ businessId: id }));
         dispatch(queryServiceAsync({ business: id, isActive: true }));
     }, []);
-    console.log(business, branches, services);
+
+    const renderHeadquarter = () => {
+        const headquarter = branches?.find(
+            (item: any) => item.id === business?.headquarter
+        );
+        return (
+            <p className="ms-5">
+                <span className="badge bg-primary">{headquarter?.name}</span>{' '}
+                {`${headquarter?.address.street}, ${headquarter?.address.ward}, ${headquarter?.address.district}, ${headquarter?.address.province}`}
+            </p>
+        );
+    };
     return (
         <div className="container">
             <div className="businessInfo">
@@ -48,6 +58,7 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                             {business?.displayName}
                         </h4>
                     </div>
+                    <Link to="/businesses">{'<< '}Về danh sách</Link>
                     <hr />
                     <div className="mt-5 mb-5 fs-4">
                         <h2 className="fw-bold">Thông tin cơ bản</h2>
@@ -58,12 +69,14 @@ export const BusinessInfo = (props: BusinessInfoProps) => {
                                 </span>
                                 <p className="ms-5">{business?.businessName}</p>
                             </li>
-                            <li>
-                                <span className="badge bg-secondary">
-                                    Trụ sở
-                                </span>
-                                <p>TPHCM</p>
-                            </li>
+                            {business?.headquarter && (
+                                <li>
+                                    <span className="badge bg-secondary">
+                                        Trụ sở
+                                    </span>
+                                    {renderHeadquarter()}
+                                </li>
+                            )}
                             <li>
                                 <span className="badge bg-secondary">
                                     Số điện thoại liên lạc

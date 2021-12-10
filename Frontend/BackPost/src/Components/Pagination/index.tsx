@@ -1,8 +1,12 @@
 import React from 'react';
 
-export const Pagination = (props: { totalPages?: number; query?: any }) => {
-    const { totalPages, query } = props;
-    const [pagination, setPagination] = React.useState(1);
+export const Pagination = (props: {
+    totalPages?: number;
+    query?: any;
+    page?: number;
+}) => {
+    const { totalPages, query, page } = props;
+    const [pagination, setPagination] = React.useState(page);
     const handleChangePage = (thisPage: number) => {
         if (thisPage === pagination) return;
         setPagination(thisPage);

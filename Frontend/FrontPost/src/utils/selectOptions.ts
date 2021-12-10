@@ -5,6 +5,30 @@ export const TIME_TO_COME = [
 ];
 
 export const APPOINTMENT_TIME = [
+    { value: '0000', label: '00:00' },
+    { value: '0015', label: '00:15' },
+    { value: '0030', label: '00:30' },
+    { value: '0045', label: '00:45' },
+    { value: '0100', label: '01:00' },
+    { value: '0115', label: '01:15' },
+    { value: '0130', label: '01:30' },
+    { value: '0145', label: '01:45' },
+    { value: '0200', label: '02:00' },
+    { value: '0215', label: '02:15' },
+    { value: '0230', label: '02:30' },
+    { value: '0245', label: '02:45' },
+    { value: '0300', label: '03:00' },
+    { value: '0315', label: '03:15' },
+    { value: '0330', label: '03:30' },
+    { value: '0345', label: '03:45' },
+    { value: '0400', label: '04:00' },
+    { value: '0415', label: '04:15' },
+    { value: '0430', label: '04:30' },
+    { value: '0445', label: '04:45' },
+    { value: '0500', label: '05:00' },
+    { value: '0515', label: '05:15' },
+    { value: '0530', label: '05:30' },
+    { value: '0545', label: '05:45' },
     { value: '0600', label: '06:00' },
     { value: '0615', label: '06:15' },
     { value: '0630', label: '06:30' },
@@ -90,6 +114,11 @@ export const BUSINESS_FILTER = [
     { value: 'ownerName', label: 'Tên chủ doanh nghiệp' },
 ];
 
+export const GENDER_OPTIONS = [
+    { value: 'male', label: 'Nam' },
+    { value: 'female', label: 'Nữ' },
+];
+
 export const ACTIVE_OPTIONS = [
     { value: true, label: 'Đang hoạt động' },
     { value: false, label: 'Ngưng hoạt động' },
@@ -98,4 +127,23 @@ export const ACTIVE_OPTIONS = [
 export const BRANCH_FILTER = [
     { value: 'name', label: 'Tên chi nhánh' },
     { value: 'address', label: 'Địa chỉ' },
+];
+
+export const APPOINTMENT_PAID_FILTER = [
+    { value: '', label: 'Tất cả' },
+    { value: 'NotPaid', label: 'Chưa thanh toán' },
+    { value: 'PartialPaid', label: 'Thanh toán tiền cọc' },
+    { value: 'FullyPaid', label: 'Đã thanh toán' },
+];
+
+export const APPOINTMENT_STATE_FILTER = [
+    { value: '', label: 'Tất cả' },
+    { value: 'Pending', label: 'Đang chờ' },
+    { value: 'Done', label: 'Hoàn tất' },
+    { value: 'Canceled', label: 'Đã hủy' },
+];
+
+export const APPOINTMENT_FILTER = [
+    { value: 'customerName', label: 'Tên khách hàng' },
+    { value: 'customerPhoneNumber', label: 'Số điện thoại khách hàng' },
 ];

@@ -3,16 +3,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ButtonSpinner } from '../../../../Components';
 import { CreateBranchSchema } from '../../../../validations/branch';
-// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { createBranchApi } from '../../Apis/business.api';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { useHistory } from 'react-router';
-interface Props {
-    business?: string;
-}
+import { useDispatch } from 'react-redux';
+import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 
-export const CreateBranch = (props: Props) => {
+export const CreateBranch = (props: { business?: string }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const { business } = props;
     const {
         register,
@@ -34,9 +33,9 @@ export const CreateBranch = (props: Props) => {
             return new Promise((resolve) => {
                 setTimeout(async () => {
                     const result = await createBranchApi(rest);
-                    console.log(result);
                     if (result.code === 201) {
                         notifySuccess('Đã tạo chi nhánh mới');
+                        dispatch(getCurrentUserAsync());
                         history.push('/business-dashboard/branches');
                     } else {
                         notifyError(result.message);
@@ -128,25 +127,17 @@ export const CreateBranch = (props: Props) => {
                         </p>
                     </div>
                 </div>
-                {/* <div className="mb-3">
-                    <div style={{ height: '360px' }}>
-                        <MapContainer
-                            center={[10.7894725, 106.710327]}
-                            key="51.505--0.09"
-                            zoom={13}
-                            scrollWheelZoom={true}
-                            dragging
-                        >
-                            <TileLayer
-                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <Marker position={[10.7894725, 106.710327]}>
-                                <Popup>Test popup</Popup>
-                            </Marker>
-                        </MapContainer>
-                    </div>
-                </div> */}
+                <div className="form-check mb-3">
+                    <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="headquarter"
+                        {...register('headquarter')}
+                    />
+                    <label className="form-check-label" htmlFor="headquarter">
+                        Đặt làm trụ sở chính
+                    </label>
+                </div>
                 <button
                     className="btn btn-primary mb-2"
                     type="submit"

@@ -26,5 +26,11 @@ router.get(
   queryService.queryServices,
   serviceController.queryServices
 );
+router.put(
+  '/change-service-activation',
+  auth('business'),
+  validate(serviceValidation.changeServiceActivation),
+  serviceController.changeServiceActivation
+);
 
 module.exports = router;

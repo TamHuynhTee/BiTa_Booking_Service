@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getDetailService } from '../../../Business/slice';
 
-interface Props {
-    data?: any;
-}
-
-export const ServiceCardHome = (props: Props) => {
+export const ServiceCardHome = (props: { data?: any }) => {
     const { data } = props;
     const history = useHistory();
     const dispatch = useDispatch();

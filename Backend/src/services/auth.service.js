@@ -16,10 +16,10 @@ const { tokenTypes } = require('../config/tokens');
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Sai email hoặc mật khẩu');
   }
-  if (!(await userService.checkVerifyEmail(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Email not confirmed');
-  if (!(await userService.checkIsActive(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'User is blocked');
+  if (!(await userService.checkVerifyEmail(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Chưa xác nhận email');
+  if (!(await userService.checkIsActive(user._id))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Tài khoản đang bị chặn');
   return user;
 };
 

@@ -9,6 +9,7 @@ const createBranch = async (branchBody) => {
   const business = await businessService.getBusinessById(branchBody.business);
   if (!business) throw new ApiError(httpStatus.NOT_FOUND, 'Doanh nghiệp không tồn tại');
   business.branches.push(branch._id);
+  if (branchBody.headquarter) business.headquarter = branch._id;
   await business.save();
   return branch;
 };
@@ -39,6 +40,16 @@ const deleteBranch = async (branchBody) => {
   return branch;
 };
 
+const updateBranchActivation = async (branchId) => {
+  const branch = await getBranchById(branchId);
+  if (!branch) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy chi nhánh');
+  }
+  Object.assign(branch, { isActive: !branch.isActive });
+  await branch.save();
+  return branch;
+};
+
 const queryBranches = async (filter, options) => {
   const branches = await Branch.paginate(filter, options);
   return branches;
@@ -52,4 +63,5 @@ module.exports = {
   queryBranches,
   getBranchesByService,
   getAllBranches,
+  updateBranchActivation,
 };

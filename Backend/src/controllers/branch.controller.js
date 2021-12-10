@@ -38,6 +38,11 @@ const getAllBranches = catchAsync(async (req, res) => {
   sendSuccess(res, branches, httpStatus.OK, 'Branches found');
 });
 
+const changeBranchActivation = catchAsync(async (req, res) => {
+  const branch = await branchService.updateBranchActivation(req.body.branchId);
+  sendSuccess(res, branch, httpStatus.OK, 'Đã thay đổi trạng thái chi nhánh');
+});
+
 const queryBranches = catchAsync(async (req, res) => {
   const filter = pick(req.query, [
     'name',
@@ -62,4 +67,5 @@ module.exports = {
   getBranchById,
   getBranchesByService,
   getAllBranches,
+  changeBranchActivation,
 };

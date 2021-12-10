@@ -34,6 +34,12 @@ export const getAllServiceApi = async (
     return await Repository(routeBusiness['getAllService'], businessId);
 };
 
+export const updateServiceActivationApi = async (payload: {
+    serviceId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['updateServiceActivation'], payload);
+};
+
 // Branch
 export const createBranchApi = async (
     payload: any
@@ -63,4 +69,38 @@ export const getAllBranchApi = async (
     businessId: any
 ): Promise<ReturnListResponse<any>> => {
     return await Repository(routeBusiness['getAllBranch'], businessId);
+};
+
+export const updateBranchActivationApi = async (payload: {
+    branchId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['updateBranchActivation'], payload);
+};
+
+// Business
+export const setHeadquarterApi = async (payload: {
+    businessId?: string;
+    branchId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['setHeadquarter'], payload);
+};
+
+// Appointment
+export const doneAppointmentApi = async (payload: {
+    appointmentId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['doneAppointment'], payload);
+};
+// Statistic
+export const getBusinessStatsApi = async (payload: {
+    businessId?: string;
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['businessStats'], payload);
+};
+export const getBusinessRevenueApi = async (payload: {
+    businessId?: string;
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeBusiness['businessRevenue'], payload);
 };

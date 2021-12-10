@@ -26,3 +26,9 @@ export const getBusinessDetailApi = async (
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeCommon['getBusinessDetail'], businessId);
 };
+// Appointment
+export const cancelAppointmentApi = async (payload: {
+    appointmentId?: string;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeCommon['cancelAppointment'], payload);
+};

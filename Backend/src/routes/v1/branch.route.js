@@ -19,5 +19,11 @@ router.get(
   queryBranch.queryBranches,
   branchController.queryBranches
 );
+router.put(
+  '/change-branch-activation',
+  auth('business'),
+  validate(branchValidation.changeBranchActivation),
+  branchController.changeBranchActivation
+);
 
 module.exports = router;

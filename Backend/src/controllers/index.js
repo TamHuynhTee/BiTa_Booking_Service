@@ -6,3 +6,4 @@ module.exports.returnController = require('./return.controller');
 module.exports.serviceController = require('./service.controller');
 module.exports.branchController = require('./branch.controller');
 module.exports.appointmentController = require('./appointment.controller');
+module.exports.statisticController = require('./statistic.controller');

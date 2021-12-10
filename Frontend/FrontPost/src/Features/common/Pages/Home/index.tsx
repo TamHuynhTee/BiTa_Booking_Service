@@ -9,6 +9,8 @@ import user from '../../../../images/user.svg';
 import business from '../../../../images/business.svg';
 import booked from '../../../../images/booked.svg';
 import plan from '../../../../images/plan.svg';
+import review1 from '../../../../images/avareview1.jpg';
+import review2 from '../../../../images/avareview2.jpg';
 import { defaultRoute } from '../../../../routes/defaultRoute';
 import { useHistory } from 'react-router';
 import { Typewriter } from 'react-simple-typewriter';
@@ -17,24 +19,20 @@ import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { selectServices } from '../../../Business/slice/selector';
-import { ServiceCardHome } from '../../Components';
+import { BusinessCardHome, ServiceCardHome } from '../../Components';
 import { SearchBar } from '../../../../Components';
 import { Link } from 'react-router-dom';
+import { queryBusinessAsync } from '../../slice/thunk';
+import { selectQueryBusiness } from '../../slice/selector';
 
-interface HomePageProps {}
-
-export const HomePage = (props: HomePageProps) => {
+export const HomePage = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const services = useSelector(selectServices);
-
+    const businesses = useSelector(selectQueryBusiness);
     React.useEffect(() => {
         dispatch(queryServiceAsync({ limit: 4, isActive: true }));
+        dispatch(queryBusinessAsync({ limit: 4, isActive: true }));
     }, []);
-
-    const handleSearch = () => {
-        history.push('/search');
-    };
 
     return (
         <div className="homepage">
@@ -123,14 +121,19 @@ export const HomePage = (props: HomePageProps) => {
                         lưu vào dòng thời gian của người dùng."
                 />
                 <SectionTitle title="Đối tác" />
+                <div className="d-flex justify-content-between">
+                    <Link to="/businesses">Xem tất cả {' >'}</Link>
+                </div>
+                <hr />
+                <div className="row">
+                    {businesses?.results?.map((e: any, i: number) => (
+                        <div className="col-lg-3" key={i}>
+                            <BusinessCardHome data={e} />
+                        </div>
+                    ))}
+                </div>
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">
-                    <div className="d-inline-block">
-                        <SearchBar
-                            placeholder="Tìm kiếm dịch vụ"
-                            formSubmit={handleSearch}
-                        />
-                    </div>
                     <Link to="/services">Xem tất cả {' >'}</Link>
                 </div>
                 <hr />
@@ -142,8 +145,49 @@ export const HomePage = (props: HomePageProps) => {
                     ))}
                 </div>
                 <SectionTitle title="Đánh giá từ khách hàng" />
+                <ReviewHome
+                    author="Anh Tâm"
+                    quote="Việc đặt hẹn để sử dụng dịch vụ đang càng ngày càng
+                            phổ biến trên khắp thế giới. Hệ thống đang đáp ứng
+                            nhu cầu rất tốt. Nhờ có Bita mà việc đặt hẹn rất
+                            nhanh chóng và tiện lợi hơn trước nhiều."
+                    avatar={review1}
+                />
+                <ReviewHome
+                    author="Chú Hiếu"
+                    quote="Nhờ BiTa mà tôi biết đến nhiều loại hình dịch vụ hơn. Các doanh nghiệp trên BiTa làm việc rất nhanh chóng và tiện lợi, có thể nói BiTa đang dẫn đầu trong xu thế đặt hẹn dịch vụ ở Việt Nam."
+                    avatar={review2}
+                />
             </div>
             <ChooseAccountDialog />
+        </div>
+    );
+};
+
+const ReviewHome = (props: {
+    avatar: string;
+    quote: string;
+    author: string;
+}) => {
+    const { avatar, author, quote } = props;
+    return (
+        <div className="row homepage-reviews">
+            <div className="col-4">
+                <img
+                    src={avatar}
+                    alt="..."
+                    className="mx-auto d-block"
+                    width={200}
+                    height={200}
+                    style={{ borderRadius: '50%' }}
+                />
+            </div>
+            <div className="col-8 px-5">
+                <blockquote className="callout quote EN">
+                    {quote}
+                    <cite> - {author}</cite>
+                </blockquote>
+            </div>
         </div>
     );
 };

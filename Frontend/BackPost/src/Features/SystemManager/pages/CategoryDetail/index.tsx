@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ButtonSpinner, CustomInput } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { CreateCategorySchema } from '../../../../validations/category';
@@ -53,7 +54,10 @@ export const CategoryDetail = (props: Props) => {
 
     return (
         <div className="container">
-            <h4>Thông tin loại dịch vụ</h4>
+            <div className="d-flex justify-content-between">
+                <h4 className="fw-bold">Thông tin loại dịch vụ</h4>
+                <Link to={'/dashboard/categories'}>{'< '}Về danh sách</Link>
+            </div>
             <hr />
             <form onSubmit={handleSubmit(onSubmit)} className="my-3">
                 <CustomInput

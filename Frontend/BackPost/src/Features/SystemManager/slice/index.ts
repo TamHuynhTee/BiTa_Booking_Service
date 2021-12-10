@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { moneyFormatter } from '../../../utils/moneyFormatter';
 import { ManagerStateTypes } from '../type';
 import {
     getAllCategoriesAsync,
     getBusinessByIdAsync,
     getCategoryByIdAsync,
+    getManagerRevenueAsync,
+    getManagerStatsAsync,
     queryBusinessAsync,
 } from './thunk';
 
@@ -12,6 +15,8 @@ const initialState: Partial<ManagerStateTypes> = {
     categoryDetail: null,
     businessDetail: null,
     queryBusiness: undefined,
+    managerStats: undefined,
+    managerRevenue: null,
     status: 'idle',
 };
 
@@ -38,7 +43,7 @@ export const managerSlice = createSlice({
             state.categories = action.payload;
         },
         [getAllCategoriesAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getCategoryByIdAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -51,7 +56,7 @@ export const managerSlice = createSlice({
             state.categoryDetail = action.payload;
         },
         [getCategoryByIdAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [queryBusinessAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -64,7 +69,7 @@ export const managerSlice = createSlice({
             state.queryBusiness = action.payload;
         },
         [queryBusinessAsync.rejected.toString()]: (state) => {
-            state.status = 'loading';
+            state.status = 'idle';
         },
         [getBusinessByIdAsync.pending.toString()]: (state) => {
             state.status = 'loading';
@@ -77,7 +82,34 @@ export const managerSlice = createSlice({
             state.businessDetail = action.payload;
         },
         [getBusinessByIdAsync.rejected.toString()]: (state) => {
+            state.status = 'idle';
+        },
+        // Stats
+        [getManagerRevenueAsync.pending.toString()]: (state) => {
             state.status = 'loading';
+        },
+        [getManagerRevenueAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.managerRevenue = action.payload;
+        },
+        [getManagerRevenueAsync.rejected.toString()]: (state) => {
+            state.status = 'idle';
+        },
+        [getManagerStatsAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getManagerStatsAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.managerStats = action.payload;
+        },
+        [getManagerStatsAsync.rejected.toString()]: (state) => {
+            state.status = 'idle';
         },
     },
 });

@@ -6,6 +6,7 @@ import {
     Pagination,
     SearchBar,
 } from '../../../../Components';
+import { ResultNumber } from '../../../../Components/ResultNumber';
 import { ACTIVE_OPTIONS } from '../../../../utils/selectOptions';
 import { IQueryServiceApi } from '../../../common/type';
 import { ServiceCard } from '../../Components';
@@ -60,7 +61,7 @@ export const ServiceList = (props: { business?: string }) => {
             <div className="input-group my-3 row">
                 <SearchBar
                     className="col-md-7"
-                    placeholder="Tìm kiếm tên chi nhánh"
+                    placeholder="Tìm kiếm tên dịch vụ"
                     submit={handleSearch}
                 />
                 <select
@@ -82,6 +83,10 @@ export const ServiceList = (props: { business?: string }) => {
             </div>
             {loading === 'idle' ? (
                 <>
+                    <ResultNumber
+                        number={services?.totalResults}
+                        suffix="dịch vụ"
+                    />
                     <div className="my-3">
                         {services?.results?.length === 0 ? (
                             <NoDataView />

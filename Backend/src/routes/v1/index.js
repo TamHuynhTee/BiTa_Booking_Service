@@ -5,8 +5,8 @@ const categoryRoute = require('./category.route');
 const businessRoute = require('./business.route');
 const branchRoute = require('./branch.route');
 const appointmentRoute = require('./appointment.route');
-const docsRoute = require('./docs.route');
 const serviceRoute = require('./service.route');
+const statisticRoute = require('./statistic.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -40,13 +40,9 @@ const defaultRoutes = [
     path: '/appointment',
     route: appointmentRoute,
   },
-];
-
-const devRoutes = [
-  // routes available only in development mode
   {
-    path: '/docs',
-    route: docsRoute,
+    path: '/statistic',
+    route: statisticRoute,
   },
 ];
 
@@ -55,10 +51,10 @@ defaultRoutes.forEach((route) => {
 });
 
 /* istanbul ignore next */
-if (config.env === 'development') {
-  devRoutes.forEach((route) => {
-    router.use(route.path, route.route);
-  });
-}
+// if (config.env === 'development') {
+//   devRoutes.forEach((route) => {
+//     router.use(route.path, route.route);
+//   });
+// }
 
 module.exports = router;

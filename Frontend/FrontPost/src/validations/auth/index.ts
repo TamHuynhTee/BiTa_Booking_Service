@@ -37,29 +37,32 @@ export const SignUpSchema = yup.object().shape({
     agreed: yup.boolean().oneOf([true], 'Cần chấp nhận điều khoản'),
 });
 
-export const ProfileSchema = yup.object().shape({
-    surName: yup.string(),
-    firstName: yup.string(),
-    username: yup.string().required('Chưa nhập username'),
-    email: yup.string().email('Không phải định dạng email'),
+export const ProfileInfoSchema = yup.object().shape({
+    surName: yup.string().required('Chưa nhập họ'),
+    firstName: yup.string().required('Chưa nhập tên'),
+    username: yup.string().required('Chưa nhập tên đăng nhập'),
+    email: yup.string().email('Không phải email').required('Chưa nhập email'),
     phoneNumber: yup
         .string()
+        .required('Chưa nhập số điện thoại')
         .matches(
             /(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})\b/,
             'Số điện thoại không hợp lệ'
         ),
     gender: yup.string(),
+    dayOfBirth: yup.date(),
+    avatar: yup.string(),
+});
+
+export const BusinessInfoSchema = yup.object().shape({
+    businessName: yup.string().required('Chưa nhập tên doanh nghiệp'),
+    displayName: yup.string().required('Chưa nhập tên hiển thị'),
+    ownerName: yup.string().required('Chưa nhập tên chru doanh nghiệp'),
+    shortDescription: yup.string(),
 });
 
 export const ChangePassSchema = yup.object().shape({
-    oldPassword: yup
-        .string()
-        .required('Chưa nhập mật khẩu hiện tại')
-        .min(8, 'Mật khẩu ít nhất 8 ký tự')
-        .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            'Mật khẩu phải chứa ít nhất 1 số và 1 ký tự'
-        ),
+    oldPassword: yup.string().required('Chưa nhập mật khẩu hiện tại'),
     newPassword: yup
         .string()
         .required('Chưa nhập mật khẩu mới')

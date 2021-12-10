@@ -18,6 +18,7 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
+        reset,
     } = useForm({ resolver: yupResolver(SignUpSchema) });
 
     const onSubmit = (data: any, e: any) => {
@@ -32,6 +33,8 @@ export const RegisterCustomer = (props: RegisterCustomerProps) => {
                         notifySuccess(
                             'Đăng ký tài khoản thành công, vui lòng kiểm tra email để xác thực tài khoản'
                         );
+                        reset();
+                        history.push('/');
                     } else {
                         notifyError(result.message);
                     }

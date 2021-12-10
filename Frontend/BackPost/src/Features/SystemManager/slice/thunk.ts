@@ -3,6 +3,8 @@ import {
     getAllCategoriesApi,
     getBusinessByIdApi,
     getCategoryByIdApi,
+    getManagerRevenueApi,
+    getManagerStatsApi,
     queryBusinessApi,
 } from '../apis/systemmanager.api';
 import { IQueryBusinessApi } from '../type';
@@ -35,6 +37,22 @@ export const getBusinessByIdAsync = createAsyncThunk(
     'Business/getBusinessById',
     async (payload: any): Promise<any> => {
         const response = await getBusinessByIdApi(payload);
+        return response.data;
+    }
+);
+// Stats
+export const getManagerRevenueAsync = createAsyncThunk(
+    'Stats/getManagerRevenue',
+    async (query: { year?: number }): Promise<any> => {
+        const response = await getManagerRevenueApi(query);
+        return response.data;
+    }
+);
+
+export const getManagerStatsAsync = createAsyncThunk(
+    'Stats/getManagerStats',
+    async (query: { year?: number }): Promise<any> => {
+        const response = await getManagerStatsApi(query);
         return response.data;
     }
 );

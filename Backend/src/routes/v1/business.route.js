@@ -7,23 +7,16 @@ const queryBusiness = require('../../middlewares/queryBusiness');
 
 const router = express.Router();
 
-// router.put(
-//   '/create-business',
-//   auth(),
-//   validate(businessValidation.createBusiness),
-//   businessController.createBusiness
-// );
-
 router.put(
   '/update-business-info',
-  auth(),
+  auth('business'),
   validate(businessValidation.updateBusinessInfo),
   businessController.updateBusinessInfo
 );
 
 router.delete(
   '/delete-business',
-  auth(),
+  auth('business'),
   validate(businessValidation.deleteBusinessById),
   businessController.deleteBusinessById
 );
@@ -33,6 +26,12 @@ router.get(
   validate(businessValidation.queryBusinesses),
   queryBusiness.queryBusinesses,
   businessController.queryBusinesses
+);
+router.put(
+  '/set-headquarter',
+  auth('business'),
+  validate(businessValidation.setHeadquarter),
+  businessController.setHeadquarter
 );
 
 module.exports = router;

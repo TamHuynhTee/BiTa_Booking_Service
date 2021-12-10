@@ -22,7 +22,7 @@ export const ResetPassword = () => {
                     token: params.get('token'),
                     password: data.password,
                 });
-                setSuccess(res.status === 204);
+                setSuccess(res.code === 200);
                 console.log(res);
                 resolve(true);
             }, 2000);

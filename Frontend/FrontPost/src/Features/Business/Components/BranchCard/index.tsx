@@ -3,16 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getDetailBranch } from '../../slice';
 
-interface Props {
-    data?: any;
-}
-
-export const BranchCard = (props: Props) => {
+export const BranchCard = (props: { data?: any; headquarter?: any | '' }) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { address, name, id, services } = props.data;
+    const { headquarter } = props;
+    const { address, name, id, services, isActive } = props.data;
     const { street, ward, district, province } = address;
-
+    console.log(props.data);
     const handleToDetail = (e: any) => {
         dispatch(getDetailBranch(props.data));
         history.push(`/business-dashboard/branch/${id}`);
@@ -20,8 +17,16 @@ export const BranchCard = (props: Props) => {
 
     return (
         <div className="card bg-light mb-3">
-            <div className="card-body">
-                <h5 className="card-title fw-bold">{name}</h5>
+            <div className="card-body position-relative">
+                <ActiveDot active={isActive} />
+                <h5 className="card-title fw-bold">
+                    {name}{' '}
+                    {id === headquarter && (
+                        <span className="badge rounded-pill bg-primary">
+                            Trụ sở chính
+                        </span>
+                    )}
+                </h5>
                 <p className="card-text">
                     <i
                         className="bi bi-geo-alt-fill"
@@ -45,5 +50,15 @@ export const BranchCard = (props: Props) => {
                 </button>
             </div>
         </div>
+    );
+};
+
+const ActiveDot = (props: { active?: boolean }) => {
+    const { active } = props;
+    return (
+        <i
+            className="bi bi-dot position-absolute end-0 top-0"
+            style={{ fontSize: '3rem', color: `${active ? 'green' : 'red'}` }}
+        ></i>
     );
 };

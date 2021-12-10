@@ -33,6 +33,11 @@ const getAllServices = catchAsync(async (req, res) => {
   sendSuccess(res, services, httpStatus.OK, 'Service found');
 });
 
+const changeServiceActivation = catchAsync(async (req, res) => {
+  const service = await serviceService.updateServiceActivation(req.body.serviceId);
+  sendSuccess(res, service, httpStatus.OK, 'Đã thay đổi trạng thái dịch vụ');
+});
+
 const queryServices = catchAsync(async (req, res) => {
   //   console.log(req.query);
   const filter = pick(req.query, ['name', 'price', 'isActive', 'business', 'category']);
@@ -48,4 +53,5 @@ module.exports = {
   getServiceById,
   queryServices,
   getAllServices,
+  changeServiceActivation,
 };

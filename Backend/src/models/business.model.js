@@ -88,22 +88,14 @@ businessSchema.statics.displayNameExists = async function (displayName, excludeB
 };
 
 businessSchema.pre(/^find/, function (next) {
+  //   this.populate({
+  //     path: 'headquarter',
+  //     select: 'name',
+  //   });
   this.populate({
     path: 'businessAccount',
     select: 'avatar username firstName surName avatar email phoneNumber',
   });
-  //   this.populate({
-  //     path: 'branches',
-  //     select: 'name',
-  //   });
-  //   this.populate({
-  //     path: 'services',
-  //     select: 'name',
-  //   });
-  //   this.populate({
-  //     path: 'members',
-  //     select: 'username',
-  //   });
   next();
 });
 

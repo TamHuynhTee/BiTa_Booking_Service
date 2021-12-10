@@ -29,6 +29,11 @@ const appointmentSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    payment: {
+      type: String,
+      enum: ['NotPaid', 'PartialPaid', 'FullyPaid'],
+      default: 'NotPaid',
+    },
     startTime: {
       type: Date,
       required: true,
@@ -64,6 +69,22 @@ const appointmentSchema = mongoose.Schema(
 
 appointmentSchema.plugin(toJSON);
 appointmentSchema.plugin(paginate);
+
+appointmentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'service',
+    select: 'name',
+  });
+  this.populate({
+    path: 'branch',
+    select: 'name address',
+  });
+  this.populate({
+    path: 'business',
+    select: 'displayName',
+  });
+  next();
+});
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 module.exports = Appointment;

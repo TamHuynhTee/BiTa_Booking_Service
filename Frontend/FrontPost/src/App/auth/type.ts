@@ -1,5 +1,6 @@
 export interface AuthStateTypes {
     user?: any;
+    needAuth?: boolean;
     status?: string;
 }
 
@@ -40,4 +41,30 @@ export interface IForgotPassword {
 export interface IResetPassword {
     token: string;
     password: string;
+}
+
+export interface IUpdateProfileApi {
+    username?: string;
+    firstName?: string;
+    surName?: string;
+    phoneNumber?: string;
+    dayOfBirth?: any;
+    email?: string;
+    gender?: string;
+}
+
+export interface IUpdateBusinessApi {
+    businessName?: string;
+    displayName?: string;
+    ownerName?: string;
+    shortDescription?: string;
+}
+
+export interface IUpdateAvatarApi {
+    avatar?: string;
+}
+
+export interface IChangePasswordApi {
+    oldPassword?: string;
+    newPassword?: string;
 }

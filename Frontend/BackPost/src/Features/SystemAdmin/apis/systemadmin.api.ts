@@ -20,3 +20,15 @@ export const changeUserAccessApi = async (
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeAdmin['changeUserAccess'], query);
 };
+// Stats
+export const getRegisterStatsApi = async (query: {
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAdmin['getRegisterStats'], query);
+};
+
+export const getAdminStatsApi = async (query: {
+    year?: number;
+}): Promise<ReturnResponse<any>> => {
+    return await Repository(routeAdmin['getAdminStats'], query);
+};

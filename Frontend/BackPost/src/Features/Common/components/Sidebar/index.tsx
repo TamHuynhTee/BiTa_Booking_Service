@@ -134,7 +134,7 @@ export const Sidebar = (props: SidebarProps) => {
                                             Tất cả người dùng
                                         </Link>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <Link
                                             to={`${url}/create-user`}
                                             className="text-truncate"
@@ -142,7 +142,7 @@ export const Sidebar = (props: SidebarProps) => {
                                             <SidebarIcon type="bi-plus-lg" />
                                             Tạo người dùng mới
                                         </Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </>

@@ -30,4 +30,13 @@ export const routeManager: Record<string, ApiRoutes> = {
         method: ApiMethods.POST,
         url: 'auth/approve-business',
     },
+    // Stats
+    getManagerRevenue: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-manager-revenue',
+    },
+    getManagerStats: {
+        method: ApiMethods.GET,
+        url: 'statistic/get-manager-statistic',
+    },
 };

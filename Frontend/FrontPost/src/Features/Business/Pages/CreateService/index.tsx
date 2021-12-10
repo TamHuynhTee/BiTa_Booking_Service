@@ -25,11 +25,8 @@ import {
     uploadBytesResumable,
 } from '@firebase/storage';
 import storage from '../../../../firebase';
-interface Props {
-    business?: string;
-}
 
-export const CreateService = (props: Props) => {
+export const CreateService = (props: { business?: string }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
@@ -183,6 +180,7 @@ export const CreateService = (props: Props) => {
                         placeholder="Loại"
                         errors={errors}
                         control={control}
+                        handleChange={() => {}}
                     />
                 </div>
                 <div className="mb-3">
@@ -191,6 +189,7 @@ export const CreateService = (props: Props) => {
                     </label>
                     <CurrencyInput
                         id="price"
+                        groupSeparator="."
                         {...register('price')}
                         allowNegativeValue={false}
                         className="form-control"
@@ -210,6 +209,7 @@ export const CreateService = (props: Props) => {
                         </label>
                         <CurrencyInput
                             id="depositPrice"
+                            groupSeparator="."
                             {...register('depositPrice')}
                             allowNegativeValue={false}
                             className="form-control"
@@ -241,6 +241,7 @@ export const CreateService = (props: Props) => {
                 <div className="input-group mb-3">
                     <CurrencyInput
                         id="quantity"
+                        groupSeparator="."
                         {...register('quantity')}
                         allowNegativeValue={false}
                         className="form-control"

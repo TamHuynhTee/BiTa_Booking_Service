@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { notifyError, notifySuccess } from '../../../utils/notify';
 import { BusinessStateTypes } from '../type';
 import {
     getAllBranchAsync,
     getAllServiceAsync,
     getBranchByIdAsync,
+    getBusinessRevenueAsync,
+    getBusinessStatsAsync,
     getServiceByIdAsync,
     queryBranchAsync,
     queryServiceAsync,
@@ -16,6 +17,8 @@ const initialState: Partial<BusinessStateTypes> = {
     businessBranches: [],
     businessServiceDetail: null,
     businessBranchDetail: null,
+    stats: undefined,
+    revenue: null,
     status: 'idle',
 };
 
@@ -114,6 +117,34 @@ export const businessSlice = createSlice({
             state.businessBranches = action.payload;
         },
         [getAllBranchAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        // Stats
+        [getBusinessStatsAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getBusinessStatsAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            const data = action.payload;
+            state.stats = data;
+        },
+        [getBusinessStatsAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        [getBusinessRevenueAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getBusinessRevenueAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.revenue = action.payload;
+        },
+        [getBusinessRevenueAsync.rejected.toString()]: (state, action) => {
             state.status = 'idle';
         },
     },

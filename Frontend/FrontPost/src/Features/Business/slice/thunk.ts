@@ -4,6 +4,8 @@ import {
     getAllBranchApi,
     getAllServiceApi,
     getBranchByIdApi,
+    getBusinessRevenueApi,
+    getBusinessStatsApi,
     getServiceByIdApi,
     queryBranchApi,
     queryServiceApi,
@@ -54,6 +56,22 @@ export const getAllBranchAsync = createAsyncThunk(
     'Branch/getBranchByIdApi',
     async (payload: any): Promise<any> => {
         const response = await getAllBranchApi(payload);
+        return response.data;
+    }
+);
+
+// Stats
+export const getBusinessStatsAsync = createAsyncThunk(
+    'Statistic/getBusinessStats',
+    async (payload: { businessId?: string; year?: number }): Promise<any> => {
+        const response = await getBusinessStatsApi(payload);
+        return response.data;
+    }
+);
+export const getBusinessRevenueAsync = createAsyncThunk(
+    'Statistic/getBusinessRevenue',
+    async (payload: { businessId?: string; year?: number }): Promise<any> => {
+        const response = await getBusinessRevenueApi(payload);
         return response.data;
     }
 );

@@ -8,3 +8,4 @@ export * from './NoDataView';
 export * from './Pagination';
 export * from './DefaultAvatar';
 export * from './LoadingComponent';
+export * from './LineChartResponsive';

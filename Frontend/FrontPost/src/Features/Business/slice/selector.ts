@@ -11,3 +11,6 @@ export const selectBranchDetail = (state: RootState) =>
     state?.business.businessBranchDetail;
 export const selectBusinessBranches = (state: RootState) =>
     state?.business.businessBranches;
+export const selectBusinessStats = (state: RootState) => state?.business.stats;
+export const selectBusinessRevenue = (state: RootState) =>
+    state?.business.revenue;

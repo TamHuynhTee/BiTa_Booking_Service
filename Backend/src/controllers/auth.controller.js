@@ -24,7 +24,7 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const token = await tokenService.generateAuthTokens(user);
   const { role } = user;
-  sendSuccess(res, { token, role }, httpStatus.OK, 'Logged in');
+  sendSuccess(res, { token, role, userId: user._id }, httpStatus.OK, 'Đăng nhập thành công');
 });
 
 const forgotPassword = catchAsync(async (req, res) => {
@@ -35,18 +35,18 @@ const forgotPassword = catchAsync(async (req, res) => {
 
 const resetPassword = catchAsync(async (req, res) => {
   await authService.resetPassword(req.body.token, req.body.password);
-  sendSuccess(res, {}, httpStatus.NO_CONTENT, 'Password reset.');
+  sendSuccess(res, {}, httpStatus.OK, 'Password reset.');
 });
 
 const sendVerificationEmail = catchAsync(async (req, res) => {
   const verifyEmailToken = await tokenService.generateVerifyEmailToken(req.user);
   await emailService.sendVerificationEmail(req.user.email, verifyEmailToken);
-  res.status(httpStatus.NO_CONTENT).send();
+  res.status(httpStatus.OK).send();
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
   await authService.verifyEmail(req.body.token);
-  sendSuccess(res, { token: req.body.token }, httpStatus.OK, 'Email confirmed');
+  sendSuccess(res, {}, httpStatus.OK, 'Email confirmed');
 });
 
 const approveBusiness = catchAsync(async (req, res) => {
