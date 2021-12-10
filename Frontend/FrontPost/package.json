@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite --host",
+        "publishheroku": "cd ../../ && git subtree push --prefix Frontend/FrontPost client master || true",
         "build": "tsc && vite build",
         "serve": "vite preview"
     },
