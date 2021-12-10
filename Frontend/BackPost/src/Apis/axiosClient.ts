@@ -5,7 +5,7 @@ const uri = [
     'http://localhost:5000/v1/',
 ];
 const axiosClient = axios.create({
-    baseURL: uri[1],
+    baseURL: uri[0],
     timeout: 20000,
     headers: {
         'Content-Type': 'application/json',
