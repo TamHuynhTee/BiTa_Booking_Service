@@ -13,7 +13,6 @@ import {
     RegisterBusiness,
     RegisterCustomer,
     ResetPassword,
-    SearchResult,
     ServiceDetail,
     ServiceList,
     VerifyEmail,
@@ -102,38 +101,6 @@ const routes: Array<IRoute> = [
         child: (
             <>
                 <Header />
-                <SearchResult />
-                <Footer />
-            </>
-        ),
-        path: defaultRoute.Search,
-        exact: true,
-    },
-    // {
-    //     child: (
-    //         <>
-    //             <Header />
-    //             <CustomerHomepage />
-    //             <Footer />
-    //         </>
-    //     ),
-    //     path: defaultRoute.AuthenticatedHome,
-    //     exact: true,
-    // },
-    // {
-    //     child: (
-    //         <>
-    //             <Header />
-    //             <Profile />
-    //         </>
-    //     ),
-    //     path: defaultRoute.Profile,
-    //     exact: true,
-    // },
-    {
-        child: (
-            <>
-                <Header />
                 <ServiceDetail />
                 <Footer />
             </>
@@ -152,17 +119,6 @@ const routes: Array<IRoute> = [
         path: defaultRoute.Business,
         exact: true,
     },
-    // {
-    //     child: (
-    //         <>
-    //             <Header />
-    //             <Booking />
-    //             <Footer />
-    //         </>
-    //     ),
-    //     path: defaultRoute.Book,
-    //     exact: true,
-    // },
     {
         child: (
             <>
@@ -203,17 +159,6 @@ const routes: Array<IRoute> = [
         path: defaultRoute.PaymentFailed,
         exact: true,
     },
-    // {
-    //     child: (
-    //         <>
-    //             <Header />
-    //             <AppointmentHistory />
-    //             <Footer />
-    //         </>
-    //     ),
-    //     path: defaultRoute.AppointmentHistory,
-    //     exact: true,
-    // },
 ];
 
 const privateRoutes: Array<IPrivateRoute> = [

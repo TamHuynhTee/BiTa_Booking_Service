@@ -3,7 +3,6 @@ export * from './Home';
 export * from './Profile';
 export * from './RegisterBusiness';
 export * from './RegisterCustomer';
-export * from './Search';
 export * from './ServiceDetail';
 export * from './ServiceList';
 export * from './BusinessList';
