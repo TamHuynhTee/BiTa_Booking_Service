@@ -16,8 +16,8 @@ import {
 } from '../../slice/selector';
 import { queryAppointmentAsync } from '../../slice/thunk';
 import { IQueryAppointment } from '../../type';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { thisDay } from '../../../../utils/thisDay';
 
 dayjs.extend(utc);

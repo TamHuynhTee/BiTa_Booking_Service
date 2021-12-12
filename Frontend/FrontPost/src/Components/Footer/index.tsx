@@ -32,22 +32,35 @@ export const Footer = (props: FooterProps) => {
                     <p className="footer-content-social">Stay in touch</p>
                     <ul className="footer-content-links">
                         <li>
-                            <a href="#">
+                            <a
+                                href="https://www.facebook.com/tamhuynh.260500/"
+                                target={'_blank'}
+                            >
                                 <img src={facebook} alt="" />
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a
+                                href="https://twitter.com/_thanhtamhuynh_"
+                                target={'_blank'}
+                            >
+                                {' '}
                                 <img src={twitter} alt="" />
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a
+                                href="https://www.instagram.com/tamhuynh2605/"
+                                target={'_blank'}
+                            >
                                 <img src={instagram} alt="" />
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a
+                                href="https://www.pinterest.com/huynhthanhtam2605/_saved/"
+                                target={'_blank'}
+                            >
                                 <img src={pinterest} alt="" />
                             </a>
                         </li>

@@ -33,7 +33,7 @@ export const ServiceListItem = (props: {
                 </h5>
                 <ul className="list-group list-group-flush">
                     {withBusiness && (
-                        <li className="list-group-item">
+                        <li className="list-group-item text-truncate">
                             Dịch vụ của:{' '}
                             <Link to={`/business/${data?.business?.id}`}>
                                 {data?.business?.displayName}

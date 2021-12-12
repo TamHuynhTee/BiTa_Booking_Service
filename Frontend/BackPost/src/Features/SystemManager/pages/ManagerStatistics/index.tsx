@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LineChartResponsive } from '../../../../Components';
 import { selectManagerStats } from '../../slice/selector';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { getManagerStatsAsync } from '../../slice/thunk';
 interface Props {}
 

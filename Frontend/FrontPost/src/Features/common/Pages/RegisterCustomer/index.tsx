@@ -10,9 +10,7 @@ import { useHistory } from 'react-router';
 import { registerCustomerApi } from '../../../../App/auth/apis/auth.api';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 
-interface RegisterCustomerProps {}
-
-export const RegisterCustomer = (props: RegisterCustomerProps) => {
+export const RegisterCustomer = () => {
     const history = useHistory();
     const {
         register,

@@ -14,7 +14,7 @@ import {
 } from '../../slice/selector';
 import { getManagerRevenueAsync, queryBusinessAsync } from '../../slice/thunk';
 import { IQueryBusinessApi } from '../../type';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export const ManagerDashboard = () => {
     const dispatch = useDispatch();

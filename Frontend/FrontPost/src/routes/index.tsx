@@ -24,6 +24,7 @@ import { PaymentDenied, PaymentSuccess } from '../Features/Customer/Pages';
 import { AppointmentHistory } from '../Features/common/Components';
 import { PrivateRoute } from './privateRoute';
 import ScrollToTop from './scrollToTop';
+import { ChooseAccountDialog } from '../Components/ChooseAccount';
 
 export interface IRoute {
     exact: Boolean;
@@ -274,6 +275,7 @@ const Router = () => {
                         <NotFound />
                     </Route>
                 </Switch>
+                <ChooseAccountDialog />
             </ScrollToTop>
         </BrowserRouter>
     );

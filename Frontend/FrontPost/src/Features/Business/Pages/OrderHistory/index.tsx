@@ -8,8 +8,8 @@ import {
 } from '../../../../utils/selectOptions';
 import { thisDay } from '../../../../utils/thisDay';
 import { IQueryAppointment } from '../../../Customer/type';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
 import {
     selectCustomerLoading,

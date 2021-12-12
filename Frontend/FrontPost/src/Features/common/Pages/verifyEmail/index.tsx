@@ -15,7 +15,8 @@ export const VerifyEmail = () => {
     React.useEffect(() => {
         getCode();
         return () => {
-            setResult;
+            result;
+            loading;
         };
     }, []);
     console.log(result);

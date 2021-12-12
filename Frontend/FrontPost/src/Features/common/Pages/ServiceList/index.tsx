@@ -19,22 +19,19 @@ import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { ServiceListItem } from '../../Components';
 import { IQueryServiceApi } from '../../type';
 
-interface Props {}
-
-export const ServiceList = (props: Props) => {
+export const ServiceList = () => {
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const servicesResult = useSelector(selectServices);
     const loading = useSelector(selectLoading);
-    React.useEffect(() => {
-        dispatch(getAllCategoriesAsync());
-        dispatch(queryServiceAsync({ isActive: true }));
-    }, []);
-
     const [query, setQuery] = React.useState<IQueryServiceApi>({
         isActive: true,
         limit: 12,
     });
+    React.useEffect(() => {
+        dispatch(getAllCategoriesAsync());
+        dispatch(queryServiceAsync(query));
+    }, []);
 
     const handleSubmitSearch = () => {
         dispatch(queryServiceAsync(query));
@@ -66,7 +63,7 @@ export const ServiceList = (props: Props) => {
     const handleChangePage = (page: number) => {
         dispatch(queryServiceAsync({ ...query, page: page }));
     };
-    console.log(servicesResult);
+
     return (
         <PageContainer>
             <PageWrapper>

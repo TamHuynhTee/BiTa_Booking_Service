@@ -4,7 +4,7 @@ import { selectUser } from '../../../../App/auth/slice/selector';
 import { LineChartResponsive } from '../../../../Components';
 import { selectBusinessStats } from '../../slice/selector';
 import { getBusinessStatsAsync } from '../../slice/thunk';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export const Statistics = (props: { business?: string }) => {
     const { business } = props;

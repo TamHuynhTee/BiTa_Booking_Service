@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingComponent, Pagination } from '../../../../Components';
@@ -13,57 +13,6 @@ import { IQueryAppointment } from '../../../Customer/type';
 import { AppointmentBusinessCard } from '../../Components';
 import { getBusinessRevenueAsync } from '../../slice/thunk';
 import { selectBusinessRevenue } from '../../slice/selector';
-
-export const TestUserDataHome = [
-    {
-        name: 'Jan',
-        'Active User': 4000,
-    },
-    {
-        name: 'Feb',
-        'Active User': 3000,
-    },
-    {
-        name: 'Mar',
-        'Active User': 2000,
-    },
-    {
-        name: 'Apr',
-        'Active User': 2780,
-    },
-    {
-        name: 'May',
-        'Active User': 1890,
-    },
-    {
-        name: 'Jun',
-        'Active User': 2390,
-    },
-    {
-        name: 'Jul',
-        'Active User': 3490,
-    },
-    {
-        name: 'Aug',
-        'Active User': 3490,
-    },
-    {
-        name: 'Sep',
-        'Active User': 2527,
-    },
-    {
-        name: 'Oct',
-        'Active User': 9353,
-    },
-    {
-        name: 'Nov',
-        'Active User': 6237,
-    },
-    {
-        name: 'Dec',
-        'Active User': 9573,
-    },
-];
 
 const startOfDay = dayjs().startOf('day').toDate();
 

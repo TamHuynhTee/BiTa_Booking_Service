@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LineChartResponsive } from '../../../../Components';
 import { selectManagerRevenue } from '../../slice/selector';
 import { getManagerRevenueAsync } from '../../slice/thunk';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export const Revenue = () => {
     const [currentYear, setCurrentYear] = React.useState(dayjs().year());
