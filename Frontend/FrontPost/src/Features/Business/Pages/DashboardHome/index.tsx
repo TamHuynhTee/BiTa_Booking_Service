@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingComponent, Pagination } from '../../../../Components';

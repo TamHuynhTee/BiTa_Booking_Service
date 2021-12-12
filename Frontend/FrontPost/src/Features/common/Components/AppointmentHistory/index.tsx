@@ -11,8 +11,8 @@ import {
     APPOINTMENT_STATE_FILTER,
 } from '../../../../utils/selectOptions';
 import { thisDay } from '../../../../utils/thisDay';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { IQueryAppointment } from '../../../Customer/type';

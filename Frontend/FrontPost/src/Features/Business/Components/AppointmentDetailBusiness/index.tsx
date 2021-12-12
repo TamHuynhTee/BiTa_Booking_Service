@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
-import * as utc from 'dayjs/plugin/utc';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
 import {
     APPOINTMENT_PAID_FILTER,
