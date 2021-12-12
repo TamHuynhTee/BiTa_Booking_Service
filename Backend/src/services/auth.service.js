@@ -3,7 +3,7 @@ const tokenService = require('./token.service');
 const userService = require('./user.service');
 const businessService = require('./business.service');
 const emailService = require('./email.service');
-const Token = require('../models/token.model');
+const { Token } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
 
