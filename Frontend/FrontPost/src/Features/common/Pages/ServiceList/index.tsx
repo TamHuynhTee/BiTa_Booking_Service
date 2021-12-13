@@ -19,6 +19,8 @@ import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { ServiceListItem } from '../../Components';
 import { IQueryServiceApi } from '../../type';
 
+const limit = 12;
+
 export const ServiceList = () => {
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
@@ -26,7 +28,7 @@ export const ServiceList = () => {
     const loading = useSelector(selectLoading);
     const [query, setQuery] = React.useState<IQueryServiceApi>({
         isActive: true,
-        limit: 12,
+        limit: limit,
     });
     React.useEffect(() => {
         dispatch(getAllCategoriesAsync());
@@ -43,9 +45,19 @@ export const ServiceList = () => {
     };
 
     const handleChangeCategory = (category: any) => {
-        if (category)
-            dispatch(queryServiceAsync({ isActive: true, category: category }));
-        else dispatch(queryServiceAsync({ isActive: true }));
+        if (category) {
+            dispatch(
+                queryServiceAsync({
+                    isActive: true,
+                    limit: limit,
+                    category: category,
+                })
+            );
+            setQuery({ isActive: true, limit: limit, category: category });
+        } else {
+            dispatch(queryServiceAsync({ isActive: true, limit: limit }));
+            setQuery({ isActive: true, limit: limit });
+        }
     };
 
     const handleChangeMaxPrice = (e: any) => {
