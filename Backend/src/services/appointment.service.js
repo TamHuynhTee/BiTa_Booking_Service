@@ -35,7 +35,7 @@ const updateAppointment = async (appointmentBody) => {
   if (appointment.state === 'Done') throw new ApiError(httpStatus.NOT_FOUND, 'Không thể cập nhật cuộc hẹn đã hoàn tất');
   if (appointment.state === 'Canceled') throw new ApiError(httpStatus.NOT_FOUND, 'Không thể cập nhật cuộc hẹn đã bị hủy');
   Object.assign(appointment, appointmentBody);
-  await appointment.save();
+  return appointment.save();
 };
 
 const deleteAppointment = async (appointmentBody) => {

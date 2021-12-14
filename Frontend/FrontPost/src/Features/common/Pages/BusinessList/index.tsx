@@ -27,15 +27,13 @@ export const BusinessList = (props: Props) => {
     });
 
     React.useEffect(() => {
-        dispatch(queryBusinessAsync({ isActive: true }));
+        dispatch(queryBusinessAsync(query));
     }, []);
 
     const handleSubmitSearch = () => {
         console.log(query);
         dispatch(queryBusinessAsync(query));
     };
-
-    console.log(businessesResult);
 
     const handleChangeSearch = (data: { keyword: string }) => {
         const { keyword } = data;

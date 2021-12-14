@@ -10,6 +10,9 @@ export interface BusinessStateTypes {
     stats?: IBusinessStatsApi;
     revenue?: any;
     status?: string;
+    provinces?: Array<any>;
+    districts?: Array<any>;
+    wards?: Array<any>;
 }
 
 export interface IQueryBranchApi extends IQueryApi {

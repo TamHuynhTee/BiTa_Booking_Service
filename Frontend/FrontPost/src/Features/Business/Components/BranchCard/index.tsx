@@ -9,7 +9,7 @@ export const BranchCard = (props: { data?: any; headquarter?: any | '' }) => {
     const { headquarter } = props;
     const { address, name, id, services, isActive } = props.data;
     const { street, ward, district, province } = address;
-    console.log(props.data);
+
     const handleToDetail = (e: any) => {
         dispatch(getDetailBranch(props.data));
         history.push(`/business-dashboard/branch/${id}`);

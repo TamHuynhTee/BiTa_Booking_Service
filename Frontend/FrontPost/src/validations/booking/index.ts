@@ -11,5 +11,6 @@ export const CreateBookingSchema = yup.object().shape({
         ),
     appointmentDate: yup.date().required('Chưa chọn ngày hẹn'),
     appointmentTime: yup.string().required('Chưa chọn giờ hẹn').nullable(),
-    customerTime: yup.string(),
+    appointmentBranch: yup.string().required('Chưa chọn nơi hẹn').nullable(),
+    customerTime: yup.string().required('Hãy cho chúng tôi biết lúc bạn đến'),
 });

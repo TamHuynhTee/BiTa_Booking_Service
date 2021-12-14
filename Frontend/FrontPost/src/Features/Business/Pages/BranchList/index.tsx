@@ -7,6 +7,7 @@ import {
     Pagination,
     SearchBar,
 } from '../../../../Components';
+import { ResultNumber } from '../../../../Components/ResultNumber';
 import { ACTIVE_OPTIONS, BRANCH_FILTER } from '../../../../utils/selectOptions';
 import { BranchCard } from '../../Components';
 import { selectBranches, selectLoading } from '../../slice/selector';
@@ -67,6 +68,7 @@ export const BranchList = (props: { business?: string }) => {
                     className="col-md-7"
                     placeholder="Tìm kiếm chi nhánh theo"
                     submit={handleSearch}
+                    formSubmit={(e: any) => e.preventDefault()}
                 />
                 <select
                     className="form-select col-md-2"
@@ -102,11 +104,15 @@ export const BranchList = (props: { business?: string }) => {
             </div>
             {loading === 'idle' ? (
                 <>
-                    <div className="my-2">
+                    <ResultNumber
+                        number={branches?.totalResults}
+                        suffix="chi nhánh"
+                    />
+                    {/* <div className="my-2">
                         <h5 className="fw-bold">
                             Tìm thấy {branches?.totalResults} chi nhánh
                         </h5>
-                    </div>
+                    </div> */}
                     <div className="my-3">
                         {branches?.results?.length === 0 ? (
                             <NoDataView />

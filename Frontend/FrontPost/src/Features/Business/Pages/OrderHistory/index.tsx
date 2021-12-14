@@ -38,8 +38,8 @@ export const OrderHistory = () => {
     const user = useSelector(selectUser);
     const [query, setQuery] = React.useState<IQueryAppointment>({
         business: user?.business?.id,
-        startTime: startOfDay,
-        endTime: endOfDay,
+        // startTime: startOfDay,
+        // endTime: endOfDay,
         limit: 12,
         filter: APPOINTMENT_FILTER[0].value,
     });

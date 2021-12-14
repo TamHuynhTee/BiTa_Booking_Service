@@ -87,48 +87,50 @@ export const BookingForm = (props: {
     };
 
     const handleCreateApp = async (data: any, e: any) => {
-        e.preventDefault();
-        const date = data.appointmentDate;
-        const now =
-            date.getFullYear() +
-            '-' +
-            ('0' + (date.getMonth() + 1)).slice(-2) +
-            '-' +
-            date.getDate();
-        data.appointmentDate = now;
-        data.appointmentTime = timeFormatter(data.appointmentTime);
-        const startTime = moment
-            .utc(data.appointmentDate + ' ' + data.appointmentTime)
-            .toDate();
-        const minutes =
-            service?.duration?.unit === 'hour'
-                ? moment
-                      .duration(service?.duration?.quantity, 'hour')
-                      .asMinutes()
-                : service?.duration?.quantity;
-        console.log(data);
-        const result = await createAppointmentApi({
-            business: service?.business?.id,
-            customerName: data.customerName,
-            customerPhoneNumber: data.customerPhone,
-            service: service?.id,
-            branch: data.appointmentBranch,
-            price: service?.price,
-            hasDeposit: service?.hasDeposit,
-            depositPrice: service?.depositPrice,
-            notify: data.customerTime,
-            payNow: data.payNow,
-            duration: minutes,
-            startTime: startTime,
-        });
-        console.log(result);
-        if (result.code === 200) {
-            window.location.href = result.data;
-        } else if (result.code === 201) {
-            history.push('/home');
-            notifySuccess('Đã đặt hẹn');
-        } else {
-            notifyError(result.message);
+        if (confirm('Bạn xác nhận đặt hẹn?')) {
+            e.preventDefault();
+            const date = data.appointmentDate;
+            const now =
+                date.getFullYear() +
+                '-' +
+                ('0' + (date.getMonth() + 1)).slice(-2) +
+                '-' +
+                ('0' + date.getDate()).slice(-2);
+            data.appointmentDate = now;
+            data.appointmentTime = timeFormatter(data.appointmentTime);
+            const startTime = moment
+                .utc(data.appointmentDate + ' ' + data.appointmentTime)
+                .toDate();
+            const minutes =
+                service?.duration?.unit === 'hour'
+                    ? moment
+                          .duration(service?.duration?.quantity, 'hour')
+                          .asMinutes()
+                    : service?.duration?.quantity;
+            console.log(data);
+            const result = await createAppointmentApi({
+                business: service?.business?.id,
+                customerName: data.customerName,
+                customerPhoneNumber: data.customerPhone,
+                service: service?.id,
+                branch: data.appointmentBranch,
+                price: service?.price,
+                hasDeposit: service?.hasDeposit,
+                depositPrice: service?.depositPrice,
+                notify: data.customerTime,
+                payNow: data.payNow,
+                duration: minutes,
+                startTime: startTime,
+            });
+
+            if (result.code === 200) {
+                window.location.href = result.data;
+            } else if (result.code === 201) {
+                history.push('/home');
+                notifySuccess('Đã đặt hẹn');
+            } else {
+                notifyError(result.message);
+            }
         }
     };
 
@@ -219,6 +221,7 @@ export const BookingForm = (props: {
                 handleChange={handleChange}
                 objKey="notify"
             />
+            <p className="text-danger">{errors?.customerTime?.message}</p>
             <div className="form-check mt-2">
                 <input
                     className="form-check-input"

@@ -65,6 +65,14 @@ const serviceSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    usage: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

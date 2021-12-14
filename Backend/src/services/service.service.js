@@ -24,9 +24,16 @@ const getAllServices = async (businessId) => {
 const updateService = async (serviceBody) => {
   const service = await getServiceById(serviceBody.serviceId);
   if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
-  if (await Service.nameExists(serviceBody.name, serviceBody.serviceId))
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
+  //   if (await Service.nameExists(serviceBody.name, serviceBody.serviceId))
+  //     throw new ApiError(httpStatus.BAD_REQUEST, 'Name already exists');
   Object.assign(service, serviceBody);
+  await service.save();
+};
+
+const updateServiceUsage = async (serviceId) => {
+  const service = await getServiceById(serviceId);
+  if (!service) throw new ApiError(httpStatus.NOT_FOUND, "Service doesn't exists");
+  Object.assign(service, { usage: service.usage + 1 });
   await service.save();
 };
 
@@ -60,4 +67,5 @@ module.exports = {
   queryServices,
   getAllServices,
   updateServiceActivation,
+  updateServiceUsage,
 };

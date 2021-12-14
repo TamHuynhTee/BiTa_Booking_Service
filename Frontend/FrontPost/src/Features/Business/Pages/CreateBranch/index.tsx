@@ -1,13 +1,29 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ButtonSpinner } from '../../../../Components';
+import { Controller, useForm } from 'react-hook-form';
+import { ButtonSpinner, CustomSelect } from '../../../../Components';
 import { CreateBranchSchema } from '../../../../validations/branch';
-import { createBranchApi } from '../../Apis/business.api';
+import {
+    createBranchApi,
+    getVietNamDistrictsApi,
+    getVietNamProvincesApi,
+    getVietNamWardApi,
+} from '../../Apis/business.api';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
+import Select from 'react-select';
+import {
+    getVietNamDistrictsAsync,
+    getVietNamProvincesAsync,
+    getVietNamWardAsync,
+} from '../../slice/thunk';
+import {
+    selectDistricts,
+    selectProvinces,
+    selectWards,
+} from '../../slice/selector';
 
 export const CreateBranch = (props: { business?: string }) => {
     const history = useHistory();
@@ -16,8 +32,24 @@ export const CreateBranch = (props: { business?: string }) => {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors, isSubmitting },
-    } = useForm({ resolver: yupResolver(CreateBranchSchema) });
+    } = useForm({
+        resolver: yupResolver(CreateBranchSchema),
+    });
+
+    React.useEffect(() => {
+        dispatch(getVietNamProvincesAsync());
+        return () => {
+            districts;
+            provinces;
+            wards;
+        };
+    }, []);
+
+    const provinces = useSelector(selectProvinces);
+    const districts = useSelector(selectDistricts);
+    const wards = useSelector(selectWards);
 
     const onSubmit = (data: any, e: any) => {
         try {
@@ -84,26 +116,68 @@ export const CreateBranch = (props: { business?: string }) => {
                     </div>
                     <div className="mb-3">
                         <div className="input-group">
-                            <span className="input-group-text">Phường, xã</span>
-                            <input
-                                type="text"
-                                {...register('ward')}
-                                className="form-control"
-                                placeholder="VD: phường Linh Chiểu"
+                            <span className="input-group-text">
+                                Tỉnh, thành phố
+                            </span>
+                            <Controller
+                                control={control}
+                                name="province"
+                                render={({
+                                    field: { onChange, value, name },
+                                }) => (
+                                    <Select
+                                        name={name}
+                                        className="form-control"
+                                        options={provinces}
+                                        value={provinces?.find(
+                                            (c) => c.value === value
+                                        )}
+                                        onChange={(val) => {
+                                            onChange(val.label);
+                                            dispatch(
+                                                getVietNamDistrictsAsync({
+                                                    provinceId: val.value,
+                                                })
+                                            );
+                                        }}
+                                        placeholder="Chọn tỉnh thành"
+                                    />
+                                )}
                             />
                         </div>
-                        <p className="text-danger">{errors.ward?.message}</p>
+                        <p className="text-danger">
+                            {errors.province?.message}
+                        </p>
                     </div>
                     <div className="mb-3">
                         <div className="input-group">
                             <span className="input-group-text">
                                 Quận, huyện
                             </span>
-                            <input
-                                type="text"
-                                {...register('district')}
-                                className="form-control"
-                                placeholder="VD: thành phố Thủ Đức"
+                            <Controller
+                                control={control}
+                                name="district"
+                                render={({
+                                    field: { onChange, value, name },
+                                }) => (
+                                    <Select
+                                        name={name}
+                                        className="form-control"
+                                        options={districts}
+                                        value={districts?.find(
+                                            (c) => c.value === value
+                                        )}
+                                        onChange={(val) => {
+                                            onChange(val.label);
+                                            dispatch(
+                                                getVietNamWardAsync({
+                                                    districtId: val.value,
+                                                })
+                                            );
+                                        }}
+                                        placeholder="Chọn quận huyện"
+                                    />
+                                )}
                             />
                         </div>
                         <p className="text-danger">
@@ -112,19 +186,27 @@ export const CreateBranch = (props: { business?: string }) => {
                     </div>
                     <div className="mb-3">
                         <div className="input-group">
-                            <span className="input-group-text">
-                                Tỉnh, thành phố
-                            </span>
-                            <input
-                                type="text"
-                                {...register('province')}
-                                className="form-control"
-                                placeholder="VD: thành phố Hồ Chí Minh"
+                            <span className="input-group-text">Phường, xã</span>
+                            <Controller
+                                control={control}
+                                name="ward"
+                                render={({
+                                    field: { onChange, value, name },
+                                }) => (
+                                    <Select
+                                        name={name}
+                                        className="form-control"
+                                        options={wards}
+                                        value={wards?.find(
+                                            (c) => c.value === value
+                                        )}
+                                        onChange={(val) => onChange(val.label)}
+                                        placeholder="Chọn phường xã"
+                                    />
+                                )}
                             />
                         </div>
-                        <p className="text-danger">
-                            {errors.province?.message}
-                        </p>
+                        <p className="text-danger">{errors.ward?.message}</p>
                     </div>
                 </div>
                 <div className="form-check mb-3">
