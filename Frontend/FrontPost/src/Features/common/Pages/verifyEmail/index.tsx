@@ -19,7 +19,7 @@ export const VerifyEmail = () => {
             loading;
         };
     }, []);
-    console.log(result);
+
     return (
         <div className="container d-flex flex-column align-items-center">
             {loading ? (

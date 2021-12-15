@@ -1,9 +1,9 @@
 import React from 'react';
 
 export const Pagination = (props: {
-    totalPages?: number;
+    totalPages?: number | 0;
     query?: any;
-    page?: number;
+    page?: number | 1;
 }) => {
     const { totalPages, query, page } = props;
     const [pagination, setPagination] = React.useState(page);

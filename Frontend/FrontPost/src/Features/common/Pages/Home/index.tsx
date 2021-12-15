@@ -11,17 +11,22 @@ import schedule from '../../../../images/online-schedule.svg';
 import plan from '../../../../images/plan.svg';
 import simple from '../../../../images/simple.svg';
 import wallet from '../../../../images/wallet.svg';
-import { selectServices } from '../../../Business/slice/selector';
+import {
+    selectServices,
+    selectLoading,
+} from '../../../Business/slice/selector';
 import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { BusinessCardHome, ServiceCardHome } from '../../Components';
 import { selectQueryBusiness } from '../../slice/selector';
 import { queryBusinessAsync } from '../../slice/thunk';
+import { LoadingComponent } from '../../../../Components';
 import './style.scss';
 
 export const HomePage = () => {
     const dispatch = useDispatch();
     const services = useSelector(selectServices);
     const businesses = useSelector(selectQueryBusiness);
+    const loading = useSelector(selectLoading);
     React.useEffect(() => {
         dispatch(queryServiceAsync({ limit: 4, isActive: true }));
         dispatch(queryBusinessAsync({ limit: 4, isActive: true }));
@@ -119,11 +124,15 @@ export const HomePage = () => {
                 </div>
                 <hr />
                 <div className="row">
-                    {businesses?.results?.map((e: any, i: number) => (
-                        <div className="col-lg-3" key={i}>
-                            <BusinessCardHome data={e} />
-                        </div>
-                    ))}
+                    {loading === 'idle' ? (
+                        businesses?.results?.map((e: any, i: number) => (
+                            <div className="col-lg-3" key={i}>
+                                <BusinessCardHome data={e} />
+                            </div>
+                        ))
+                    ) : (
+                        <LoadingComponent />
+                    )}
                 </div>
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">
@@ -131,11 +140,15 @@ export const HomePage = () => {
                 </div>
                 <hr />
                 <div className="row">
-                    {services?.results?.map((e: any, i: number) => (
-                        <div className="col-lg-3" key={i}>
-                            <ServiceCardHome data={e} />
-                        </div>
-                    ))}
+                    {loading === 'idle' ? (
+                        services?.results?.map((e: any, i: number) => (
+                            <div className="col-lg-3" key={i}>
+                                <ServiceCardHome data={e} />
+                            </div>
+                        ))
+                    ) : (
+                        <LoadingComponent />
+                    )}
                 </div>
                 <SectionTitle title="Đánh giá từ khách hàng" />
                 <ReviewHome

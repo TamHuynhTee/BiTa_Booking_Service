@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Rating } from 'react-simple-star-rating';
 import { selectCategories } from '../../../../App/category/slice/selector';
 import { getAllCategoriesAsync } from '../../../../App/category/slice/thunk';
 import {
@@ -72,6 +73,11 @@ export const ServiceList = () => {
         else setQuery({ ...query, minPrice: value });
     };
 
+    const handleChangeRating = (rate: number) => {
+        dispatch(queryServiceAsync({ ...query, rating: rate }));
+        setQuery({ ...query, rating: rate });
+    };
+
     const handleChangePage = (page: number) => {
         dispatch(queryServiceAsync({ ...query, page: page }));
     };
@@ -90,6 +96,7 @@ export const ServiceList = () => {
                             changeSearch={handleChangeSearch}
                             changeMaxPrice={handleChangeMaxPrice}
                             changeMinPrice={handleChangeMinPrice}
+                            changeRating={handleChangeRating}
                             query={query}
                         />
                     </div>
@@ -142,6 +149,7 @@ const ServiceSideBar = (props: {
     changeCategory?: any;
     changeMinPrice?: any;
     changeMaxPrice?: any;
+    changeRating?: any;
     query?: any;
 }) => {
     const {
@@ -151,8 +159,10 @@ const ServiceSideBar = (props: {
         changeCategory,
         changeMinPrice,
         changeMaxPrice,
+        changeRating,
         query,
     } = props;
+    const [rate, setRate] = React.useState(0);
 
     return (
         <>
@@ -199,6 +209,17 @@ const ServiceSideBar = (props: {
                         onChange={changeMaxPrice}
                     />
                 </div>
+            </div>
+            <h5 className="fw-bold mt-3">Đánh giá</h5>
+            <div className="my-2">
+                <Rating
+                    ratingValue={rate}
+                    onClick={(rate: number) => {
+                        setRate(rate);
+                        changeRating(rate / 20);
+                    }}
+                />{' '}
+                {`${rate / 20}/5`}
             </div>
             <h5 className="fw-bold mt-3">Loại dịch vụ</h5>
             <ul>

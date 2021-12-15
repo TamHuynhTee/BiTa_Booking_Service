@@ -5,7 +5,7 @@ const customerReview = {
   body: Joi.object().keys({
     reviewId: Joi.string().required().custom(objectId),
     rating: Joi.number().allow(null),
-    comment: Joi.string().allow(null),
+    comment: Joi.string().allow(null, ''),
     review: Joi.boolean(),
   }),
 };

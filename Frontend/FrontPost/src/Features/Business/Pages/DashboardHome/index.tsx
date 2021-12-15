@@ -41,9 +41,22 @@ export const DashboardHome = (props: { business?: any }) => {
         dispatch(queryAppointmentAsync({ ...query, page: page }));
     };
 
+    const handleRefresh = () => {
+        dispatch(queryAppointmentAsync(query));
+    };
+
     return (
         <div className="container">
-            <h5 className="fw-bold">Cuộc hẹn mới</h5>
+            <div className="d-flex justify-content-between">
+                <h5 className="fw-bold">Cuộc hẹn mới</h5>
+                <button className="btn btn-primary">
+                    <i
+                        className="bi bi-arrow-repeat"
+                        onClick={handleRefresh}
+                    ></i>{' '}
+                    Làm mới
+                </button>
+            </div>
             <hr />
             <div className="mb-3">
                 {loading === 'idle' ? (

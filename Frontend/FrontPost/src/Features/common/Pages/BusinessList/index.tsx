@@ -120,7 +120,7 @@ const BusinessSideBar = (props: {
             <div className="row mb-3">
                 <SearchBar
                     className="col"
-                    placeholder="Tìm kiếm tên nhà cung cấp"
+                    placeholder="Tìm kiếm nhà cung cấp"
                     submit={changeSearch}
                     formSubmit={(e: any) => e.preventDefault()}
                 />

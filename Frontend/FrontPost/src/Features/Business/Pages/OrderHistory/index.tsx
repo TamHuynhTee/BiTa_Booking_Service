@@ -55,7 +55,6 @@ export const OrderHistory = () => {
 
     const handleChangeDate = (e: any, type?: 'start' | 'end') => {
         const date = dayjs(e.target.value).utc().toDate();
-        // console.log(date);
         if (type === 'start') {
             setQuery({ ...query, startTime: date });
             dispatch(queryAppointmentAsync({ ...query, startTime: date }));

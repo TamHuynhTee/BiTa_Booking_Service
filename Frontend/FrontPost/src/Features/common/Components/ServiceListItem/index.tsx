@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rating } from 'react-simple-star-rating';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -31,6 +32,7 @@ export const ServiceListItem = (props: {
                 <h5 className=" fw-bold text-truncate card-title">
                     {data?.name}
                 </h5>
+                <Rating ratingValue={data?.rating * 20} readonly />
                 <ul className="list-group list-group-flush">
                     {withBusiness && (
                         <li className="list-group-item text-truncate">
@@ -46,6 +48,9 @@ export const ServiceListItem = (props: {
                     <li className="list-group-item">
                         Thời lượng: {data?.duration?.quantity}{' '}
                         {durationFormatter(data?.duration?.unit)}
+                    </li>
+                    <li className="list-group-item">
+                        Đã đặt: {data?.usage ? data?.usage : 0}
                     </li>
                     <li className="list-group-item">
                         <Link to={`/service/${data?.id}`}>Chi tiết{' >>'}</Link>

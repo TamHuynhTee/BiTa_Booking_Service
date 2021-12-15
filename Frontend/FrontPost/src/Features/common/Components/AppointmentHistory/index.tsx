@@ -122,21 +122,27 @@ export const AppointmentHistory = () => {
                         <>
                             <div className="row g-2">
                                 {appointments?.totalResults ? (
-                                    appointments.results?.map(
-                                        (e: any, i: number) => (
-                                            <div className="col-sm-3" key={i}>
-                                                <AppointmentCard
-                                                    data={e}
-                                                    query={query}
-                                                />
-                                            </div>
-                                        )
-                                    )
+                                    <>
+                                        {appointments.results?.map(
+                                            (e: any, i: number) => (
+                                                <div
+                                                    className="col-sm-3"
+                                                    key={i}
+                                                >
+                                                    <AppointmentCard
+                                                        data={e}
+                                                        query={query}
+                                                    />
+                                                </div>
+                                            )
+                                        )}
+                                        <hr />
+                                    </>
                                 ) : (
                                     <NoDataView />
                                 )}
                             </div>
-                            <hr />
+
                             <div className="my-3 d-flex justify-content-between align-items-center">
                                 <Pagination
                                     totalPages={appointments?.totalPages}

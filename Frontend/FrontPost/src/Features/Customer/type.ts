@@ -4,6 +4,8 @@ export interface CustomerStateTypes {
     queryAppointments?: IQueryResult;
     appointment?: any;
     branchesForSelect?: any;
+    newReviews?: number;
+    queryReviews?: IQueryResult;
     status?: string;
 }
 
@@ -36,6 +38,13 @@ export interface IQueryAppointment extends IQueryApi {
     branch?: string;
 }
 
+export interface IQueryReview extends IQueryApi {
+    appointment?: string;
+    customer?: string;
+    service?: string;
+    state?: 'Pending' | 'Reviewed';
+}
+
 export interface ICancelAppointmentApi {
     appointmentId?: string;
 }
@@ -45,4 +54,11 @@ export interface IUpdateAppointmentCustomerApi {
 }
 export interface IGetAppointmentByIdApi {
     appointmentId?: string;
+}
+
+export interface ICustomerReviewApi {
+    reviewId?: string;
+    rating?: number;
+    comment?: string;
+    review?: boolean;
 }

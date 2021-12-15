@@ -77,6 +77,7 @@ const queryServices = {
     isActive: Joi.boolean(),
     minPrice: Joi.number().allow(null),
     maxPrice: Joi.number().allow(null),
+    rating: Joi.number().allow(null),
     business: Joi.string().optional().custom(objectId),
     category: Joi.string().optional().custom(objectId),
     sortBy: Joi.string(),

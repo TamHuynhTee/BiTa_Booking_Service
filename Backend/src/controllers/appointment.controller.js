@@ -87,6 +87,7 @@ const doneAppointment = catchAsync(async (req, res) => {
     service: appointment.service,
     appointment: appointment._id,
     customer: appointment.customer,
+    reviewedAt: moment().utc().add(7, 'hours').toDate(),
   });
   sendSuccess(res, appointment, httpStatus.OK, 'Đã hoàn tất cuộc hẹn');
 });

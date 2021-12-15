@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
+const mongoose = require('mongoose');
 const { Review } = require('../models');
 
 const createReview = async (reviewBody) => {
@@ -31,13 +32,17 @@ const getServiceSumRating = async (serviceId) => {
       },
     },
     {
-      $group: { rating: { $sum: '$rating' } },
+      $group: { _id: null, rating: { $sum: '$rating' } },
     },
   ]);
 };
 
 const countServiceReview = async (serviceId) => {
   return Review.countDocuments({ service: mongoose.Types.ObjectId(serviceId) });
+};
+
+const countCustomerNewReview = async (customerId) => {
+  return Review.countDocuments({ customer: mongoose.Types.ObjectId(customerId), state: 'Pending' });
 };
 
 const queryReviews = async (filter, options) => {
@@ -53,4 +58,5 @@ module.exports = {
   queryReviews,
   getServiceSumRating,
   countServiceReview,
+  countCustomerNewReview,
 };

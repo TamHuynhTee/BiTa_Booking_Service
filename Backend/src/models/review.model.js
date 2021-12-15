@@ -43,5 +43,21 @@ const reviewSchema = mongoose.Schema(
 reviewSchema.plugin(toJSON);
 reviewSchema.plugin(paginate);
 
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'service',
+    select: 'name business -category',
+  });
+  this.populate({
+    path: 'customer',
+    select: 'avatar username',
+  });
+  this.populate({
+    path: 'appointment',
+    select: 'customerName customerPhoneNumber price startTime endTime -business -service -branch',
+  });
+  next();
+});
+
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
