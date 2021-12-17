@@ -28,7 +28,13 @@ export const HomePage = () => {
     const businesses = useSelector(selectQueryBusiness);
     const loading = useSelector(selectLoading);
     React.useEffect(() => {
-        dispatch(queryServiceAsync({ limit: 4, isActive: true }));
+        dispatch(
+            queryServiceAsync({
+                limit: 4,
+                isActive: true,
+                sortBy: 'usage:desc',
+            })
+        );
         dispatch(queryBusinessAsync({ limit: 4, isActive: true }));
     }, []);
 

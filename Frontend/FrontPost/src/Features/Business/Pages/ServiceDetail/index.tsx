@@ -3,7 +3,7 @@ import React from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { selectCategories } from '../../../../App/category/slice/selector';
@@ -30,19 +30,20 @@ import {
     updateServiceActivationApi,
     updateServiceApi,
 } from '../../Apis/business.api';
-interface Props {}
+import { Rating } from 'react-simple-star-rating';
 
 const getNumber = (money: any) => {
-    return typeof money === 'string' ? ~~money.replaceAll('.', '') : money;
+    return typeof money === 'string' ? ~~money.replaceAll(',', '') : money;
 };
 
-export const ServiceDetail = (props: Props) => {
+export const ServiceDetail = () => {
     const { id } = useParams<any>();
     const dispatch = useDispatch();
     const history = useHistory();
     const service = useSelector(selectServiceDetail);
     const categories = useSelector(selectCategories);
     const avatarInput = React.useRef<any>(null);
+    const { url } = useRouteMatch();
     const {
         register,
         handleSubmit,
@@ -237,6 +238,13 @@ export const ServiceDetail = (props: Props) => {
                     >
                         Đổi ảnh
                     </button>
+                    <h5 className="fw-bold mt-3">Đánh giá trung bình</h5>
+                    <Rating ratingValue={service?.rating * 20} readonly />
+                    <span>{service?.rating}/5</span>
+                    <br />
+                    <Link to={`${url}/review`}>
+                        Xem đánh giá của khách hàng
+                    </Link>
                 </div>
                 <div className="col-lg-8">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -274,7 +282,8 @@ export const ServiceDetail = (props: Props) => {
                             </label>
                             <CurrencyInput
                                 id="price"
-                                groupSeparator="."
+                                groupSeparator=","
+                                decimalSeparator="."
                                 {...register('price')}
                                 allowNegativeValue={false}
                                 className="form-control"
@@ -294,7 +303,8 @@ export const ServiceDetail = (props: Props) => {
                             </label>
                             <CurrencyInput
                                 id="depositPrice"
-                                groupSeparator="."
+                                groupSeparator=","
+                                decimalSeparator="."
                                 {...register('depositPrice')}
                                 allowNegativeValue={false}
                                 className="form-control"
@@ -326,7 +336,8 @@ export const ServiceDetail = (props: Props) => {
                         <div className="input-group mb-3">
                             <CurrencyInput
                                 id="quantity"
-                                groupSeparator="."
+                                groupSeparator=","
+                                decimalSeparator="."
                                 {...register('quantity')}
                                 allowNegativeValue={false}
                                 className="form-control"

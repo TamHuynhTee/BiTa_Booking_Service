@@ -5,17 +5,23 @@ import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { getDetailService } from '../../slice';
 import { durationFormatter } from '../../../../utils/durationFormatter';
+import { Rating } from 'react-simple-star-rating';
 
-interface Props {
-    data?: any;
-}
-
-export const ServiceCard = (props: Props) => {
+export const ServiceCard = (props: { data?: any }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const { data } = props;
-    const { price, name, image, description, hasDeposit, depositPrice, id } =
-        data;
+    const {
+        price,
+        name,
+        image,
+        description,
+        hasDeposit,
+        depositPrice,
+        id,
+        rating,
+        usage,
+    } = data;
     const { quantity, unit } = data?.duration;
 
     const handleToDetail = (e: any) => {
@@ -45,6 +51,15 @@ export const ServiceCard = (props: Props) => {
                         <p className="card-text">
                             <i className="bi bi-cash"></i>{' '}
                             {`Phí dịch vụ: ${moneyFormatter(price)}`}
+                        </p>
+                        <p className="card-text">
+                            <i className="bi bi-chat-left-quote"></i>{' '}
+                            {`Đánh giá trung bình: `}
+                            <Rating ratingValue={rating * 20} readonly />
+                        </p>
+                        <p className="card-text">
+                            <i className="bi bi-pause-circle"></i>{' '}
+                            {`Đã sử dụng: ${usage || 0}`}
                         </p>
                         {hasDeposit && (
                             <p className="card-text">

@@ -97,9 +97,10 @@ export const AppointmentHistory = () => {
     const handleChangeState = (e: any) => {
         const value = e.target.value;
         if (!value) {
-            delete query.payment;
+            delete query.state;
             dispatch(queryAppointmentAsync(query));
             setQuery(query);
+            console.log(query);
         } else {
             dispatch(queryAppointmentAsync({ ...query, state: value }));
             setQuery({ ...query, state: value });

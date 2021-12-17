@@ -19,15 +19,15 @@ const startOfDay = dayjs().startOf('day').toDate();
 export const DashboardHome = (props: { business?: any }) => {
     const dispatch = useDispatch();
     const { business } = props;
-    const [query, setQuery] = React.useState<IQueryAppointment>({
+    const query: IQueryAppointment = {
         business: business,
         state: 'Pending',
         startTime: startOfDay,
-    });
+    };
     const loading = useSelector(selectCustomerLoading);
     const appointments = useSelector(selectQueryAppointments);
     const revenue = useSelector(selectBusinessRevenue);
-    React.useEffect(() => {
+    const fetchData = () => {
         dispatch(queryAppointmentAsync(query));
         dispatch(
             getBusinessRevenueAsync({
@@ -35,6 +35,9 @@ export const DashboardHome = (props: { business?: any }) => {
                 year: dayjs().year(),
             })
         );
+    };
+    React.useEffect(() => {
+        fetchData();
     }, []);
 
     const handleChangePage = (page: number) => {
@@ -42,19 +45,15 @@ export const DashboardHome = (props: { business?: any }) => {
     };
 
     const handleRefresh = () => {
-        dispatch(queryAppointmentAsync(query));
+        fetchData();
     };
 
     return (
         <div className="container">
             <div className="d-flex justify-content-between">
                 <h5 className="fw-bold">Cuộc hẹn mới</h5>
-                <button className="btn btn-primary">
-                    <i
-                        className="bi bi-arrow-repeat"
-                        onClick={handleRefresh}
-                    ></i>{' '}
-                    Làm mới
+                <button className="btn btn-primary" onClick={handleRefresh}>
+                    <i className="bi bi-arrow-repeat"></i> Làm mới
                 </button>
             </div>
             <hr />

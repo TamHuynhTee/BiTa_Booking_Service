@@ -20,7 +20,7 @@ export const PaymentSuccess = (props: Props) => {
             <h1 className="fw-bold fs-2 mb-3" style={{ color: 'green' }}>
                 Đã thanh toán thành công
             </h1>
-            <button className="btn btn-light mb-3" onClick={handleHome}>
+            <button className="btn mb-3" onClick={handleHome}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100"

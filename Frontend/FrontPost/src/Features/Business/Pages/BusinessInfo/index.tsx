@@ -1,23 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateBusinessApi } from '../../../../App/auth/apis/auth.api';
 import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
-import {
-    ButtonSpinner,
-    ColorLabel,
-    CustomInput,
-    CustomSelect,
-} from '../../../../Components';
+import { ButtonSpinner, ColorLabel, CustomInput } from '../../../../Components';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
 import { BusinessInfoSchema } from '../../../../validations/auth';
-import { selectBusinessBranches } from '../../slice/selector';
-import { getAllBranchAsync } from '../../slice/thunk';
 
 export const BusinessInfo = (props: { info?: any }) => {
     const { info } = props;
-    console.log(info);
     const dispatch = useDispatch();
     const {
         register,

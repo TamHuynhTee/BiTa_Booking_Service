@@ -69,7 +69,10 @@ export const Header = () => {
                                         fontSize: '1.25rem',
                                     }}
                                 >
-                                    <button className="position-relative">
+                                    <button
+                                        className="position-relative"
+                                        style={{ background: 'inherit' }}
+                                    >
                                         <img
                                             src={
                                                 user?.user?.avatar || tempAvatar

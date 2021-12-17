@@ -11,4 +11,5 @@ export * from './BusinessInfo';
 export * from './CustomerDetail';
 export * from './CustomerList';
 export * from './Statistics';
+export * from './ServiceReview';
 export * from './OrderHistory';

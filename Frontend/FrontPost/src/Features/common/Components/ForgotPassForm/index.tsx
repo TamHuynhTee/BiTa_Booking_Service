@@ -4,9 +4,7 @@ import { useForm } from 'react-hook-form';
 import { forgotPasswordApi } from '../../../../App/auth/apis/auth.api';
 import { ForgotPassSchema } from '../../../../validations/auth';
 
-interface Props {}
-
-export const ForgotPassForm = (props: Props) => {
+export const ForgotPassForm = () => {
     const [state, setState] = React.useState(0);
     const {
         register,
@@ -14,6 +12,10 @@ export const ForgotPassForm = (props: Props) => {
         formState: { errors, isSubmitting },
         reset,
     } = useForm({ resolver: yupResolver(ForgotPassSchema) });
+
+    React.useEffect(() => {
+        return () => setState(0);
+    });
 
     const onSubmit = (data: any, e: any) => {
         try {
@@ -23,6 +25,7 @@ export const ForgotPassForm = (props: Props) => {
                     const result = await forgotPasswordApi(data);
                     if (result.code === 200) {
                         setState(1);
+                        reset();
                     } else {
                         setState(2);
                     }

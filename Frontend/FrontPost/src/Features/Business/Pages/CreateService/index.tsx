@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import Select from 'react-select';
 import { selectCategories } from '../../../../App/category/slice/selector';
 import { getAllCategoriesAsync } from '../../../../App/category/slice/thunk';
-import { CustomSelect } from '../../../../Components';
+import { CustomSelect, RequiredSign } from '../../../../Components';
 import { ButtonSpinner } from '../../../../Components/ButtonSpinner';
 import { weekDays } from '../../../../static/Weekdays';
 import { notifyError, notifySuccess } from '../../../../utils/notify';
@@ -118,9 +118,9 @@ export const CreateService = (props: { business?: string }) => {
     const onSubmit = (data: any, e: any) => {
         try {
             e.preventDefault();
-            data.price = ~~data.price.replaceAll('.', '');
-            data.depositPrice = ~~data.depositPrice.replaceAll('.', '');
-            data.quantity = ~~data.quantity.replaceAll('.', '');
+            data.price = ~~data.price.replaceAll(',', '');
+            data.depositPrice = ~~data.depositPrice.replaceAll(',', '');
+            data.quantity = ~~data.quantity.replaceAll(',', '');
             if (data.price <= data.depositPrice) {
                 notifyError('Phí cọc phải bé hơn phí dịch vụ');
                 return;
@@ -158,7 +158,7 @@ export const CreateService = (props: { business?: string }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">
-                        Tên dịch vụ *
+                        Tên dịch vụ <RequiredSign />
                     </label>
                     <input
                         type="text"
@@ -172,7 +172,7 @@ export const CreateService = (props: { business?: string }) => {
 
                 <div className="mb-3">
                     <label htmlFor="category" className="form-label">
-                        Loại dịch vụ *
+                        Loại dịch vụ <RequiredSign />
                     </label>
                     <CustomSelect
                         options={categories}
@@ -185,11 +185,12 @@ export const CreateService = (props: { business?: string }) => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="price" className="form-label">
-                        Phí dịch vụ (VND)
+                        Phí dịch vụ (VND) <RequiredSign />
                     </label>
                     <CurrencyInput
                         id="price"
-                        groupSeparator="."
+                        groupSeparator=","
+                        decimalSeparator="."
                         {...register('price')}
                         allowNegativeValue={false}
                         className="form-control"
@@ -209,7 +210,8 @@ export const CreateService = (props: { business?: string }) => {
                         </label>
                         <CurrencyInput
                             id="depositPrice"
-                            groupSeparator="."
+                            groupSeparator=","
+                            decimalSeparator="."
                             {...register('depositPrice')}
                             allowNegativeValue={false}
                             className="form-control"
@@ -236,12 +238,13 @@ export const CreateService = (props: { business?: string }) => {
                     <p className="text-danger">{errors.description?.message}</p>
                 </div>
                 <label htmlFor="quantity" className="form-label">
-                    Thời gian sử dụng dịch vụ
+                    Thời gian sử dụng dịch vụ <RequiredSign />
                 </label>
                 <div className="input-group mb-3">
                     <CurrencyInput
                         id="quantity"
-                        groupSeparator="."
+                        groupSeparator=","
+                        decimalSeparator="."
                         {...register('quantity')}
                         allowNegativeValue={false}
                         className="form-control"
@@ -253,11 +256,12 @@ export const CreateService = (props: { business?: string }) => {
                         {renderOptions(DURATION_UNIT)}
                     </select>
                 </div>
+                <p className="text-danger">{errors.quantity?.message}</p>
                 <label
                     className="form-label fw-bold"
                     style={{ color: 'royalblue' }}
                 >
-                    Lịch phục vụ
+                    Lịch phục vụ <RequiredSign />
                 </label>
                 <div className="mb-3">{schedule}</div>
                 <label
@@ -270,7 +274,6 @@ export const CreateService = (props: { business?: string }) => {
                     <input
                         type="file"
                         accept=".jpg, .jpeg, .png"
-                        id="businessCertificate"
                         className="form-control"
                         onChange={onFileChange}
                     />
