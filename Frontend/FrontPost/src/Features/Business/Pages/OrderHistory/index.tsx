@@ -8,8 +8,8 @@ import {
 } from '../../../../utils/selectOptions';
 import { thisDay } from '../../../../utils/thisDay';
 import { IQueryAppointment } from '../../../Customer/type';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { queryAppointmentAsync } from '../../../Customer/slice/thunk';
 import {
     selectCustomerLoading,
@@ -38,8 +38,8 @@ export const OrderHistory = () => {
     const user = useSelector(selectUser);
     const [query, setQuery] = React.useState<IQueryAppointment>({
         business: user?.business?.id,
-        startTime: startOfDay,
-        endTime: endOfDay,
+        // startTime: startOfDay,
+        // endTime: endOfDay,
         limit: 12,
         filter: APPOINTMENT_FILTER[0].value,
     });
@@ -55,7 +55,6 @@ export const OrderHistory = () => {
 
     const handleChangeDate = (e: any, type?: 'start' | 'end') => {
         const date = dayjs(e.target.value).utc().toDate();
-        // console.log(date);
         if (type === 'start') {
             setQuery({ ...query, startTime: date });
             dispatch(queryAppointmentAsync({ ...query, startTime: date }));

@@ -7,6 +7,9 @@ import {
     getBusinessRevenueAsync,
     getBusinessStatsAsync,
     getServiceByIdAsync,
+    getVietNamDistrictsAsync,
+    getVietNamProvincesAsync,
+    getVietNamWardAsync,
     queryBranchAsync,
     queryServiceAsync,
 } from './thunk';
@@ -19,6 +22,9 @@ const initialState: Partial<BusinessStateTypes> = {
     businessBranchDetail: null,
     stats: undefined,
     revenue: null,
+    provinces: [],
+    districts: [],
+    wards: [],
     status: 'idle',
 };
 
@@ -145,6 +151,55 @@ export const businessSlice = createSlice({
             state.revenue = action.payload;
         },
         [getBusinessRevenueAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        // Vietnam address
+        [getVietNamProvincesAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getVietNamProvincesAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            const data = action.payload.map((e: any) => {
+                return { value: e.province_id, label: e.province_name };
+            });
+            state.provinces = data;
+        },
+        [getVietNamProvincesAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        [getVietNamDistrictsAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getVietNamDistrictsAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            const data = action.payload.map((e: any) => {
+                return { value: e.district_id, label: e.district_name };
+            });
+            state.districts = data;
+        },
+        [getVietNamDistrictsAsync.rejected.toString()]: (state, action) => {
+            state.status = 'idle';
+        },
+        [getVietNamWardAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [getVietNamWardAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            const data = action.payload.map((e: any) => {
+                return { value: e.ward_id, label: e.ward_name };
+            });
+            state.wards = data;
+        },
+        [getVietNamWardAsync.rejected.toString()]: (state, action) => {
             state.status = 'idle';
         },
     },

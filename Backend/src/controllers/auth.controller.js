@@ -45,7 +45,7 @@ const sendVerificationEmail = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-  await authService.verifyEmail(req.body.token);
+  await authService.verifyEmail(req.query.token);
   sendSuccess(res, {}, httpStatus.OK, 'Email confirmed');
 });
 

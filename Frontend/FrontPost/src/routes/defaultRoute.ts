@@ -16,5 +16,5 @@ export const defaultRoute = {
     AppointmentHistory: '/appointment-history',
     PaymentSuccessfully: '/payment-success',
     PaymentFailed: '/payment-denied',
-    TestPrivate: '/test',
+    Review: '/reviews',
 };

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Repository from '../../../Apis/repositoryApi';
 import { ReturnListResponse, ReturnResponse } from '../../../Apis/response';
 import { IQueryServiceApi } from '../../common/type';
@@ -75,6 +76,31 @@ export const updateBranchActivationApi = async (payload: {
     branchId?: string;
 }): Promise<ReturnResponse<any>> => {
     return await Repository(routeBusiness['updateBranchActivation'], payload);
+};
+// Branch get Vietnam address Api
+export const getVietNamProvincesApi = async (): Promise<
+    ReturnResponse<any>
+> => {
+    return (await axios.get('https://vapi.vnappmob.com/api/province')).data
+        .results;
+};
+export const getVietNamDistrictsApi = async (payload: {
+    provinceId: string;
+}): Promise<ReturnResponse<any>> => {
+    return (
+        await axios.get(
+            `https://vapi.vnappmob.com/api/province/district/${payload.provinceId}`
+        )
+    ).data.results;
+};
+export const getVietNamWardApi = async (payload: {
+    districtId: string;
+}): Promise<ReturnResponse<any>> => {
+    return (
+        await axios.get(
+            `https://vapi.vnappmob.com/api/province/ward/${payload.districtId}`
+        )
+    ).data.results;
 };
 
 // Business

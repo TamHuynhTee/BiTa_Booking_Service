@@ -11,8 +11,8 @@ import {
     APPOINTMENT_STATE_FILTER,
 } from '../../../../utils/selectOptions';
 import { thisDay } from '../../../../utils/thisDay';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { selectUser } from '../../../../App/auth/slice/selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { IQueryAppointment } from '../../../Customer/type';
@@ -97,9 +97,10 @@ export const AppointmentHistory = () => {
     const handleChangeState = (e: any) => {
         const value = e.target.value;
         if (!value) {
-            delete query.payment;
+            delete query.state;
             dispatch(queryAppointmentAsync(query));
             setQuery(query);
+            console.log(query);
         } else {
             dispatch(queryAppointmentAsync({ ...query, state: value }));
             setQuery({ ...query, state: value });
@@ -122,21 +123,27 @@ export const AppointmentHistory = () => {
                         <>
                             <div className="row g-2">
                                 {appointments?.totalResults ? (
-                                    appointments.results?.map(
-                                        (e: any, i: number) => (
-                                            <div className="col-sm-3" key={i}>
-                                                <AppointmentCard
-                                                    data={e}
-                                                    query={query}
-                                                />
-                                            </div>
-                                        )
-                                    )
+                                    <>
+                                        {appointments.results?.map(
+                                            (e: any, i: number) => (
+                                                <div
+                                                    className="col-sm-3"
+                                                    key={i}
+                                                >
+                                                    <AppointmentCard
+                                                        data={e}
+                                                        query={query}
+                                                    />
+                                                </div>
+                                            )
+                                        )}
+                                        <hr />
+                                    </>
                                 ) : (
                                     <NoDataView />
                                 )}
                             </div>
-                            <hr />
+
                             <div className="my-3 d-flex justify-content-between align-items-center">
                                 <Pagination
                                     totalPages={appointments?.totalPages}

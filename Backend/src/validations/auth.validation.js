@@ -73,7 +73,7 @@ const changePassword = {
 };
 
 const verifyEmail = {
-  body: Joi.object().keys({
+  query: Joi.object().keys({
     token: Joi.string().required(),
   }),
 };

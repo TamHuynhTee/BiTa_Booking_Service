@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Rating } from 'react-simple-star-rating';
 import { selectCategories } from '../../../../App/category/slice/selector';
 import { getAllCategoriesAsync } from '../../../../App/category/slice/thunk';
 import {
@@ -19,22 +20,21 @@ import { queryServiceAsync } from '../../../Business/slice/thunk';
 import { ServiceListItem } from '../../Components';
 import { IQueryServiceApi } from '../../type';
 
-interface Props {}
+const limit = 12;
 
-export const ServiceList = (props: Props) => {
+export const ServiceList = () => {
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const servicesResult = useSelector(selectServices);
     const loading = useSelector(selectLoading);
-    React.useEffect(() => {
-        dispatch(getAllCategoriesAsync());
-        dispatch(queryServiceAsync({ isActive: true }));
-    }, []);
-
     const [query, setQuery] = React.useState<IQueryServiceApi>({
         isActive: true,
-        limit: 12,
+        limit: limit,
     });
+    React.useEffect(() => {
+        dispatch(getAllCategoriesAsync());
+        dispatch(queryServiceAsync(query));
+    }, []);
 
     const handleSubmitSearch = () => {
         dispatch(queryServiceAsync(query));
@@ -46,9 +46,19 @@ export const ServiceList = (props: Props) => {
     };
 
     const handleChangeCategory = (category: any) => {
-        if (category)
-            dispatch(queryServiceAsync({ isActive: true, category: category }));
-        else dispatch(queryServiceAsync({ isActive: true }));
+        if (category) {
+            dispatch(
+                queryServiceAsync({
+                    isActive: true,
+                    limit: limit,
+                    category: category,
+                })
+            );
+            setQuery({ isActive: true, limit: limit, category: category });
+        } else {
+            dispatch(queryServiceAsync({ isActive: true, limit: limit }));
+            setQuery({ isActive: true, limit: limit });
+        }
     };
 
     const handleChangeMaxPrice = (e: any) => {
@@ -63,10 +73,15 @@ export const ServiceList = (props: Props) => {
         else setQuery({ ...query, minPrice: value });
     };
 
+    const handleChangeRating = (rate: number) => {
+        dispatch(queryServiceAsync({ ...query, rating: rate }));
+        setQuery({ ...query, rating: rate });
+    };
+
     const handleChangePage = (page: number) => {
         dispatch(queryServiceAsync({ ...query, page: page }));
     };
-    console.log(servicesResult);
+
     return (
         <PageContainer>
             <PageWrapper>
@@ -81,6 +96,7 @@ export const ServiceList = (props: Props) => {
                             changeSearch={handleChangeSearch}
                             changeMaxPrice={handleChangeMaxPrice}
                             changeMinPrice={handleChangeMinPrice}
+                            changeRating={handleChangeRating}
                             query={query}
                         />
                     </div>
@@ -133,6 +149,7 @@ const ServiceSideBar = (props: {
     changeCategory?: any;
     changeMinPrice?: any;
     changeMaxPrice?: any;
+    changeRating?: any;
     query?: any;
 }) => {
     const {
@@ -142,8 +159,10 @@ const ServiceSideBar = (props: {
         changeCategory,
         changeMinPrice,
         changeMaxPrice,
+        changeRating,
         query,
     } = props;
+    const [rate, setRate] = React.useState(0);
 
     return (
         <>
@@ -190,6 +209,17 @@ const ServiceSideBar = (props: {
                         onChange={changeMaxPrice}
                     />
                 </div>
+            </div>
+            <h5 className="fw-bold mt-3">Đánh giá</h5>
+            <div className="my-2">
+                <Rating
+                    ratingValue={rate}
+                    onClick={(rate: number) => {
+                        setRate(rate);
+                        changeRating(rate / 20);
+                    }}
+                />{' '}
+                {`${rate / 20}/5`}
             </div>
             <h5 className="fw-bold mt-3">Loại dịch vụ</h5>
             <ul>

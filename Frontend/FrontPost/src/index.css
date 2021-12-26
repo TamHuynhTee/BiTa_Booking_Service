@@ -16,17 +16,31 @@ p {
 
 body {
     margin: 0;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
 
-/* .container {
-    margin: 0 auto;
-    width: 1100px;
-} */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #eef2f8;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #219bf8;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1772bd;
+}

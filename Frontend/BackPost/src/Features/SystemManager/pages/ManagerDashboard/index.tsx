@@ -14,7 +14,7 @@ import {
 } from '../../slice/selector';
 import { getManagerRevenueAsync, queryBusinessAsync } from '../../slice/thunk';
 import { IQueryBusinessApi } from '../../type';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export const ManagerDashboard = () => {
     const dispatch = useDispatch();
@@ -25,10 +25,12 @@ export const ManagerDashboard = () => {
     const newBusinesses = useSelector(selectQueryBusiness);
     const revenue = useSelector(selectManagerRevenue);
     const loading = useSelector(selectLoading);
-
-    React.useEffect(() => {
+    const fetchData = () => {
         dispatch(queryBusinessAsync(query));
         dispatch(getManagerRevenueAsync({ year: dayjs().year() }));
+    };
+    React.useEffect(() => {
+        fetchData();
     }, []);
 
     const handleChangePage = (page: number) => {
@@ -36,9 +38,18 @@ export const ManagerDashboard = () => {
         dispatch(queryBusinessAsync({ ...query, page: page }));
     };
 
+    const handleRefresh = () => {
+        fetchData();
+    };
+
     return (
         <div className="container">
-            <h4>Doanh nghiệp mới</h4>
+            <div className="d-flex justify-content-between">
+                <h5 className="fw-bold">Doanh nghiệp mới</h5>
+                <button className="btn btn-primary" onClick={handleRefresh}>
+                    <i className="bi bi-arrow-repeat"></i> Làm mới
+                </button>
+            </div>
             <hr />
             {loading === 'idle' ? (
                 <>

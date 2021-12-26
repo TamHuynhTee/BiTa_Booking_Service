@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Rating } from 'react-simple-star-rating';
 import { getDetailService } from '../../../Business/slice';
 
 export const ServiceCardHome = (props: { data?: any }) => {
@@ -26,6 +27,7 @@ export const ServiceCardHome = (props: { data?: any }) => {
                     {data.name}
                 </h5>
                 <p className="card-text text-truncate">{data.description}</p>
+                <Rating ratingValue={data?.rating * 20} readonly />
                 <button className="btn btn-link" onClick={handleDetailService}>
                     Chi tiết
                 </button>

@@ -27,15 +27,13 @@ export const BusinessList = (props: Props) => {
     });
 
     React.useEffect(() => {
-        dispatch(queryBusinessAsync({ isActive: true }));
+        dispatch(queryBusinessAsync(query));
     }, []);
 
     const handleSubmitSearch = () => {
         console.log(query);
         dispatch(queryBusinessAsync(query));
     };
-
-    console.log(businessesResult);
 
     const handleChangeSearch = (data: { keyword: string }) => {
         const { keyword } = data;
@@ -122,7 +120,7 @@ const BusinessSideBar = (props: {
             <div className="row mb-3">
                 <SearchBar
                     className="col"
-                    placeholder="Tìm kiếm tên nhà cung cấp"
+                    placeholder="Tìm kiếm nhà cung cấp"
                     submit={changeSearch}
                     formSubmit={(e: any) => e.preventDefault()}
                 />

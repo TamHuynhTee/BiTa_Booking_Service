@@ -2,15 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notifyError, notifySuccess } from '../../../utils/notify';
 import { CustomerStateTypes } from '../type';
 import {
+    countNewReviewsAsync,
     getAppointmentByIdAsync,
     getBranchesByServiceForSelectAsync,
     queryAppointmentAsync,
+    queryReviewsAsync,
 } from './thunk';
 
 const initialState: Partial<CustomerStateTypes> = {
     branchesForSelect: null,
     queryAppointments: undefined,
     appointment: null,
+    newReviews: 0,
+    queryReviews: undefined,
     status: 'idle',
 };
 
@@ -55,7 +59,7 @@ export const customerSlice = createSlice({
             state.status = 'idle';
             state.queryAppointments = action.payload;
         },
-        [queryAppointmentAsync.rejected.toString()]: (state, action) => {
+        [queryAppointmentAsync.rejected.toString()]: (state) => {
             state.status = 'idle';
         },
         [getAppointmentByIdAsync.pending.toString()]: (state) => {
@@ -68,7 +72,34 @@ export const customerSlice = createSlice({
             state.status = 'idle';
             state.appointment = action.payload;
         },
-        [getAppointmentByIdAsync.rejected.toString()]: (state, action) => {
+        [getAppointmentByIdAsync.rejected.toString()]: (state) => {
+            state.status = 'idle';
+        },
+        // Review
+        [countNewReviewsAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [countNewReviewsAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.newReviews = action.payload;
+        },
+        [countNewReviewsAsync.rejected.toString()]: (state) => {
+            state.status = 'idle';
+        },
+        [queryReviewsAsync.pending.toString()]: (state) => {
+            state.status = 'loading';
+        },
+        [queryReviewsAsync.fulfilled.toString()]: (
+            state,
+            action: PayloadAction<any>
+        ) => {
+            state.status = 'idle';
+            state.queryReviews = action.payload;
+        },
+        [queryReviewsAsync.rejected.toString()]: (state) => {
             state.status = 'idle';
         },
     },

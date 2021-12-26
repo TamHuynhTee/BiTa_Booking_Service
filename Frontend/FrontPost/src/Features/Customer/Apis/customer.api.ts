@@ -3,8 +3,10 @@ import { ReturnListResponse, ReturnResponse } from '../../../Apis/response';
 import {
     ICancelAppointmentApi,
     ICreateAppointment,
+    ICustomerReviewApi,
     IGetAppointmentByIdApi,
     IQueryAppointment,
+    IQueryReview,
     IUpdateAppointmentCustomerApi,
 } from '../type';
 import { routeCustomer } from './customer.route';
@@ -29,4 +31,20 @@ export const updateAppointmentApi = async (
     query: IUpdateAppointmentCustomerApi
 ): Promise<ReturnResponse<any>> => {
     return await Repository(routeCustomer['updateAppointment'], query);
+};
+// Review
+export const countNewReviewsApi = async (): Promise<ReturnResponse<any>> => {
+    return await Repository(routeCustomer['countNewReviews']);
+};
+
+export const queryReviewsApi = async (
+    query: IQueryReview
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeCustomer['queryReviews'], query);
+};
+
+export const customerReviewApi = async (
+    payload: ICustomerReviewApi
+): Promise<ReturnResponse<any>> => {
+    return await Repository(routeCustomer['customerReview'], payload);
 };

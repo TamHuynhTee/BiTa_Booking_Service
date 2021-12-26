@@ -1,5 +1,5 @@
 import React from 'react';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { LineChartResponsive } from '../../../../Components';
 import { getAdminStatsAsync } from '../../slice/thunk';
 import { selectAdminStats } from '../../slice/selector';

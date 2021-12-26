@@ -14,4 +14,6 @@ export * from './NoDataView';
 export * from './LineChartResponsive';
 export * from './LoadingComponent';
 export * from './SelectCustom';
+export * from './RequiredSign';
+export * from './ResultNumber';
 export * from './CustomDateInput';

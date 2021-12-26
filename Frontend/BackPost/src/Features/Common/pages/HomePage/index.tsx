@@ -2,10 +2,17 @@ import React from 'react';
 import './style.scss';
 import logo from '../../../../images/logo.svg';
 import { LoginForm } from '../../components';
+import { useHistory } from 'react-router';
 
-interface Props {}
+export const HomePage = () => {
+    const history = useHistory();
+    React.useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            history.push('/dashboard');
+        }
+    }, []);
 
-export const HomePage = (props: Props) => {
     return (
         <div className="homePage container d-flex flex-column align-items-center p-5">
             <div className="my-3">

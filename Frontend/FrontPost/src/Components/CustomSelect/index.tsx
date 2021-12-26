@@ -9,14 +9,15 @@ interface CustomSelectProps {
 }
 
 export const CustomSelect = (props: {
-    options: Array<any>;
+    options?: Array<any> | [];
     name: string;
     control: any;
     errors: any;
     placeholder: string;
     noOptionsMessage?: any;
     handleChange?: Function | any;
-    objKey?: string;
+    objKey?: string | '';
+    className?: string | '';
 }) => {
     const {
         options,
@@ -27,6 +28,7 @@ export const CustomSelect = (props: {
         noOptionsMessage,
         handleChange,
         objKey,
+        className,
         ...rest
     } = props;
 
@@ -37,6 +39,7 @@ export const CustomSelect = (props: {
                 name={name}
                 render={({ field: { onChange, onBlur, value, name } }) => (
                     <Select
+                        className={className}
                         name={name}
                         options={options}
                         value={options?.find(

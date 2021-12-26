@@ -5,3 +5,4 @@ module.exports.businessValidation = require('./business.validation');
 module.exports.branchValidation = require('./branch.validation');
 module.exports.serviceValidation = require('./service.validation');
 module.exports.appointmentValidation = require('./appointment.validation');
+module.exports.reviewValidation = require('./review.validation');

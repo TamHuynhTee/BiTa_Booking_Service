@@ -1,7 +1,7 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
-import * as utc from 'dayjs/plugin/utc';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { moneyFormatter } from '../../../../utils/moneyFormatter';
@@ -96,7 +96,6 @@ export const AppointmentDetailCustomer = () => {
             </select>
         );
     };
-    console.log(appointment?.notify);
 
     const handleChangeNotify = async (e: any) => {
         const value = e.target.value;

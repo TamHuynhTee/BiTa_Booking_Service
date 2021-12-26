@@ -25,9 +25,7 @@ import { selectUser } from '../../slice/selector';
 import { getCurrentUserAsync } from '../../slice/thunk';
 import './style.scss';
 
-interface Props {}
-
-export const Dashboard = (props: Props) => {
+export const Dashboard = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const { path } = useRouteMatch();

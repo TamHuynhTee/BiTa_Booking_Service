@@ -17,4 +17,17 @@ export const routeCustomer: Record<string, ApiRoutes> = {
         method: ApiMethods.PUT,
         url: 'appointment/update-appointment-customer',
     },
+    // Review
+    countNewReviews: {
+        method: ApiMethods.GET,
+        url: 'review/count-new-reviews',
+    },
+    queryReviews: {
+        method: ApiMethods.GET,
+        url: 'review/query-reviews',
+    },
+    customerReview: {
+        method: ApiMethods.PUT,
+        url: 'review/customer-review',
+    },
 };

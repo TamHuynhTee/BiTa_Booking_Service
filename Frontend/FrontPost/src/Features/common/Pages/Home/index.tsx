@@ -1,36 +1,40 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Typewriter } from 'react-simple-typewriter';
 import Slider from 'react-slick';
-import './style.scss';
-import schedule from '../../../../images/online-schedule.svg';
-import fast from '../../../../images/fast.svg';
-import simple from '../../../../images/simple.svg';
-import wallet from '../../../../images/wallet.svg';
-import user from '../../../../images/user.svg';
-import business from '../../../../images/business.svg';
-import booked from '../../../../images/booked.svg';
-import plan from '../../../../images/plan.svg';
 import review1 from '../../../../images/avareview1.jpg';
 import review2 from '../../../../images/avareview2.jpg';
-import { defaultRoute } from '../../../../routes/defaultRoute';
-import { useHistory } from 'react-router';
-import { Typewriter } from 'react-simple-typewriter';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentUserAsync } from '../../../../App/auth/slice/thunk';
-import { selectUser } from '../../../../App/auth/slice/selector';
+import booked from '../../../../images/booked.svg';
+import fast from '../../../../images/fast.svg';
+import schedule from '../../../../images/online-schedule.svg';
+import plan from '../../../../images/plan.svg';
+import simple from '../../../../images/simple.svg';
+import wallet from '../../../../images/wallet.svg';
+import {
+    selectServices,
+    selectLoading,
+} from '../../../Business/slice/selector';
 import { queryServiceAsync } from '../../../Business/slice/thunk';
-import { selectServices } from '../../../Business/slice/selector';
 import { BusinessCardHome, ServiceCardHome } from '../../Components';
-import { SearchBar } from '../../../../Components';
-import { Link } from 'react-router-dom';
-import { queryBusinessAsync } from '../../slice/thunk';
 import { selectQueryBusiness } from '../../slice/selector';
+import { queryBusinessAsync } from '../../slice/thunk';
+import { LoadingComponent } from '../../../../Components';
+import './style.scss';
 
 export const HomePage = () => {
     const dispatch = useDispatch();
     const services = useSelector(selectServices);
     const businesses = useSelector(selectQueryBusiness);
+    const loading = useSelector(selectLoading);
     React.useEffect(() => {
-        dispatch(queryServiceAsync({ limit: 4, isActive: true }));
+        dispatch(
+            queryServiceAsync({
+                limit: 4,
+                isActive: true,
+                sortBy: 'usage:desc',
+            })
+        );
         dispatch(queryBusinessAsync({ limit: 4, isActive: true }));
     }, []);
 
@@ -126,11 +130,15 @@ export const HomePage = () => {
                 </div>
                 <hr />
                 <div className="row">
-                    {businesses?.results?.map((e: any, i: number) => (
-                        <div className="col-lg-3" key={i}>
-                            <BusinessCardHome data={e} />
-                        </div>
-                    ))}
+                    {loading === 'idle' ? (
+                        businesses?.results?.map((e: any, i: number) => (
+                            <div className="col-lg-3" key={i}>
+                                <BusinessCardHome data={e} />
+                            </div>
+                        ))
+                    ) : (
+                        <LoadingComponent />
+                    )}
                 </div>
                 <SectionTitle title="Một số dịch vụ phổ biến" />
                 <div className="d-flex justify-content-between">
@@ -138,11 +146,15 @@ export const HomePage = () => {
                 </div>
                 <hr />
                 <div className="row">
-                    {services?.results?.map((e: any, i: number) => (
-                        <div className="col-lg-3" key={i}>
-                            <ServiceCardHome data={e} />
-                        </div>
-                    ))}
+                    {loading === 'idle' ? (
+                        services?.results?.map((e: any, i: number) => (
+                            <div className="col-lg-3" key={i}>
+                                <ServiceCardHome data={e} />
+                            </div>
+                        ))
+                    ) : (
+                        <LoadingComponent />
+                    )}
                 </div>
                 <SectionTitle title="Đánh giá từ khách hàng" />
                 <ReviewHome
@@ -159,7 +171,6 @@ export const HomePage = () => {
                     avatar={review2}
                 />
             </div>
-            <ChooseAccountDialog />
         </div>
     );
 };
@@ -239,58 +250,6 @@ const BannerSlider = () => {
                     <img src={plan} alt="" />
                 </div>
             </Slider>
-        </div>
-    );
-};
-
-const ChooseAccountDialog = () => {
-    const history = useHistory();
-    return (
-        <div className="modal fade" id="ChooseAccountModal" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-xl">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Chọn tài khoản</h5>
-                        <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div className="modal-body p-4">
-                        <h1 style={{ textAlign: 'center', color: '#6c63ff' }}>
-                            Bạn muốn trở thành
-                        </h1>
-                        <div className="chooseAccount">
-                            <div
-                                className="chooseAccount-card"
-                                data-bs-dismiss="modal"
-                                onClick={() =>
-                                    history.push(defaultRoute.RegisterCustomer)
-                                }
-                            >
-                                <h2>Khách hàng</h2>
-                                <div className="chooseAccount-card-image">
-                                    <img src={user} alt="" />
-                                </div>
-                            </div>
-                            <div
-                                className="chooseAccount-card"
-                                data-bs-dismiss="modal"
-                                onClick={() =>
-                                    history.push(defaultRoute.RegisterBusiness)
-                                }
-                            >
-                                <h2>Đối tác</h2>
-                                <div className="chooseAccount-card-image">
-                                    <img src={business} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

@@ -15,10 +15,11 @@ export const VerifyEmail = () => {
     React.useEffect(() => {
         getCode();
         return () => {
-            setResult;
+            result;
+            loading;
         };
     }, []);
-    console.log(result);
+
     return (
         <div className="container d-flex flex-column align-items-center">
             {loading ? (

@@ -44,16 +44,7 @@ const changeBranchActivation = catchAsync(async (req, res) => {
 });
 
 const queryBranches = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [
-    'name',
-    'address.street',
-    'address.ward',
-    'address.district',
-    'address.province',
-    'isActive',
-    'business',
-  ]);
-  console.log(filter);
+  const filter = pick(req.query, ['name', '$or', 'isActive', 'business']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const branches = await branchService.queryBranches(filter, options);
   sendSuccess(res, branches, httpStatus.OK, 'Branches found');

@@ -7,6 +7,9 @@ import {
     getBusinessRevenueApi,
     getBusinessStatsApi,
     getServiceByIdApi,
+    getVietNamDistrictsApi,
+    getVietNamProvincesApi,
+    getVietNamWardApi,
     queryBranchApi,
     queryServiceApi,
 } from '../Apis/business.api';
@@ -57,6 +60,31 @@ export const getAllBranchAsync = createAsyncThunk(
     async (payload: any): Promise<any> => {
         const response = await getAllBranchApi(payload);
         return response.data;
+    }
+);
+
+// Vietnam address
+export const getVietNamProvincesAsync = createAsyncThunk(
+    'Branch/getVietNamProvinces',
+    async (): Promise<any> => {
+        const response = await getVietNamProvincesApi();
+        return response;
+    }
+);
+
+export const getVietNamDistrictsAsync = createAsyncThunk(
+    'Branch/getVietNamDistricts',
+    async (payload: { provinceId: string }): Promise<any> => {
+        const response = await getVietNamDistrictsApi(payload);
+        return response;
+    }
+);
+
+export const getVietNamWardAsync = createAsyncThunk(
+    'Branch/getVietNamWard',
+    async (payload: { districtId: string }): Promise<any> => {
+        const response = await getVietNamWardApi(payload);
+        return response;
     }
 );
 

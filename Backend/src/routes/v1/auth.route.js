@@ -15,7 +15,7 @@ router.post('/send-verification-email', auth(), authController.sendVerificationE
 router.put('/update-profile', auth(), validate(authValidation.updateProfile), authController.updateProfile);
 router.put('/update-avatar', auth(), validate(authValidation.updateAvatar), authController.updateUserAvatar);
 router.put('/change-password', auth(), validate(authValidation.changePassword), authController.changePassword);
-router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
+router.get('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
 router.post(
   '/approve-business',
   auth('approveBusiness'),

@@ -5,3 +5,4 @@ module.exports.Category = require('./category.model');
 module.exports.Appointment = require('./appointment.model');
 module.exports.Branch = require('./branch.model');
 module.exports.Service = require('./service.model');
+module.exports.Review = require('./review.model');

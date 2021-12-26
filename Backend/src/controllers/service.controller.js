@@ -40,7 +40,7 @@ const changeServiceActivation = catchAsync(async (req, res) => {
 
 const queryServices = catchAsync(async (req, res) => {
   //   console.log(req.query);
-  const filter = pick(req.query, ['name', 'price', 'isActive', 'business', 'category']);
+  const filter = pick(req.query, ['name', 'price', 'isActive', 'business', 'category', 'rating']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const services = await serviceService.queryServices(filter, options);
   sendSuccess(res, services, httpStatus.OK, 'Services found');

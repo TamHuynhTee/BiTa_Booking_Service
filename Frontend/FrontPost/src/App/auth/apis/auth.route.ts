@@ -14,7 +14,7 @@ export const routeAuth: Record<string, ApiRoutes> = {
         url: 'auth/registerBusiness',
     },
     verifyEmail: {
-        method: ApiMethods.POST,
+        method: ApiMethods.GET,
         url: 'auth/verify-email',
     },
     resetPassword: {

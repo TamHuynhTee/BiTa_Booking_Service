@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import Slider from 'react-slick';
-import { ServiceCard } from '../../../../Components/ServiceCard';
 import { PageContainer } from '../../../../Components/PageContainer';
 import { PageWrapper } from '../../../../Components/PageWrapper';
 import './style.scss';
@@ -17,10 +14,20 @@ import { weekDayFormatter } from '../../../../utils/weekDayFormatter';
 import { timeFormatter } from '../../../../utils/timeFormatter';
 import { getDetailService } from '../../slice';
 import { Link } from 'react-router-dom';
+import { queryReviewsAsync } from '../../../Customer/slice/thunk';
+import { IQueryReview } from '../../../Customer/type';
+import {
+    selectQueryReviews,
+    selectCustomerLoading,
+} from '../../../Customer/slice/selector';
+import {
+    LoadingComponent,
+    NoDataView,
+    Pagination,
+} from '../../../../Components';
+import { CommentItem } from '../../Components';
 
-interface ServiceDetailProps {}
-
-export const ServiceDetail = (props: ServiceDetailProps) => {
+export const ServiceDetail = () => {
     const history = useHistory();
     const { id } = useParams<any>();
     const dispatch = useDispatch();
@@ -183,34 +190,58 @@ export const ServiceDetail = (props: ServiceDetailProps) => {
                     </ul>
                 </div>
             </PageWrapper>
-            {/* <div className=" mb-5 bg-body rounded">
-                <OtherService title="Các dịch vụ cùng nhà cung cấp" />
-            </div>
-            <div className=" mb-5 bg-body rounded">
-                <OtherService title="Các dịch vụ liên quan" />
-            </div> */}
+            <ServiceReview serviceID={id} />
         </PageContainer>
     );
 };
 
-const OtherService = (props: { title?: string }) => {
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
+const ServiceReview = (props: { serviceID?: string }) => {
+    const { serviceID } = props;
+    const dispatch = useDispatch();
+    const query: IQueryReview = {
+        service: serviceID,
+        state: 'Reviewed',
     };
+    React.useEffect(() => {
+        dispatch(queryReviewsAsync(query));
+    }, []);
+    const reviews = useSelector(selectQueryReviews);
+    const loading = useSelector(selectCustomerLoading);
+
+    const handleChangePage = (page: number) => {
+        dispatch(queryReviewsAsync({ ...query, page: page }));
+    };
+
     return (
-        <div className="card">
-            <div className="card-header fs-3">{props.title}</div>
-            <div className="card-body pe-5 ps-5">
-                <Slider {...settings}>
-                    <ServiceCard />
-                    <ServiceCard />
-                    <ServiceCard />
-                    <ServiceCard />
-                </Slider>
+        <div className="my-3">
+            <h2 className="fw-bold text-center">Đánh giá về dịch vụ</h2>
+            <hr />
+            <div className="my-2">
+                {loading === 'idle' ? (
+                    <>
+                        <div className="p-2">
+                            {reviews?.totalResults ? (
+                                reviews.results?.map((e: any, i: number) => (
+                                    <div className="mb-3" key={i}>
+                                        <CommentItem data={e} />
+                                    </div>
+                                ))
+                            ) : (
+                                <NoDataView />
+                            )}
+                        </div>
+                        <hr />
+                        <div className="my-3">
+                            <Pagination
+                                totalPages={reviews?.totalPages}
+                                query={handleChangePage}
+                                page={reviews?.page}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    <LoadingComponent />
+                )}
             </div>
         </div>
     );

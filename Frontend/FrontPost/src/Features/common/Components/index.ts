@@ -7,3 +7,4 @@ export * from './BusinessCardHome';
 export * from './ServiceListItem';
 export * from './BusinessListItem';
 export * from './ForgotPassForm';
+export * from './CommentItem';

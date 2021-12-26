@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import { BookingManagement } from '../Features/Customer/Pages/BookingManagement';
+import { Review } from '../Features/Customer/Pages/Review';
 import { defaultRoute } from './defaultRoute';
 import { Booking } from '../Features/Customer/Pages/Booking';
 import { Footer, Header } from '../Components';
@@ -24,6 +24,7 @@ import { PaymentDenied, PaymentSuccess } from '../Features/Customer/Pages';
 import { AppointmentHistory } from '../Features/common/Components';
 import { PrivateRoute } from './privateRoute';
 import ScrollToTop from './scrollToTop';
+import { ChooseAccountDialog } from '../Components/ChooseAccount';
 
 export interface IRoute {
     exact: Boolean;
@@ -213,6 +214,19 @@ const privateRoutes: Array<IPrivateRoute> = [
         roleRoute: ['user'],
         option: true,
     },
+    {
+        child: (
+            <>
+                <Header />
+                <Review />
+                <Footer />
+            </>
+        ),
+        path: defaultRoute.Review,
+        exact: true,
+        roleRoute: ['user'],
+        option: true,
+    },
 ];
 
 const renderPrivateRoutes = (routes: Array<IPrivateRoute>) => {
@@ -274,6 +288,7 @@ const Router = () => {
                         <NotFound />
                     </Route>
                 </Switch>
+                <ChooseAccountDialog />
             </ScrollToTop>
         </BrowserRouter>
     );

@@ -24,6 +24,7 @@ export interface IUserInfo {
 
 export interface IQueryServiceApi extends IQueryApi {
     name?: string;
+    rating?: number;
     minPrice?: number;
     maxPrice?: number;
     isActive?: boolean;

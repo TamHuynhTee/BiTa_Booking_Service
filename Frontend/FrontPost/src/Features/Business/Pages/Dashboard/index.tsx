@@ -14,6 +14,7 @@ import {
     OrderHistory,
     ServiceDetail,
     ServiceList,
+    ServiceReview,
     Statistics,
 } from '..';
 import { selectUser } from '../../../../App/auth/slice/selector';
@@ -58,6 +59,14 @@ export const BusinessDashboard = () => {
                         roleRoute={['business']}
                     >
                         <ServiceDetail />
+                    </PrivateRoute>
+                    <PrivateRoute
+                        path={`${path}/service/:id/review`}
+                        option={true}
+                        exact={true}
+                        roleRoute={['business']}
+                    >
+                        <ServiceReview />
                     </PrivateRoute>
                     <PrivateRoute
                         path={`${path}/create-service`}
@@ -115,44 +124,6 @@ export const BusinessDashboard = () => {
                     >
                         <Statistics business={user?.business?.id} />
                     </PrivateRoute>
-                    {/* <Route exact path={path}>
-                        <DashboardHome business={user?.business?.id} />
-                    </Route> */}
-                    {/* <Route exact path={`${path}/services`}>
-                        <ServiceList business={user?.business?.id} />
-                    </Route> */}
-                    {/* <Route
-                        exact
-                        path={`${path}/service/:id`}
-                        component={ServiceDetail}
-                    /> */}
-                    {/* <Route exact path={`${path}/create-service`}>
-                        <CreateService business={user?.business?.id} />
-                    </Route> */}
-                    {/* <Route exact path={`${path}/branches`}>
-                        <BranchList business={user?.business?.id} />
-                    </Route>
-                    <Route
-                        exact
-                        path={`${path}/branch/:id`}
-                        component={BranchDetail}
-                    />
-                    <Route exact path={`${path}/create-branch`}>
-                        <CreateBranch business={user?.business?.id} />
-                    </Route> */}
-                    {/* <Route exact path={`${path}/business-profile`}>
-                        <BusinessProfile data={user} />
-                    </Route>
-                    <Route
-                        exact
-                        path={`${path}/order-history`}
-                        component={OrderHistory}
-                    />
-                    <Route
-                        exact
-                        path={`${path}/statistics`}
-                        component={Statistics}
-                    /> */}
                 </Switch>
             </div>
             <AppointmentDetailBusiness />

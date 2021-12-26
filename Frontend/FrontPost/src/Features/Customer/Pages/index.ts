@@ -1,4 +1,4 @@
-export * from './BookingManagement';
+export * from './Review';
 export * from './HomePage';
 export * from './Booking';
 export * from './PaymentDenied';

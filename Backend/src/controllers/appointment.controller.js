@@ -3,10 +3,11 @@ const catchAsync = require('../utils/catchAsync');
 const { sendSuccess } = require('./return.controller');
 const ApiError = require('../utils/ApiError');
 const pick = require('../utils/pick');
-const { appointmentService, serviceService } = require('../services');
+const { appointmentService, serviceService, reviewService } = require('../services');
 const paypal = require('paypal-rest-sdk');
 const paypalConfig = require('../config/paypal');
 const moment = require('moment');
+const config = require('../config/config');
 
 paypal.configure(paypalConfig);
 
@@ -36,7 +37,7 @@ const createAppointment = catchAsync(async (req, res) => {
       },
       redirect_urls: {
         return_url: `https://bita-booking.herokuapp.com/v1/appointment/success-payment?costUSD=${costUSD}&appointment=${appointment._id}&paymentType=${paymentType}`,
-        cancel_url: 'http://localhost:3000/payment-denied',
+        cancel_url: `${config.frontEndUrl}/payment-denied`,
       },
       transactions: [
         {
@@ -81,6 +82,13 @@ const doneAppointment = catchAsync(async (req, res) => {
   req.body.state = 'Done';
   req.body.payment = 'FullyPaid';
   const appointment = await appointmentService.updateAppointment(req.body);
+  await serviceService.updateServiceUsage(appointment.service);
+  await reviewService.createReview({
+    service: appointment.service,
+    appointment: appointment._id,
+    customer: appointment.customer,
+    reviewedAt: moment().utc().add(7, 'hours').toDate(),
+  });
   sendSuccess(res, appointment, httpStatus.OK, 'Đã hoàn tất cuộc hẹn');
 });
 
@@ -160,15 +168,15 @@ const doPaymentServicePackage = catchAsync(async (req, res, next) => {
       console.log('Successfully paid');
     }
   });
-  console.log(success, appointment, paymentType);
+
   if (!success) {
     await appointmentService.deleteAppointment({ appointmentId: appointment });
-    res.redirect('http://localhost:3000/payment-denied');
+    res.redirect(`${config.frontEndUrl}/payment-denied`);
   } else {
     const appointmentDetail = await appointmentService.getAppointmentById(appointment);
     appointmentDetail.payment = paymentType;
     await appointmentDetail.save();
-    res.redirect('http://localhost:3000/payment-success');
+    res.redirect(`${config.frontEndUrl}/payment-success`);
   }
 });
 

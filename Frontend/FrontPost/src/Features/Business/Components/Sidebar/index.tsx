@@ -7,11 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../../../App/auth/slice';
 import { selectUser } from '../../../../App/auth/slice/selector';
 
-interface SidebarProps {}
-
 const img = 'https://picsum.photos/seed/picsum/200/300';
 
-export const Sidebar = (props: SidebarProps) => {
+export const Sidebar = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const history = useHistory();
@@ -20,7 +18,7 @@ export const Sidebar = (props: SidebarProps) => {
         dispatch(logoutUser());
         history.push('/');
     };
-    // console.log(user);
+
     return (
         <div className="sidebar">
             <div className="sidebar-logo d-flex justify-content-center">
